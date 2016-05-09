@@ -1,0 +1,23 @@
+{
+  "name": "d2l-dropdown",
+  "version": "0.0.1",
+  "description": "Web component for dropdown",
+  "scripts": {
+    "postinstall": "bower install",
+    "test": "polylint && wct --skip-plugin sauce"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Brightspace/valence-ui-dropdown.git"
+  },
+  "author": "D2L Corporation",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bower": "^1.6.5"
+  },
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "polylint": "^2.10.0",
+    "web-component-tester": "^4.2.2"
+  }
+}

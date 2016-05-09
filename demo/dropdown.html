@@ -1,0 +1,104 @@
+<html>
+<head>
+	<title>Polymer Dropdown Prototype</title>
+	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
+	<script>
+		//window.Polymer = window.Polymer || {};
+		//window.Polymer.dom = 'shadow';
+	</script>
+	<link rel="import" href="../dropdown.html">
+	<style is="custom-style">
+		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
+		html {
+			color: #565a5c;
+			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+			font-weight: 300;
+			font-size: 20px;
+		}
+		body {
+			margin: 40px 20px;
+		}
+		button {
+				font-size: 0.7rem;
+		}
+		p {
+			margin: 1rem;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="content" style="margin-bottom:2rem;margin-top:15rem;">
+		<div>
+			<button onclick="toggleRTL();">Toggle RTL</button>
+			<button onclick="toggleFloat();">Toggle Float</button>
+		</div>
+		<div>
+			<button id="open-dropdown" onclick="openDropdown();">Open it!</button>
+			<button onclick="closeDropdown();">Close it!</button>
+		</div>
+	</div>
+		<div style="clear:both;"></div>
+
+	<d2l-dropdown id="dropdown" target-id="open-dropdown" >
+		<p style="min-width:200px;">Grumpy wizards make toxic brew for evil Queen and Jack.</p>
+	</d2l-dropdown>
+	<div style="margin-bottom: 10rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+
+	<script>
+
+		var page_dropdown = document.getElementById('dropdown');
+
+		page_dropdown.addEventListener('open', function(e) {
+			console.log('opened', e);
+		});
+
+		page_dropdown.addEventListener('close', function(e) {
+			console.log('closed', e);
+		});
+
+		function openDropdown() {
+			page_dropdown.setAttribute('open', true);
+		}
+
+		function closeDropdown() {
+			page_dropdown.removeAttribute('open');
+		}
+
+		function appendDropdown() {
+			document.body.appendChild(page_dropdown);
+		}
+
+		function removeDropdown() {
+			page_dropdown.parentNode.removeChild(page_dropdown);
+		}
+
+		function toggleRTL() {
+			closeDropdown();
+			var isRTL = (document.dir === 'rtl');
+			if (isRTL) {
+				document.dir = 'ltr';
+			} else {
+				document.dir = 'rtl';
+			}
+			removeDropdown();
+			appendDropdown();
+		}
+
+		function toggleFloat() {
+			closeDropdown();
+			var content = document.getElementById('content');
+			var isFloatRight = (content.style.cssFloat === 'right');
+			if (isFloatRight) {
+				content.style.cssFloat = '';
+			} else {
+				content.style.cssFloat = 'right';
+			}
+
+			console.log(isFloatRight);
+
+		}
+
+	</script>
+</body>
+</html>

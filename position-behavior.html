@@ -1,0 +1,101 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<script>
+
+	window.D2L = window.D2L || {};
+
+	/** @polymerBehavior D2L.PositionBehavior */
+	D2L.PositionBehaviorImpl = {
+
+		_isRTL: false,
+
+		attached: function() {
+			this._isRTL = (getComputedStyle(this).direction === 'rtl');
+		},
+
+		_getAutoPosition: function(element, target, offset) {
+
+			var elementRect = element.getBoundingClientRect();
+			var targetRect = target.getBoundingClientRect();
+			var targetOffset = this._getOffset(target);
+
+			var spaceAround = {
+				above: targetRect.top,
+				below: window.innerHeight - targetRect.bottom,
+				left: targetRect.left,
+				right: window.innerWidth - targetRect.right
+			};
+
+			var spaceRequired = {
+				height: elementRect.height + offset.vertical,
+				width: elementRect.width + offset.horizontal
+			};
+
+			var position = {};
+
+			if (((spaceAround.below - spaceRequired.height) < 0)
+				&& (spaceAround.above > spaceRequired.height)) {
+				position.vertical = 'above';
+				position.top = targetOffset.top - elementRect.height - offset.vertical;
+			} else {
+				position.vertical = 'below';
+				position.top = targetOffset.top + targetRect.height + offset.vertical;
+			}
+
+			if (!this._isRTL) {
+				if ((spaceAround.right + targetRect.width - spaceRequired.width < 0)
+					&& (spaceAround.left + targetRect.width > spaceRequired.width)) {
+					position.horizontal = 'right';
+					position.left = targetOffset.left - offset.horizontal - (elementRect.width - targetRect.width);
+				} else {
+					position.horizontal = 'left';
+					position.left = targetOffset.left + offset.horizontal;
+				}
+			} else {
+				if ((spaceAround.left + targetRect.width - spaceRequired.width < 0)
+					&& (spaceAround.right + targetRect.width > spaceRequired.width)) {
+					position.horizontal = 'left';
+					position.left = targetOffset.left + elementRect.width + offset.horizontal;
+				} else {
+					position.horizontal = 'right';
+					position.left = targetOffset.left + targetRect.width - offset.horizontal;
+				}
+			}
+
+			return position;
+
+		},
+
+		_autoPosition: function(element, target, offset) {
+
+			var position = this._getAutoPosition(element, target, offset);
+
+			this.style.top = position.top + 'px';
+			this.style.left = position.left + 'px';
+
+			return position;
+
+		},
+
+		_getOffset: function(elem) {
+			var getOffset = function(elem) {
+				var offset = { top: 0, left: 0 };
+				do {
+					if (!isNaN(elem.offsetTop)) {
+						offset.top += elem.offsetTop;
+					}
+					if (!isNaN(elem.offsetLeft)) {
+						offset.left += elem.offsetLeft;
+					}
+				} while (elem = elem.offsetParent);
+				return offset;
+			};
+			return getOffset(elem);
+		}
+
+	};
+
+	/** @polymerBehavior */
+	D2L.PositionBehavior = [D2L.PositionBehaviorImpl];
+
+</script>
