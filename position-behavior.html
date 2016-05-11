@@ -17,7 +17,6 @@
 
 			var elementRect = element.getBoundingClientRect();
 			var targetRect = target.getBoundingClientRect();
-			var targetOffset = this._getOffset(target);
 
 			var spaceAround = {
 				above: targetRect.top,
@@ -36,29 +35,29 @@
 			if (((spaceAround.below - spaceRequired.height) < 0)
 				&& (spaceAround.above > spaceRequired.height)) {
 				position.vertical = 'above';
-				position.top = targetOffset.top - elementRect.height - offset.vertical;
+				position.top = target.offsetTop - elementRect.height - offset.vertical;
 			} else {
 				position.vertical = 'below';
-				position.top = targetOffset.top + targetRect.height + offset.vertical;
+				position.top = target.offsetTop + targetRect.height + offset.vertical;
 			}
 
 			if (!this._isRTL) {
 				if ((spaceAround.right + targetRect.width - spaceRequired.width < 0)
 					&& (spaceAround.left + targetRect.width > spaceRequired.width)) {
 					position.horizontal = 'right';
-					position.left = targetOffset.left - offset.horizontal - (elementRect.width - targetRect.width);
+					position.left = target.offsetLeft - offset.horizontal - (elementRect.width - targetRect.width);
 				} else {
 					position.horizontal = 'left';
-					position.left = targetOffset.left + offset.horizontal;
+					position.left = target.offsetLeft + offset.horizontal;
 				}
 			} else {
 				if ((spaceAround.left + targetRect.width - spaceRequired.width < 0)
 					&& (spaceAround.right + targetRect.width > spaceRequired.width)) {
 					position.horizontal = 'left';
-					position.left = targetOffset.left + elementRect.width + offset.horizontal;
+					position.left = target.offsetLeft + elementRect.width + offset.horizontal;
 				} else {
 					position.horizontal = 'right';
-					position.left = targetOffset.left + targetRect.width - offset.horizontal;
+					position.left = target.offsetLeft + targetRect.width - offset.horizontal;
 				}
 			}
 
@@ -75,22 +74,6 @@
 
 			return position;
 
-		},
-
-		_getOffset: function(elem) {
-			var getOffset = function(elem) {
-				var offset = { top: 0, left: 0 };
-				do {
-					if (!isNaN(elem.offsetTop)) {
-						offset.top += elem.offsetTop;
-					}
-					if (!isNaN(elem.offsetLeft)) {
-						offset.left += elem.offsetLeft;
-					}
-				} while (elem = elem.offsetParent);
-				return offset;
-			};
-			return getOffset(elem);
 		}
 
 	};
