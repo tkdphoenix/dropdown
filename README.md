@@ -51,6 +51,17 @@ Use the `open` attribute to control the state of the dropdown.
 </body>
 ```
 
+Optionally add the `auto-close` attribute to have the dropdown automatically close when focus is lost.
+
+```html
+<body>
+	...
+	<d2l-dropdown auto-close target-id="my-opener" >
+		your content
+	</d2l-dropdown>
+</body>
+```
+
 Optionally hide the pointer by specifying the `hide-pointer` attribute.
 
 ```html
