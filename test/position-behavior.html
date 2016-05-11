@@ -12,7 +12,7 @@
 
 		<test-fixture id="Position">
 			<template>
-				<div id="spacer1" style="height: 0; width: 0; display: none;"></div><div id="spacer2" style="height: 0; width: 0; display: none;"></div><div id="target" style="height: 50px; width: 50px; display: inline-block;"></div>
+				<div id="target" style="position: absolute; height: 50px; width: 50px; display: inline-block;"></div>
 				<div id="element" style="position: absolute; height: 50px; width: 100px;"></div>
 			</template>
 		</test-fixture>
@@ -20,7 +20,7 @@
 		<script>
 		describe('d2l-position-behavior', function() {
 
-			var target, element, spacer1, spacer2, zeroOffset = {vertical: 0, horizontal: 0};
+			var target, element, zeroOffset = {vertical: 0, horizontal: 0};
 
 			var vp = {
 				width : window.innerWidth,
@@ -29,19 +29,17 @@
 
 			beforeEach(function() {
 				var positionFixture = fixture('Position');
-				spacer1 = positionFixture[0];
-				spacer2 = positionFixture[1];
-				target = positionFixture[2];
-				elem = positionFixture[3];
+				target = positionFixture[0];
+				elem = positionFixture[1];
 			});
 
 			var expectPosition = function(position, expectedPosition) {
 				expect(position.vertical).to.equal(expectedPosition.vertical);
 				expect(position.horizontal).to.equal(expectedPosition.horizontal);
-				if (expectedPosition.top) {
+				if (expectedPosition.top !== undefined) {
 					expect(position.top).to.equal(expectedPosition.top);
 				}
-				if (expectedPosition.left) {
+				if (expectedPosition.left !== undefined) {
 					expect(position.left).to.equal(expectedPosition.left);
 				}
 			};
@@ -66,8 +64,7 @@
 
 				it('positions below-right when target top-right', function() {
 
-					spacer1.style.display = 'inline-block';
-					spacer1.style.width = vp.width - 60 + 'px';
+					target.style.left = vp.width - 60 + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, zeroOffset);
@@ -80,8 +77,7 @@
 
 				it('positions above-left when target bottom-left', function() {
 
-					spacer1.style.display = 'block';
-					spacer1.style.height = vp.height + 'px';
+					target.style.top = vp.height + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, zeroOffset);
@@ -94,10 +90,8 @@
 
 				it('positions above-right when target bottom-right', function() {
 
-					spacer1.style.display = 'block';
-					spacer1.style.height = vp.height + 'px';
-					spacer2.style.display = 'inline-block';
-					spacer2.style.width = vp.width - 60 + 'px';
+					target.style.left = vp.width - 60 + 'px';
+					target.style.top = vp.height + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, zeroOffset);
@@ -121,10 +115,8 @@
 
 				it('positions above-right with specified offset', function() {
 
-					spacer1.style.display = 'block';
-					spacer1.style.height = vp.height + 'px';
-					spacer2.style.display = 'inline-block';
-					spacer2.style.width = vp.width - 60 + 'px';
+					target.style.top = vp.height + 'px';
+					target.style.left = vp.width - 60 + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, { vertical: 15, horizontal: 15 });
@@ -150,51 +142,47 @@
 						._getAutoPosition(elem, target, zeroOffset);
 
 					expectPosition(position, {
-						vertical: 'below', horizontal: 'right', top: 50, left: 0
+						vertical: 'below', horizontal: 'right', top: 50, left: vp.width
 					});
 
 				});
 
 				it('positions below-left when target top-right', function() {
 
-					spacer1.style.display = 'inline-block';
-					spacer1.style.width = vp.width - 60 + 'px';
+					target.style.left = 0 + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, zeroOffset);
 
 					expectPosition(position, {
-						vertical: 'below', horizontal: 'left', top: 50, left: 110
+						vertical: 'below', horizontal: 'left', top: 50, left: 100
 					});
 
 				});
 
 				it('positions above-right when target bottom-left', function() {
 
-					spacer1.style.display = 'block';
-					spacer1.style.height = vp.height + 'px';
+					target.style.top = vp.height + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, zeroOffset);
 
 					expectPosition(position, {
-						vertical: 'above', horizontal: 'right', top: vp.height - 50, left: 0
+						vertical: 'above', horizontal: 'right', top: vp.height - 50, left: vp.width
 					});
 
 				});
 
 				it('positions above-left when target bottom-right', function() {
 
-					spacer1.style.display = 'block';
-					spacer1.style.height = vp.height + 'px';
-					spacer2.style.display = 'inline-block';
-					spacer2.style.width = vp.width - 60 + 'px';
+					target.style.top = vp.height + 'px'
+					target.style.left = 0 + 'px';
 
 					var position = D2L.PositionBehaviorImpl
 						._getAutoPosition(elem, target, zeroOffset);
 
 					expectPosition(position, {
-						vertical: 'above', horizontal: 'left', top: vp.height - 50, left: 110
+						vertical: 'above', horizontal: 'left', top: vp.height - 50, left: 100
 					});
 
 				});
