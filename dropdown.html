@@ -121,8 +121,16 @@
 				this._container = this.$$('.d2l-dropdown-container');
 			},
 
+			detached: function() {
+				window.removeEventListener('resize', this._handleResize);
+			},
+
 			_targetChanged: function(newValue, oldValue) {
 				this._target = document.getElementById(newValue);
+			},
+
+			_handleResize: function() {
+				this._position();
 			},
 
 			_openChanged: function(newValue, oldValue) {
@@ -132,11 +140,19 @@
 				}
 
 				if (newValue) {
+					window.addEventListener('resize', this._handleResize.bind(this));
 					this.fire('open');
 				} else {
+					window.removeEventListener('resize', this._handleResize);
 					this.fire('close');
 					return;
 				}
+
+				this._position();
+
+			},
+
+			_position: function() {
 
 				var position = this._autoPosition(
 						this._container,
