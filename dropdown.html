@@ -107,6 +107,9 @@
 			_offset: { vertical: 20, horizontal: 0},
 
 			properties: {
+				autoClose: {
+					type: Boolean
+				},
 				open: {
 					type: Boolean,
 					observer: '_openChanged'
@@ -121,12 +124,44 @@
 				this._container = this.$$('.d2l-dropdown-container');
 			},
 
+			attached: function() {
+				this._container.addEventListener('blur', this._handleBlur.bind(this), true);
+			},
+
 			detached: function() {
+				this._container.removeEventListener('blur', this._handleBlur);
 				window.removeEventListener('resize', this._handleResize);
 			},
 
 			_targetChanged: function(newValue, oldValue) {
 				this._target = document.getElementById(newValue);
+			},
+
+			_handleBlur: function() {
+
+				if (!this.autoClose) {
+					return;
+				}
+
+				// this logic is necessary due to lack of support for e.relatedTarget
+				setTimeout(function() {
+
+					if (!this.open || !document.activeElement) {
+						return;
+					}
+
+					var parentNode = document.activeElement.parentNode;
+
+					while (parentNode) {
+						if (parentNode === this) {
+							return;
+						}
+						parentNode = parentNode.parentNode;
+					}
+
+					Polymer.dom(this).removeAttribute('open');
+
+				}.bind(this), 0);
 			},
 
 			_handleResize: function() {
