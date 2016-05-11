@@ -21,9 +21,11 @@
 
 		<test-fixture id="OpenDropdown">
 			<template>
-				<d2l-dropdown id="dropdown" target-id="opener" open>
+				<d2l-dropdown id="dropdown" target-id="opener" auto-close open>
 					<p>Lorem ipsum dolor sit...</p>
+					<a id="dropdownLink" href="http://www.google.com">Google 1</a>
 				</d2l-dropdown>
+				<a id="otherLink" href="http://www.google.com">Google 2</a>
 			</template>
 		</test-fixture>
 		<script>
@@ -35,7 +37,8 @@
 				var dropdown;
 
 				beforeEach(function() {
-					dropdown = fixture('ClosedDropdown');
+					fixture('ClosedDropdown');
+					dropdown = document.getElementById('dropdown');
 				});
 
 				it('distributes its children', function() {
@@ -46,6 +49,7 @@
 
 				it('should fire open event when open attribute is added', function(done) {
 					dropdown.addEventListener('open', function() {
+						expect(dropdown.open).to.be.true;
 						done();
 					});
 					dropdown.setAttribute('open', true);
@@ -55,10 +59,13 @@
 
 			describe('open', function() {
 
-				var dropdown;
+				var dropdown, dropdownLink, otherLink;
 
 				beforeEach(function() {
-					dropdown = fixture('OpenDropdown');
+					fixture('OpenDropdown');
+					dropdown = document.getElementById('dropdown');
+					dropdownLink = document.getElementById('dropdownLink');
+					otherLink = document.getElementById('otherLink');
 				});
 
 				it('should fire close event when open attribute is removed', function(done) {
@@ -66,6 +73,25 @@
 						done();
 					});
 					dropdown.removeAttribute('open');
+				});
+
+				it('should close when focus lost and auto-close is specified', function(done) {
+					dropdown.addEventListener('close', function() {
+						expect(dropdown.open).to.be.false;
+						done();
+					});
+					dropdownLink.focus();
+					otherLink.focus();
+				});
+
+				it('should not close when focus lost and auto-close is not specified', function(done) {
+					dropdown.removeAttribute('auto-close');
+					setTimeout(function() {
+						expect(dropdown.open).to.be.true;
+						done();
+					},100);
+					dropdownLink.focus();
+					otherLink.focus();
 				});
 
 			});
