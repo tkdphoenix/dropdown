@@ -4,9 +4,7 @@
 [![Bower version][bower-image]][bower-url]
 [![Build status][ci-image]][ci-url]
 
-A Valence UI, [Polymer](https://www.polymer-project.org/1.0/)-based web component button element.
-
-For further information on this and other VUI components, see the docs at [ui.valence.d2l.com](http://ui.valence.d2l.com/).
+A [Polymer](https://www.polymer-project.org/1.0/)-based web component for dropdown/flyouts.
 
 ## Installation
 
