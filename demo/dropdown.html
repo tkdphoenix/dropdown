@@ -35,8 +35,8 @@
 			<button onclick="toggleFloat();">Toggle Float</button>
 		</div>
 		<div style="margin-bottom: 0.75rem;">
-			<label for="config-auto-close">
-				Auto-Close <input id="config-auto-close" type="checkbox" />
+			<label for="config-no-auto-close">
+				No Auto-Close <input id="config-no-auto-close" type="checkbox" />
 			</label>
 			<label for="config-no-pointer">
 				No Pointer <input id="config-no-pointer" type="checkbox" />
@@ -72,12 +72,12 @@
 
 		var page_dropdown = document.getElementById('dropdown');
 
-		var config_autoClose = document.getElementById('config-auto-close');
-		config_autoClose.addEventListener('change', function(e) {
+		var config_noAutoClose = document.getElementById('config-no-auto-close');
+		config_noAutoClose.addEventListener('change', function(e) {
 			if (e.target.checked) {
-				page_dropdown.setAttribute('auto-close', true);
+				page_dropdown.setAttribute('no-auto-close', true);
 			} else {
-				page_dropdown.removeAttribute('auto-close');
+				page_dropdown.removeAttribute('no-auto-close');
 			}
 		});
 

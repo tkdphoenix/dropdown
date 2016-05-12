@@ -21,7 +21,7 @@
 
 		<test-fixture id="OpenDropdown">
 			<template>
-				<d2l-dropdown id="dropdown" target-id="opener" auto-close open>
+				<d2l-dropdown id="dropdown" target-id="opener" open>
 					<p>Lorem ipsum dolor sit...</p>
 					<a id="dropdownLink" href="http://www.google.com">Google 1</a>
 				</d2l-dropdown>
@@ -85,7 +85,7 @@
 				});
 
 				it('should not close when focus lost and auto-close is not specified', function(done) {
-					dropdown.removeAttribute('auto-close');
+					dropdown.setAttribute('no-auto-close', true);
 					setTimeout(function() {
 						expect(dropdown.open).to.be.true;
 						done();

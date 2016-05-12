@@ -107,7 +107,7 @@
 			_offset: { vertical: 20, horizontal: 0},
 
 			properties: {
-				autoClose: {
+				noAutoClose: {
 					type: Boolean
 				},
 				open: {
@@ -139,7 +139,7 @@
 
 			_handleBlur: function() {
 
-				if (!this.autoClose) {
+				if (this.noAutoClose) {
 					return;
 				}
 

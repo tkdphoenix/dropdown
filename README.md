@@ -51,12 +51,12 @@ Use the `open` attribute to control the state of the dropdown.
 </body>
 ```
 
-Optionally add the `auto-close` attribute to have the dropdown automatically close when focus is lost.
+Optionally add the `no-auto-close` attribute to have the dropdown remain open when focus is lost.
 
 ```html
 <body>
 	...
-	<d2l-dropdown auto-close target-id="my-opener" >
+	<d2l-dropdown no-auto-close target-id="my-opener" >
 		your content
 	</d2l-dropdown>
 </body>
