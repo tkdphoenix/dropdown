@@ -143,23 +143,14 @@
 					return;
 				}
 
-				// this logic is necessary due to lack of support for e.relatedTarget
 				setTimeout(function() {
-
 					if (!this.open || !document.activeElement) {
 						return;
 					}
-
-					var parentNode = document.activeElement.parentNode;
-					while (parentNode) {
-						if (Polymer.dom(parentNode).node === this._container) {
-							return;
-						}
-						parentNode = parentNode.parentNode;
+					if (Polymer.dom(this._container).deepContains(document.activeElement)) {
+						return;
 					}
-
 					Polymer.dom(this).removeAttribute('open');
-
 				}.bind(this), 0);
 			},
 
