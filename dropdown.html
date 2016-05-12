@@ -1,0 +1,211 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="position-behavior.html">
+
+<dom-module id="d2l-dropdown">
+
+	<template>
+		<style include="vui-colors"></style>
+		<style>
+
+			:host {
+				box-sizing: border-box;
+				display: none;
+				position: absolute;
+			}
+
+			:host([open]) {
+				display: inline-block;
+			}
+
+			:host .d2l-dropdown-container {
+				background-color: var(--vui-color-white);
+				border: 1px solid var(--vui-color-titanius);
+				border-radius: 0.3rem;
+				box-shadow: 0 2px 12px 0 rgba(86, 90, 92, .2);
+				box-sizing: border-box;
+				position: absolute;
+			}
+
+			:host([open]) .d2l-dropdown-container {
+				animation: d2l-dropdown-animation 300ms ease;
+				-webkit-animation: d2l-dropdown-animation 300ms ease;
+			}
+
+			:host([open]) .d2l-dropdown-container.d2l-dropdown-flip-x {
+				animation: d2l-dropdown-above-animation 300ms ease;
+				-webkit-animation: d2l-dropdown-above-animation 300ms ease;
+			}
+
+			:host .d2l-dropdown-pointer {
+				position: absolute;
+				display: inline-block;
+				background-color: var(--vui-color-white);
+				border: 1px solid var(--vui-color-titanius);
+				border-right: 1px solid transparent;
+				border-bottom: 1px solid transparent;
+				border-radius: 0.1rem;
+				box-shadow: -4px -4px 12px -5px rgba(86, 90, 92, .2);
+				left: 30px;
+				top: -0.55rem;
+				height: 20px;
+				width: 20px;
+				transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
+			}
+
+			:host([no-pointer]) .d2l-dropdown-pointer {
+				display: none;
+			}
+
+			:host .d2l-dropdown-flip-x > .d2l-dropdown-pointer {
+				top: auto;
+				bottom: -0.55rem;
+				border-color: transparent var(--vui-color-titanius) var(--vui-color-titanius) transparent;
+				box-shadow: 4px 4px 12px -5px rgba(86, 90, 92, .2);
+			}
+
+			:host .d2l-dropdown-flip-y > .d2l-dropdown-pointer {
+				left: auto;
+				right: 30px;
+			}
+
+			@keyframes d2l-dropdown-animation {
+				0% { transform: translate(0,-10px); opacity: 0; }
+				100% { transform: translate(0,0); opacity: 1; }
+			}
+			@keyframes d2l-dropdown-above-animation {
+				0% { transform: translate(0,10px); opacity: 0; }
+				100% { transform: translate(0,0); opacity: 1; }
+			}
+			@-webkit-keyframes d2l-dropdown-animation {
+				0% { -webkit-transform: translate(0,-10px); opacity: 0; }
+				100% { -webkit-transform: translate(0,0); opacity: 1; }
+			}
+			@-webkit-keyframes d2l-dropdown-above-animation {
+				0% { -webkit-transform: translate(0,10px); opacity: 0; }
+				100% { -webkit-transform: translate(0,0); opacity: 1; }
+			}
+
+		</style>
+		<div on-keyup="_handleKeyUp" class="d2l-dropdown-container">
+			<div class="d2l-dropdown-pointer"></div>
+			<content></content>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-dropdown',
+
+			behaviors: [
+				D2L.PositionBehavior
+			],
+
+			_container: null,
+			_target: null,
+			_offset: { vertical: 20, horizontal: 0},
+
+			properties: {
+				noAutoClose: {
+					type: Boolean
+				},
+				open: {
+					type: Boolean,
+					observer: '_openChanged'
+				},
+				targetId: {
+					type: String,
+					observer: '_targetChanged'
+				}
+			},
+
+			ready: function() {
+				this._container = this.$$('.d2l-dropdown-container');
+			},
+
+			attached: function() {
+				this._container.addEventListener('blur', this._handleBlur.bind(this), true);
+			},
+
+			detached: function() {
+				this._container.removeEventListener('blur', this._handleBlur);
+				window.removeEventListener('resize', this._handleResize);
+			},
+
+			_targetChanged: function(newValue, oldValue) {
+				this._target = document.getElementById(newValue);
+			},
+
+			_handleBlur: function() {
+
+				if (this.noAutoClose) {
+					return;
+				}
+
+				setTimeout(function() {
+					if (!this.open || !document.activeElement) {
+						return;
+					}
+					if (Polymer.dom(this._container).deepContains(document.activeElement)) {
+						return;
+					}
+					Polymer.dom(this).removeAttribute('open');
+				}.bind(this), 0);
+			},
+
+			_handleKeyUp: function(e) {
+				if (e.keyCode === 27) {
+					Polymer.dom(this).removeAttribute('open');
+				}
+			},
+
+			_handleResize: function() {
+				this._position();
+			},
+
+			_openChanged: function(newValue, oldValue) {
+
+				if (!this._target) {
+					return;
+				}
+
+				if (newValue) {
+					window.addEventListener('resize', this._handleResize.bind(this));
+					this.fire('open');
+				} else {
+					window.removeEventListener('resize', this._handleResize);
+					this.fire('close');
+					return;
+				}
+
+				this._position();
+
+			},
+
+			_position: function() {
+
+				var position = this._autoPosition(
+						this._container,
+						this._target,
+						this._offset
+					);
+
+				if (position.vertical !== 'above') {
+					this._container.classList.remove('d2l-dropdown-flip-x');
+				} else {
+					this._container.classList.add('d2l-dropdown-flip-x');
+				}
+
+				if (position.horizontal !== 'right') {
+					this._container.classList.remove('d2l-dropdown-flip-y');
+				} else {
+					this._container.classList.add('d2l-dropdown-flip-y');
+				}
+
+			}
+
+		});
+	</script>
+
+</dom-module>

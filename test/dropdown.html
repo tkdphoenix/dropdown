@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>d2l-dropdown basic tests</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../dropdown.html">
+	</head>
+	<body>
+		<button id="opener">opener</button>
+
+		<test-fixture id="ClosedDropdown">
+			<template>
+				<d2l-dropdown id="dropdown" target-id="opener" >
+					<p>Lorem ipsum dolor sit...</p>
+				</d2l-dropdown>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="OpenDropdown">
+			<template>
+				<d2l-dropdown id="dropdown" target-id="opener" open>
+					<p>Lorem ipsum dolor sit...</p>
+					<a id="dropdownLink" href="http://www.google.com">Google 1</a>
+				</d2l-dropdown>
+				<a id="otherLink" href="http://www.google.com">Google 2</a>
+			</template>
+		</test-fixture>
+		<script>
+
+		describe('<d2l-dropdown>', function() {
+
+			describe('closed', function() {
+
+				var dropdown;
+
+				beforeEach(function() {
+					fixture('ClosedDropdown');
+					dropdown = document.getElementById('dropdown');
+				});
+
+				it('distributes its children', function() {
+					var content = dropdown.getContentChildren();
+					expect(content.length).to.equal(1);
+					expect(content[0]).to.equal(dropdown.querySelector('p'));
+				});
+
+				it('should fire open event when open attribute is added', function(done) {
+					dropdown.addEventListener('open', function() {
+						expect(dropdown.open).to.be.true;
+						done();
+					});
+					dropdown.setAttribute('open', true);
+				});
+
+			});
+
+			describe('open', function() {
+
+				var dropdown, dropdownLink, otherLink;
+
+				beforeEach(function() {
+					fixture('OpenDropdown');
+					dropdown = document.getElementById('dropdown');
+					dropdownLink = document.getElementById('dropdownLink');
+					otherLink = document.getElementById('otherLink');
+				});
+
+				it('should fire close event when open attribute is removed', function(done) {
+					dropdown.addEventListener('close', function() {
+						done();
+					});
+					dropdown.removeAttribute('open');
+				});
+
+				it('should close when focus lost and auto-close is specified', function(done) {
+					dropdown.addEventListener('close', function() {
+						expect(dropdown.open).to.be.false;
+						done();
+					});
+					dropdownLink.focus();
+					otherLink.focus();
+				});
+
+				it('should not close when focus lost and auto-close is not specified', function(done) {
+					dropdown.setAttribute('no-auto-close', true);
+					setTimeout(function() {
+						expect(dropdown.open).to.be.true;
+						done();
+					},100);
+					dropdownLink.focus();
+					otherLink.focus();
+				});
+
+			});
+
+		});
+		</script>
+	</body>
+</html>

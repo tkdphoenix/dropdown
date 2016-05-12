@@ -1,0 +1,84 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<script>
+
+	window.D2L = window.D2L || {};
+
+	/** @polymerBehavior D2L.PositionBehavior */
+	D2L.PositionBehaviorImpl = {
+
+		_isRTL: false,
+
+		attached: function() {
+			this._isRTL = (getComputedStyle(this).direction === 'rtl');
+		},
+
+		_getAutoPosition: function(element, target, offset) {
+
+			var elementRect = element.getBoundingClientRect();
+			var targetRect = target.getBoundingClientRect();
+
+			var spaceAround = {
+				above: targetRect.top,
+				below: window.innerHeight - targetRect.bottom,
+				left: targetRect.left,
+				right: window.innerWidth - targetRect.right
+			};
+
+			var spaceRequired = {
+				height: elementRect.height + offset.vertical,
+				width: elementRect.width + offset.horizontal
+			};
+
+			var position = {};
+
+			if (((spaceAround.below - spaceRequired.height) < 0)
+				&& (spaceAround.above > spaceRequired.height)) {
+				position.vertical = 'above';
+				position.top = target.offsetTop - elementRect.height - offset.vertical;
+			} else {
+				position.vertical = 'below';
+				position.top = target.offsetTop + targetRect.height + offset.vertical;
+			}
+
+			if (!this._isRTL) {
+				if ((spaceAround.right + targetRect.width - spaceRequired.width < 0)
+					&& (spaceAround.left + targetRect.width > spaceRequired.width)) {
+					position.horizontal = 'right';
+					position.left = target.offsetLeft - offset.horizontal - (elementRect.width - targetRect.width);
+				} else {
+					position.horizontal = 'left';
+					position.left = target.offsetLeft + offset.horizontal;
+				}
+			} else {
+				if ((spaceAround.left + targetRect.width - spaceRequired.width < 0)
+					&& (spaceAround.right + targetRect.width > spaceRequired.width)) {
+					position.horizontal = 'left';
+					position.left = target.offsetLeft + elementRect.width + offset.horizontal;
+				} else {
+					position.horizontal = 'right';
+					position.left = target.offsetLeft + targetRect.width - offset.horizontal;
+				}
+			}
+
+			return position;
+
+		},
+
+		_autoPosition: function(element, target, offset) {
+
+			var position = this._getAutoPosition(element, target, offset);
+
+			this.style.top = position.top + 'px';
+			this.style.left = position.left + 'px';
+
+			return position;
+
+		}
+
+	};
+
+	/** @polymerBehavior */
+	D2L.PositionBehavior = [D2L.PositionBehaviorImpl];
+
+</script>

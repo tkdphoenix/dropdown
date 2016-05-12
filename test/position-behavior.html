@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>d2l-position-behavior tests</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../position-behavior.html">
+	</head>
+	<body>
+
+		<test-fixture id="Position">
+			<template>
+				<div id="target" style="position: absolute; height: 50px; width: 50px; display: inline-block;"></div>
+				<div id="element" style="position: absolute; height: 50px; width: 100px;"></div>
+			</template>
+		</test-fixture>
+
+		<script>
+		describe('d2l-position-behavior', function() {
+
+			var target, element, zeroOffset = {vertical: 0, horizontal: 0};
+
+			var vp = {
+				width : window.innerWidth,
+				height : window.innerHeight
+			};
+
+			beforeEach(function() {
+				var positionFixture = fixture('Position');
+				target = positionFixture[0];
+				elem = positionFixture[1];
+			});
+
+			var expectPosition = function(position, expectedPosition) {
+				expect(position.vertical).to.equal(expectedPosition.vertical);
+				expect(position.horizontal).to.equal(expectedPosition.horizontal);
+				if (expectedPosition.top !== undefined) {
+					expect(position.top).to.equal(expectedPosition.top);
+				}
+				if (expectedPosition.left !== undefined) {
+					expect(position.left).to.equal(expectedPosition.left);
+				}
+			};
+
+			describe('ltr', function() {
+
+				beforeEach(function() {
+					document.body.removeAttribute('dir');
+					D2L.PositionBehaviorImpl._isRTL = false;
+				});
+
+				it('positions below-left when target top-left', function() {
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'below', horizontal: 'left', top: 50, left: 0
+					});
+
+				});
+
+				it('positions below-right when target top-right', function() {
+
+					target.style.left = vp.width - 60 + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'below', horizontal: 'right', top: 50, left: vp.width - 110
+					});
+
+				});
+
+				it('positions above-left when target bottom-left', function() {
+
+					target.style.top = vp.height + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'above', horizontal: 'left', top: vp.height - 50, left: 0
+					});
+
+				});
+
+				it('positions above-right when target bottom-right', function() {
+
+					target.style.left = vp.width - 60 + 'px';
+					target.style.top = vp.height + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'above', horizontal: 'right', top: vp.height - 50, left: vp.width - 110
+					});
+
+				});
+
+				it('positions below-left with specified offset', function() {
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, { vertical: 15, horizontal: 15 });
+
+					expectPosition(position, {
+						vertical: 'below', horizontal: 'left', top: 65, left: 15
+					});
+
+				});
+
+				it('positions above-right with specified offset', function() {
+
+					target.style.top = vp.height + 'px';
+					target.style.left = vp.width - 60 + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, { vertical: 15, horizontal: 15 });
+
+					expectPosition(position, {
+						vertical: 'above', horizontal: 'right', top: vp.height - 65, left: vp.width - 125
+					});
+
+				});
+
+			});
+
+			describe('rtl', function() {
+
+				beforeEach(function() {
+					document.body.setAttribute('dir', 'rtl');
+					D2L.PositionBehaviorImpl._isRTL = true;
+				});
+
+				it('positions below-right when target top-left', function() {
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'below', horizontal: 'right', top: 50, left: vp.width
+					});
+
+				});
+
+				it('positions below-left when target top-right', function() {
+
+					target.style.left = 0 + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'below', horizontal: 'left', top: 50, left: 100
+					});
+
+				});
+
+				it('positions above-right when target bottom-left', function() {
+
+					target.style.top = vp.height + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'above', horizontal: 'right', top: vp.height - 50, left: vp.width
+					});
+
+				});
+
+				it('positions above-left when target bottom-right', function() {
+
+					target.style.top = vp.height + 'px'
+					target.style.left = 0 + 'px';
+
+					var position = D2L.PositionBehaviorImpl
+						._getAutoPosition(elem, target, zeroOffset);
+
+					expectPosition(position, {
+						vertical: 'above', horizontal: 'left', top: vp.height - 50, left: 100
+					});
+
+				});
+
+			});
+
+		});
+		</script>
+
+	</body>
+</html>

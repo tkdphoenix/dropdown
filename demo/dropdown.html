@@ -1,0 +1,144 @@
+<html>
+<head>
+	<title>D2L Dropdown Web Component</title>
+	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
+	<script>
+		//window.Polymer = window.Polymer || {};
+		//window.Polymer.dom = 'shadow';
+	</script>
+	<link rel="import" href="../dropdown.html">
+	<link rel="import" href="content.html">
+	<style is="custom-style">
+		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
+		html {
+			color: #565a5c;
+			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+			font-weight: 300;
+			font-size: 20px;
+		}
+		body {
+			margin: 40px 20px;
+		}
+		button {
+				font-size: 0.7rem;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>d2l-dropdown web component</h1>
+
+	<div>
+		<h2>Configuration</h2>
+		<div style="margin-bottom: 0.75rem;">
+			<button onclick="toggleRTL();">Toggle RTL</button>
+			<button onclick="toggleFloat();">Toggle Float</button>
+		</div>
+		<div style="margin-bottom: 0.75rem;">
+			<label for="config-no-auto-close">
+				No Auto-Close <input id="config-no-auto-close" type="checkbox" />
+			</label>
+			<label for="config-no-pointer">
+				No Pointer <input id="config-no-pointer" type="checkbox" />
+			</label>
+		</div>
+	</div>
+
+	<p style="height: 3rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+	<div style="position:relative;">
+		<div id="content" style="margin-bottom:2rem;margin-top:10rem;">
+			<h2>Component</h2>
+			<button id="opener-default" style="position:relative;" onclick="openDropdown();">Open it!</button>
+			<button onclick="closeDropdown();">Close it!</button>
+		</div>
+		<div style="clear:both;"></div>
+
+		<div id="dropdown-container">
+			<d2l-dropdown id="dropdown" target-id="opener-default">
+				<div style="min-width: 10rem; margin: 1rem;">
+					<d2l-demo-content>
+						<p>Grumpy wizards make toxic brew for evil Queen and Jack.</p>
+						<a href="http://thumbs.dreamstime.com/x/angry-wizard-14480360.jpg">Grumpy Wizards</a>
+					</d2l-demo-content>
+					<a href="https://youtu.be/ANzNCpsXrK4">Google 4</a>
+				</div>
+			</d2l-dropdown>
+		</div>
+
+		<a href="https://youtu.be/9ze87zQFSak">Google 5</a>
+		<p style="margin-bottom: 30rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+	</div>
+	<script>
+
+		var page_dropdown = document.getElementById('dropdown');
+
+		var config_noAutoClose = document.getElementById('config-no-auto-close');
+		config_noAutoClose.addEventListener('change', function(e) {
+			if (e.target.checked) {
+				page_dropdown.setAttribute('no-auto-close', true);
+			} else {
+				page_dropdown.removeAttribute('no-auto-close');
+			}
+		});
+
+		var config_noPointer = document.getElementById('config-no-pointer');
+		config_noPointer.addEventListener('change', function(e) {
+			if (e.target.checked) {
+				page_dropdown.setAttribute('no-pointer', true);
+			} else {
+				page_dropdown.removeAttribute('no-pointer');
+			}
+		});
+
+		page_dropdown.addEventListener('open', function(e) {
+			console.log('opened', e);
+		});
+
+		page_dropdown.addEventListener('close', function(e) {
+			console.log('closed', e);
+		});
+
+		function openDropdown() {
+			page_dropdown.setAttribute('open', true);
+		}
+
+		function closeDropdown() {
+			page_dropdown.removeAttribute('open');
+		}
+
+		function appendDropdown() {
+			document.getElementById('dropdown-container').appendChild(page_dropdown);
+		}
+
+		function removeDropdown() {
+			page_dropdown.parentNode.removeChild(page_dropdown);
+		}
+
+		function toggleRTL() {
+			closeDropdown();
+			var isRTL = (document.body.dir === 'rtl');
+			if (isRTL) {
+				document.body.dir = 'ltr';
+			} else {
+				document.body.dir = 'rtl';
+			}
+			removeDropdown();
+			appendDropdown();
+		}
+
+		function toggleFloat() {
+			closeDropdown();
+			var content = document.getElementById('content');
+			var isFloatRight = (content.style.cssFloat === 'right');
+			if (isFloatRight) {
+				content.style.cssFloat = '';
+			} else {
+				content.style.cssFloat = 'right';
+			}
+		}
+
+	</script>
+</body>
+</html>
