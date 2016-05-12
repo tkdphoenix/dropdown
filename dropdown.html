@@ -152,7 +152,7 @@
 
 					var parentNode = document.activeElement.parentNode;
 					while (parentNode) {
-						if (parentNode === this) {
+						if (Polymer.dom(parentNode).node === this._container) {
 							return;
 						}
 						parentNode = parentNode.parentNode;
