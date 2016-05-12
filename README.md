@@ -62,12 +62,12 @@ Optionally add the `auto-close` attribute to have the dropdown automatically clo
 </body>
 ```
 
-Optionally hide the pointer by specifying the `hide-pointer` attribute.
+Optionally hide the pointer by specifying the `no-pointer` attribute.
 
 ```html
 <body>
 	...
-	<d2l-dropdown hide-pointer target-id="my-opener" >
+	<d2l-dropdown no-pointer target-id="my-opener" >
 		your content
 	</d2l-dropdown>
 </body>

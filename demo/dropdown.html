@@ -38,8 +38,8 @@
 			<label for="config-auto-close">
 				Auto-Close <input id="config-auto-close" type="checkbox" />
 			</label>
-			<label for="config-hide-pointer">
-				Hide Pointer <input id="config-hide-pointer" type="checkbox" />
+			<label for="config-no-pointer">
+				No Pointer <input id="config-no-pointer" type="checkbox" />
 			</label>
 		</div>
 	</div>
@@ -81,12 +81,12 @@
 			}
 		});
 
-		var config_hidePointer = document.getElementById('config-hide-pointer');
-		config_hidePointer.addEventListener('change', function(e) {
+		var config_noPointer = document.getElementById('config-no-pointer');
+		config_noPointer.addEventListener('change', function(e) {
 			if (e.target.checked) {
-				page_dropdown.setAttribute('hide-pointer', true);
+				page_dropdown.setAttribute('no-pointer', true);
 			} else {
-				page_dropdown.removeAttribute('hide-pointer');
+				page_dropdown.removeAttribute('no-pointer');
 			}
 		});
 
