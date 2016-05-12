@@ -88,7 +88,7 @@
 			}
 
 		</style>
-		<div class="d2l-dropdown-container">
+		<div on-keyup="_handleKeyUp" class="d2l-dropdown-container">
 			<div class="d2l-dropdown-pointer"></div>
 			<content></content>
 		</div>
@@ -161,6 +161,12 @@
 					Polymer.dom(this).removeAttribute('open');
 
 				}.bind(this), 0);
+			},
+
+			_handleKeyUp: function(e) {
+				if (e.keyCode === 27) {
+					Polymer.dom(this).removeAttribute('open');
+				}
 			},
 
 			_handleResize: function() {
