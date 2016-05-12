@@ -26,24 +26,37 @@
 </head>
 <body>
 
-	<div style="height: 100px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+	<h1>d2l-dropdown web component</h1>
+
+	<div>
+		<h2>Configuration</h2>
+		<div style="margin-bottom: 0.75rem;">
+			<button onclick="toggleRTL();">Toggle RTL</button>
+			<button onclick="toggleFloat();">Toggle Float</button>
+		</div>
+		<div style="margin-bottom: 0.75rem;">
+			<label for="config-auto-close">
+				Auto-Close <input id="config-auto-close" type="checkbox" />
+			</label>
+			<label for="config-hide-pointer">
+				Hide Pointer <input id="config-hide-pointer" type="checkbox" />
+			</label>
+		</div>
+	</div>
+
+	<p style="height: 3rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 	<div style="position:relative;">
-		<div id="content" style="margin-bottom:2rem;margin-top:15rem;">
-			<div>
-				<button onclick="toggleRTL();">Toggle RTL</button>
-				<button onclick="toggleFloat();">Toggle Float</button>
-			</div>
-			<div>
-				<button id="open-dropdown" style="position:relative;" onclick="openDropdown();">Open it!</button>
-				<button onclick="closeDropdown();">Close it!</button>
-			</div>
+		<div id="content" style="margin-bottom:2rem;margin-top:10rem;">
+			<h2>Component</h2>
+			<button id="opener-default" style="position:relative;" onclick="openDropdown();">Open it!</button>
+			<button onclick="closeDropdown();">Close it!</button>
 		</div>
 		<div style="clear:both;"></div>
 
 		<div id="dropdown-container">
-			<d2l-dropdown id="dropdown" target-id="open-dropdown" auto-close>
-				<div style="min-width: 200px; margin: 1rem;">
+			<d2l-dropdown id="dropdown" target-id="opener-default">
+				<div style="min-width: 10rem; margin: 1rem;">
 					<d2l-demo-content>
 						<p>Grumpy wizards make toxic brew for evil Queen and Jack.</p>
 						<a href="http://thumbs.dreamstime.com/x/angry-wizard-14480360.jpg">Grumpy Wizards</a>
@@ -53,11 +66,29 @@
 			</d2l-dropdown>
 		</div>
 
-		<div style="margin-bottom: 10rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+		<p style="margin-bottom: 30rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 	</div>
 	<script>
 
 		var page_dropdown = document.getElementById('dropdown');
+
+		var config_autoClose = document.getElementById('config-auto-close');
+		config_autoClose.addEventListener('change', function(e) {
+			if (e.target.checked) {
+				page_dropdown.setAttribute('auto-close', true);
+			} else {
+				page_dropdown.removeAttribute('auto-close');
+			}
+		});
+
+		var config_hidePointer = document.getElementById('config-hide-pointer');
+		config_hidePointer.addEventListener('change', function(e) {
+			if (e.target.checked) {
+				page_dropdown.setAttribute('hide-pointer', true);
+			} else {
+				page_dropdown.removeAttribute('hide-pointer');
+			}
+		});
 
 		page_dropdown.addEventListener('open', function(e) {
 			console.log('opened', e);
