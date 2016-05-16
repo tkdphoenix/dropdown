@@ -147,9 +147,15 @@
 					if (!this.open || !document.activeElement) {
 						return;
 					}
-					if (Polymer.dom(this._container).deepContains(document.activeElement)) {
-						return;
+
+					var parentNode = document.activeElement.parentNode;
+					while (parentNode) {
+						if (Polymer.dom(parentNode).node === this) {
+							return;
+						}
+						parentNode = parentNode.parentNode;
 					}
+
 					Polymer.dom(this).removeAttribute('open');
 				}.bind(this), 0);
 			},
