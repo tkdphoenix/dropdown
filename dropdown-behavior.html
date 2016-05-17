@@ -79,6 +79,7 @@
 				this.addEventListener('blur', this._handleBlur, true);
 				this.addEventListener('keyup', this._handleKeyUp);
 				window.addEventListener('resize', this._handleResize);
+				this._container.focus();
 				this.fire('open');
 
 			} else {
