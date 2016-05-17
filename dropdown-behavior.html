@@ -1,0 +1,134 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="position-behavior.html">
+<script>
+(function() {
+'use strict';
+
+	var DropdownBehavior = {
+
+		_container: null,
+		_offset: { vertical: 20, horizontal: 0},
+		_target: null,
+
+		properties: {
+			noAutoClose: {
+				type: Boolean
+			},
+			open: {
+				type: Boolean,
+				observer: '_openChanged'
+			},
+			targetId: {
+				type: String,
+				observer: '_targetChanged'
+			}
+		},
+
+		ready: function() {
+			this._handleResize = this._handleResize.bind(this);
+		},
+
+		detached: function() {
+			this.removeEventListener('blur', this._handleBlur);
+			this.removeEventListener('keyup', this._handleKeyUp);
+			window.removeEventListener('resize', this._handleResize);
+		},
+
+		_handleBlur: function() {
+
+			if (this.noAutoClose) {
+				return;
+			}
+
+			setTimeout(function() {
+				if (!this.open || !document.activeElement) {
+					return;
+				}
+
+				var parentNode = document.activeElement.parentNode;
+				while (parentNode) {
+					if (Polymer.dom(parentNode).node === this) {
+						return;
+					}
+					parentNode = parentNode.parentNode;
+				}
+
+				Polymer.dom(this).removeAttribute('open');
+			}.bind(this), 0);
+
+		},
+
+		_handleKeyUp: function(e) {
+			if (e.keyCode === 27) {
+				// escape
+				Polymer.dom(this).removeAttribute('open');
+			}
+		},
+
+		_handleResize: function() {
+			this._position();
+		},
+
+		_openChanged: function(newValue, oldValue) {
+
+			if (!this._target) {
+				return;
+			}
+
+			if (newValue) {
+				this.addEventListener('blur', this._handleBlur, true);
+				this.addEventListener('keyup', this._handleKeyUp);
+				window.addEventListener('resize', this._handleResize);
+				this.fire('open');
+
+			} else {
+
+				this.removeEventListener('blur', this._handleBlur);
+				this.removeEventListener('keyup', this._handleKeyUp);
+				window.removeEventListener('resize', this._handleResize);
+				this.fire('close');
+
+				return;
+			}
+
+			this._position();
+
+		},
+
+		_position: function() {
+
+			var position = this._autoPosition(
+					this._container,
+					this._target,
+					this._offset
+				);
+
+			if (position.vertical !== 'above') {
+				this._container.classList.remove('d2l-dropdown-flip-x');
+			} else {
+				this._container.classList.add('d2l-dropdown-flip-x');
+			}
+
+			if (position.horizontal !== 'right') {
+				this._container.classList.remove('d2l-dropdown-flip-y');
+			} else {
+				this._container.classList.add('d2l-dropdown-flip-y');
+			}
+
+		},
+
+		_targetChanged: function(newValue, oldValue) {
+			this._target = document.getElementById(newValue);
+		}
+
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.DropdownBehavior = [
+		D2L.PolymerBehaviors.PositionBehavior,
+		DropdownBehavior
+	];
+})();
+</script>
