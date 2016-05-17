@@ -26,6 +26,9 @@
 				box-sizing: border-box;
 				position: absolute;
 			}
+			.d2l-dropdown-container:focus {
+				outline: none;
+			}
 
 			:host([opened]) .d2l-dropdown-container {
 				animation: d2l-dropdown-animation 300ms ease;
@@ -88,7 +91,7 @@
 			}
 
 		</style>
-		<div class="d2l-dropdown-container">
+		<div class="d2l-dropdown-container" tabindex="0">
 			<div class="d2l-dropdown-pointer"></div>
 			<content></content>
 		</div>
