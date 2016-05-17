@@ -19,10 +19,7 @@
 				observer: '_openedChanged',
 				reflectToAttribute: true
 			},
-			targetId: {
-				type: String,
-				observer: '_targetChanged'
-			}
+			targetId: String
 		},
 
 		ready: function() {
@@ -41,7 +38,7 @@
 				return;
 			}
 
-			setTimeout(function() {
+			this.async(function() {
 				if (!this.opened || !document.activeElement) {
 					return;
 				}
@@ -72,6 +69,7 @@
 
 		_openedChanged: function(newValue) {
 
+			this._target = document.getElementById(this.targetId);
 			if (!this._target) {
 				return;
 			}
@@ -117,10 +115,6 @@
 				this._container.classList.add('d2l-dropdown-flip-y');
 			}
 
-		},
-
-		_targetChanged: function(newValue) {
-			this._target = document.getElementById(newValue);
 		}
 
 	};
