@@ -38,12 +38,12 @@ Include the `d2l-dropdown` element on your page, and provide a `target-id` where
 </body>
 ```
 
-Use the `open` attribute to control the state of the dropdown.
+Use the `opened` attribute to control the state of the dropdown.
 
 ```html
 <body>
 	...
-	<d2l-dropdown open target-id="my-opener" >
+	<d2l-dropdown opened target-id="my-opener" >
 		your content
 	</d2l-dropdown>
 </body>
