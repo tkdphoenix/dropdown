@@ -2,7 +2,7 @@
 <link rel="import" href="position-behavior.html">
 <script>
 (function() {
-'use strict';
+	'use strict';
 
 	var DropdownBehavior = {
 
@@ -69,7 +69,7 @@
 			this._position();
 		},
 
-		_openChanged: function(newValue, oldValue) {
+		_openChanged: function(newValue) {
 
 			if (!this._target) {
 				return;
@@ -117,7 +117,7 @@
 
 		},
 
-		_targetChanged: function(newValue, oldValue) {
+		_targetChanged: function(newValue) {
 			this._target = document.getElementById(newValue);
 		}
 
@@ -127,7 +127,7 @@
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 	/** @polymerBehavior */
 	window.D2L.PolymerBehaviors.DropdownBehavior = [
-		D2L.PolymerBehaviors.PositionBehavior,
+		window.D2L.PolymerBehaviors.PositionBehavior,
 		DropdownBehavior
 	];
 })();
