@@ -14,7 +14,7 @@
 				position: absolute;
 			}
 
-			:host([open]) {
+			:host([opened]) {
 				display: inline-block;
 			}
 
@@ -27,12 +27,12 @@
 				position: absolute;
 			}
 
-			:host([open]) .d2l-dropdown-container {
+			:host([opened]) .d2l-dropdown-container {
 				animation: d2l-dropdown-animation 300ms ease;
 				-webkit-animation: d2l-dropdown-animation 300ms ease;
 			}
 
-			:host([open]) .d2l-dropdown-container.d2l-dropdown-flip-x {
+			:host([opened]) .d2l-dropdown-container.d2l-dropdown-flip-x {
 				animation: d2l-dropdown-above-animation 300ms ease;
 				-webkit-animation: d2l-dropdown-above-animation 300ms ease;
 			}

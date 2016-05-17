@@ -14,9 +14,10 @@
 			noAutoClose: {
 				type: Boolean
 			},
-			open: {
+			opened: {
 				type: Boolean,
-				observer: '_openChanged'
+				observer: '_openedChanged',
+				reflectToAttribute: true
 			},
 			targetId: {
 				type: String,
@@ -41,7 +42,7 @@
 			}
 
 			setTimeout(function() {
-				if (!this.open || !document.activeElement) {
+				if (!this.opened || !document.activeElement) {
 					return;
 				}
 
@@ -53,7 +54,7 @@
 					parentNode = parentNode.parentNode;
 				}
 
-				Polymer.dom(this).removeAttribute('open');
+				Polymer.dom(this).removeAttribute('opened');
 			}.bind(this), 0);
 
 		},
@@ -61,7 +62,7 @@
 		_handleKeyUp: function(e) {
 			if (e.keyCode === 27) {
 				// escape
-				Polymer.dom(this).removeAttribute('open');
+				Polymer.dom(this).removeAttribute('opened');
 			}
 		},
 
@@ -69,7 +70,7 @@
 			this._position();
 		},
 
-		_openChanged: function(newValue) {
+		_openedChanged: function(newValue) {
 
 			if (!this._target) {
 				return;
