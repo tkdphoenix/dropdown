@@ -1,0 +1,75 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="../vui-typography/small-text.html">
+
+<dom-module id="d2l-menu-item">
+
+	<template>
+		<style include="vui-colors"></style>
+		<style include="vui-small-text"></style>
+		<style>
+			:host {
+				box-sizing: border-box;
+				cursor: pointer;
+				display: block;
+				outline: none;
+				padding: 0.75rem 1rem;
+				@apply(--vui-small-text);
+			}
+			:host([disabled]), :host([disabled]:hover), :host([disabled]:focus) {
+				cursor: default;
+				opacity: 0.5;
+			}
+		</style>
+		<content></content>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-menu-item',
+
+			hostAttributes: {
+				'role': 'menuitem',
+				tabindex: -1
+			},
+
+			listeners: {
+				'tap': '_handleTap',
+				'keyup': '_handleKeyUp'
+			},
+
+			properties: {
+				disabled: {
+					type: Boolean,
+					reflectToAttribute: true,
+					value: false
+				}
+			},
+
+			_keyCodes: {
+				ENTER: 13,
+				SPACE: 32
+			},
+
+			_handleKeyUp: function(e) {
+				if (e.keyCode !== this._keyCodes.ENTER && e.keyCode !== this._keyCodes.SPACE) {
+					return;
+				}
+				this._select();
+			},
+
+			_handleTap: function() {
+				this._select();
+			},
+
+			_select: function() {
+				if (this.disabled) {
+					return;
+				}
+				this.fire('d2l-menu-item-selected');
+			}
+
+		});
+	</script>
+
+</dom-module>

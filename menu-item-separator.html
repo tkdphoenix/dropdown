@@ -1,0 +1,26 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+
+<dom-module id="d2l-menu-item-separator">
+
+	<template>
+		<style include="vui-colors"></style>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-menu-item-separator',
+
+			hostAttributes: {
+				'role': 'separator'
+			}
+
+		});
+	</script>
+
+</dom-module>

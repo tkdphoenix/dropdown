@@ -1,0 +1,114 @@
+<html>
+<head>
+	<title>D2L Menu Web Component</title>
+	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
+	<script>
+		window.Polymer = window.Polymer || {};
+		window.Polymer.dom = 'shadow';
+	</script>
+	<link rel="import" href="../menu.html">
+	<style is="custom-style">
+		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
+		html {
+			color: #565a5c;
+			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+			font-weight: 300;
+			font-size: 20px;
+		}
+		body {
+			margin: 40px 20px;
+		}
+		button {
+				font-size: 0.7rem;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>d2l-menu web component</h1>
+
+	<div>
+		<h2>Configuration</h2>
+		<div style="margin-bottom: 0.75rem;">
+			<button onclick="toggleRTL();">Toggle RTL</button>
+			<button onclick="toggleFloat();">Toggle Float</button>
+			<button onclick="setFocus();">Set Focus</button>
+			<button onclick="addItem();">Add Top Item</button>
+		</div>
+		<div style="margin-bottom: 0.75rem;"></div>
+	</div>
+
+	<div>
+		<div id="content">
+			<h2>Component</h2>
+
+			<d2l-menu id="menu">
+				<d2l-menu-item>Mount Everest (29,029 ft)</d2l-menu-item>
+				<d2l-menu-item>Aconcagua (22,838 ft)</d2l-menu-item>
+				<d2l-menu-item-separator></d2l-menu-item-separator>
+				<d2l-menu-item>Denali (20,322 ft)</d2l-menu-item>
+				<d2l-menu-item disabled>Kilimanjaro (19,341 ft)</d2l-menu-item>
+				<d2l-menu-item style="display:none;">Mount Elbrus (18,510 ft)</d2l-menu-item>
+				<d2l-menu-item>Mount Vinson (16,050 ft)</d2l-menu-item>
+			</d2l-menu>
+
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+	<script>
+
+		var page_menu, page_menu_items;
+
+		window.addEventListener('WebComponentsReady', function(e) {
+			page_menu = document.getElementById('menu');
+			page_menu_items = Polymer.dom(page_menu).children;
+			page_menu.addEventListener('d2l-menu-item-selected', function(e) {
+				console.log('item selected:', e);
+			});
+		});
+
+		function appendMenu() {
+			document.getElementById('content').appendChild(page_menu);
+		}
+
+		function removeMenu() {
+			page_menu.parentNode.removeChild(page_menu);
+		}
+
+		function setFocus() {
+			page_menu.focus();
+		}
+
+		function addItem() {
+			var item = document.createElement('d2l-menu-item');
+			item.appendChild(document.createTextNode('Puncak Jaya (16,024 ft)'));
+			Polymer.dom(page_menu).insertBefore(
+				item,
+				page_menu.children[0]
+			);
+		}
+
+		function toggleRTL() {
+			var isRTL = (document.body.dir === 'rtl');
+			if (isRTL) {
+				document.body.dir = 'ltr';
+			} else {
+				document.body.dir = 'rtl';
+			}
+			removeMenu();
+			appendMenu();
+		}
+
+		function toggleFloat() {
+			var content = document.getElementById('content');
+			var isFloatRight = (content.style.cssFloat === 'right');
+			if (isFloatRight) {
+				content.style.cssFloat = '';
+			} else {
+				content.style.cssFloat = 'right';
+			}
+		}
+
+	</script>
+</body>
+</html>
