@@ -34,6 +34,10 @@
 			},
 
 			listeners: {
+				'focus': '_handleFocus',
+				'blur': '_handleBlur',
+				'mouseenter': '_handleMouseEnter',
+				'mouseleave': '_handleMouseLeave',
 				'tap': '_handleTap',
 				'keyup': '_handleKeyUp'
 			},
@@ -51,11 +55,27 @@
 				SPACE: 32
 			},
 
+			_handleBlur: function(e) {
+				this.fire('d2l-menu-item-blur');
+			},
+
+			_handleFocus: function(e) {
+				this.fire('d2l-menu-item-focus');
+			},
+
 			_handleKeyUp: function(e) {
 				if (e.keyCode !== this._keyCodes.ENTER && e.keyCode !== this._keyCodes.SPACE) {
 					return;
 				}
 				this._select();
+			},
+
+			_handleMouseEnter: function(e) {
+				this.fire('d2l-menu-item-over');
+			},
+
+			_handleMouseLeave: function(e) {
+				this.fire('d2l-menu-item-out');
 			},
 
 			_handleTap: function() {

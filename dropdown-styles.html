@@ -1,0 +1,98 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+
+<dom-module id="d2l-dropdown-styles">
+	<template>
+		<style include="vui-colors">
+
+			:host {
+				box-sizing: border-box;
+				display: none;
+				position: absolute;
+				z-index: 1001;
+			}
+
+			:host([opened]) {
+				display: inline-block;
+			}
+
+			:host .d2l-dropdown-container {
+				background-color: var(--vui-color-white);
+				border: 1px solid var(--vui-color-titanius);
+				border-radius: 0.3rem;
+				box-shadow: 0 2px 12px 0 rgba(86, 90, 92, .2);
+				box-sizing: border-box;
+				position: relative;
+			}
+
+			.d2l-dropdown-container:focus {
+				outline: none;
+			}
+
+			:host([opened]) .d2l-dropdown-container {
+				animation: d2l-dropdown-animation 300ms ease;
+				-webkit-animation: d2l-dropdown-animation 300ms ease;
+			}
+
+			:host([opened]) .d2l-dropdown-container.d2l-dropdown-flip-x {
+				animation: d2l-dropdown-above-animation 300ms ease;
+				-webkit-animation: d2l-dropdown-above-animation 300ms ease;
+			}
+
+			:host .d2l-dropdown-pointer {
+				position: absolute;
+				display: inline-block;
+				background-color: var(--vui-color-white);
+				border: 1px solid var(--vui-color-titanius);
+				border-right: 1px solid transparent;
+				border-bottom: 1px solid transparent;
+				border-radius: 0.1rem;
+				box-shadow: -4px -4px 12px -5px rgba(86, 90, 92, .2);
+				left: 30px;
+				top: -0.55rem;
+				height: 20px;
+				width: 20px;
+				transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
+			}
+
+			:host([no-pointer]) .d2l-dropdown-pointer {
+				display: none;
+			}
+
+			:host .d2l-dropdown-flip-x > .d2l-dropdown-pointer {
+				top: auto;
+				bottom: -0.55rem;
+				border-color: transparent var(--vui-color-titanius) var(--vui-color-titanius) transparent;
+				box-shadow: 4px 4px 12px -5px rgba(86, 90, 92, .2);
+			}
+
+			:host .d2l-dropdown-flip-y > .d2l-dropdown-pointer {
+				left: auto;
+				right: 30px;
+			}
+
+			.d2l-dropdown-content-container {
+				overflow: hidden;
+			}
+
+			@keyframes d2l-dropdown-animation {
+				0% { transform: translate(0,-10px); opacity: 0; }
+				100% { transform: translate(0,0); opacity: 1; }
+			}
+			@keyframes d2l-dropdown-above-animation {
+				0% { transform: translate(0,10px); opacity: 0; }
+				100% { transform: translate(0,0); opacity: 1; }
+			}
+			@-webkit-keyframes d2l-dropdown-animation {
+				0% { -webkit-transform: translate(0,-10px); opacity: 0; }
+				100% { -webkit-transform: translate(0,0); opacity: 1; }
+			}
+			@-webkit-keyframes d2l-dropdown-above-animation {
+				0% { -webkit-transform: translate(0,10px); opacity: 0; }
+				100% { -webkit-transform: translate(0,0); opacity: 1; }
+			}
+
+		</style>
+	</template>
+</dom-module>
