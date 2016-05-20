@@ -80,23 +80,15 @@
 				Polymer.dom(this).observeNodes(this._handleItemsChanged);
 			},
 
-			_handleItemsChanged: function() {
-				var items = this.queryAllEffectiveChildren('d2l-menu-item');
-				for(var i=0; i<items.length; i++) {
-					Polymer.dom(items[i]).setAttribute('tabindex', i===0 ? 0 : -1 );
-				}
-			},
-
 			focus: function() {
 				this._focusFirst();
 			},
 
 			_focusFirst: function() {
-				var items = this.queryAllEffectiveChildren('d2l-menu-item');
-				if (items.length === 0) {
-					return;
+				var item = this._tryGetNextFocusable();
+				if (item) {
+					item.focus();
 				}
-				items[0].focus();
 			},
 
 			_focusLast: function() {
@@ -104,16 +96,22 @@
 				if (items.length === 0) {
 					return;
 				}
-				items[items.length-1].focus();
+				var item = items[items.length-1];
+				if (!this._isFocusable(item)) {
+					item = this._tryGetPreviousFocusable(item);
+				}
+				if (item) {
+					item.focus();
+				}
 			},
 
-			_focusPrevious: function(elem) {
-				var item = this._tryGetFocusable(elem, function(elem) { return Polymer.dom(elem).previousSibling; });
+			_focusPrevious: function(item) {
+				item = this._tryGetPreviousFocusable(item);
 				item ? item.focus() : this._focusLast();
 			},
 
-			_focusNext: function(elem) {
-				var item = this._tryGetFocusable(elem, function(elem) { return Polymer.dom(elem).nextSibling; });
+			_focusNext: function(item) {
+				item = this._tryGetNextFocusable(item);
 				item ? item.focus() : this._focusFirst();
 			},
 
@@ -131,35 +129,38 @@
 					return;
 				}
 
-				var tryFocus = function(elem) {
-					var innerText = elem.innerText;
+				var startsWith = function(item, value) {
+					var innerText = item.innerText;
 					if (innerText && innerText.length > 0
-						&& innerText.substr(0,1) === String.fromCharCode(e.charCode)) {
-							elem.focus();
+						&& innerText.substr(0,1) === value) {
 							return true;
 					}
 					return false;
 				};
 
-				var elem = this._tryGetFocusable(e.target, function(elem) { return Polymer.dom(elem).nextSibling; });
-				while (elem) {
-					if (tryFocus(elem)) {
+				var getNextOrFirst = function(item) {
+					item = this._tryGetNextFocusable(item);
+					if (!item) {
+						item = this._tryGetNextFocusable();
+					}
+					return item;
+				}.bind(this);
+
+				var searchChar = String.fromCharCode(e.charCode);
+				var item = getNextOrFirst(e.target);
+				while (item) {
+					if (item === e.target) {
+						// completed one full iteration of items
 						return;
 					}
-					elem = this._tryGetFocusable(elem, function(elem) { return Polymer.dom(elem).nextSibling; });
+					if (startsWith(item, searchChar)) {
+						item.focus();
+						return;
+					}
+					item = getNextOrFirst(item);
 				}
 
-				elem = this._tryGetFocusable(null, function(elem) { return Polymer.dom(elem).nextSibling; });
-				while (elem) {
-					if (elem === e.target) {
-						return;
-					}
-					if (tryFocus(elem)) {
-						return;
-					}
-					elem = this._tryGetFocusable(elem, function(elem) { return Polymer.dom(elem).nextSibling; });
-				}
-
+				return;
 			},
 
 			_handleKeyUp: function(e) {
@@ -171,18 +172,40 @@
 				return;
 			},
 
-			_tryGetFocusable: function(elem, getItem) {
-				if (elem) {
-					elem = getItem(elem);
-				} else {
-					elem = this.queryEffectiveChildren('d2l-menu-item');
+			_isFocusable: function(item) {
+				return (item.tagName === 'D2L-MENU-ITEM'
+					&& window.getComputedStyle(item, null).getPropertyValue("display") !== 'none');
+			},
+
+			_handleItemsChanged: function() {
+				var items = this.queryAllEffectiveChildren('d2l-menu-item');
+				for(var i=0; i<items.length; i++) {
+					Polymer.dom(items[i]).setAttribute('tabindex', i===0 ? 0 : -1 );
 				}
-				while (elem) {
-					if (elem.tagName === 'D2L-MENU-ITEM'
-						&& window.getComputedStyle(elem, null).getPropertyValue("display") !== 'none') {
-						return elem;
+			},
+
+			_tryGetPreviousFocusable: function(item) {
+				item = Polymer.dom(item).previousSibling;
+				while (item) {
+					if (this._isFocusable(item)) {
+							return item;
 					}
-					elem = getItem(elem);
+					item = Polymer.dom(item).previousSibling;
+				}
+				return;
+			},
+
+			_tryGetNextFocusable: function(item) {
+				if (item) {
+					item = Polymer.dom(item).nextSibling;
+				} else {
+					item = this.queryEffectiveChildren('d2l-menu-item');
+				}
+				while (item) {
+					if (this._isFocusable(item)) {
+							return item;
+					}
+					item = Polymer.dom(item).nextSibling;
 				}
 				return;
 			}
