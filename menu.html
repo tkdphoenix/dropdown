@@ -1,0 +1,216 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="menu-item.html">
+<link rel="import" href="menu-item-separator.html">
+
+<dom-module id="d2l-menu">
+
+	<template>
+		<style include="vui-colors"></style>
+		<style>
+
+			:host {
+				box-sizing: border-box;
+				display: block;
+			}
+			:host ::content d2l-menu-item {
+				border: 1px solid var(--vui-color-titanius);
+				border-bottom-color: transparent;
+			}
+			:host ::content d2l-menu-item:first-child {
+				border-top-left-radius: 0.4rem;
+				border-top-right-radius: 0.4rem;
+			}
+			:host ::content d2l-menu-item:last-child {
+				border-bottom-left-radius: 0.4rem;
+				border-bottom-right-radius: 0.4rem;
+				border-bottom-color: var(--vui-color-titanius);
+			}
+			:host ::content d2l-menu-item:focus,
+			:host ::content d2l-menu-item:hover {
+				background-color: var(--vui-color-celestine-light-1);
+				border: 1px solid var(--vui-color-celestine-light-2);
+			}
+			:host ::content d2l-menu-item:focus:last-child,
+			:host ::content d2l-menu-item:hover:last-child {
+				border-bottom-color: var(--vui-color-celestine-light-2);
+			}
+			:host ::content d2l-menu-item:focus + d2l-menu-item,
+			:host ::content d2l-menu-item:hover + d2l-menu-item {
+				border-top-color: transparent;
+			}
+			:host ::content d2l-menu-item-separator {
+				border: 0;
+			}
+			:host ::content d2l-menu-item-separator + d2l-menu-item {
+				border-top: 1px solid var(--vui-color-pressicus);
+			}
+			:host ::content d2l-menu-item:focus + d2l-menu-item-separator + d2l-menu-item,
+			:host ::content d2l-menu-item:hover + d2l-menu-item-separator + d2l-menu-item {
+				border-top-color: transparent;
+			}
+
+		</style>
+		<content></content>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'd2l-menu',
+
+			_keyCodes: {
+				ENTER: 13,
+				ESCAPE: 27,
+				UP: 38,
+				DOWN: 40,
+				SPACE: 32
+			},
+
+			hostAttributes: {
+				'role': 'menu'
+			},
+
+			listeners: {
+				'keydown': '_handleKeyDown',
+				'keypress': '_handleKeyPress',
+				'keyup': '_handleKeyUp'
+			},
+
+			ready: function() {
+				Polymer.dom(this).observeNodes(this._handleItemsChanged);
+			},
+
+			focus: function() {
+				this._focusFirst();
+			},
+
+			_focusFirst: function() {
+				var item = this._tryGetNextFocusable();
+				if (item) {
+					item.focus();
+				}
+			},
+
+			_focusLast: function() {
+				var items = this.queryAllEffectiveChildren('d2l-menu-item');
+				if (items.length === 0) {
+					return;
+				}
+				var item = items[items.length-1];
+				if (!this._isFocusable(item)) {
+					item = this._tryGetPreviousFocusable(item);
+				}
+				if (item) {
+					item.focus();
+				}
+			},
+
+			_focusPrevious: function(item) {
+				item = this._tryGetPreviousFocusable(item);
+				item ? item.focus() : this._focusLast();
+			},
+
+			_focusNext: function(item) {
+				item = this._tryGetNextFocusable(item);
+				item ? item.focus() : this._focusFirst();
+			},
+
+			_handleKeyDown: function(e) {
+				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
+					// prevent scrolling when up/down arrows pressed
+					e.preventDefault();
+				}
+			},
+
+			_handleKeyPress: function(e) {
+				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP
+					|| e.keyCode === this._keyCodes.SPACE || e.keyCode === this._keyCodes.ENTER
+					|| e.keyCode === this._keyCodes.ESCAPE ) {
+					return;
+				}
+
+				var startsWith = function(item, value) {
+					var innerText = item.innerText;
+					if (innerText && innerText.length > 0
+						&& innerText.substr(0,1) === value) {
+							return true;
+					}
+					return false;
+				};
+
+				var getNextOrFirst = function(item) {
+					item = this._tryGetNextFocusable(item);
+					if (!item) {
+						item = this._tryGetNextFocusable();
+					}
+					return item;
+				}.bind(this);
+
+				var searchChar = String.fromCharCode(e.charCode);
+				var item = getNextOrFirst(e.target);
+				while (item) {
+					if (item === e.target) {
+						// completed one full iteration of items
+						return;
+					}
+					if (startsWith(item, searchChar)) {
+						item.focus();
+						return;
+					}
+					item = getNextOrFirst(item);
+				}
+
+				return;
+			},
+
+			_handleKeyUp: function(e) {
+				if (e.keyCode === this._keyCodes.DOWN) {
+					this._focusNext(e.target);
+				} else if (e.keyCode === this._keyCodes.UP) {
+					this._focusPrevious(e.target);
+				}
+				return;
+			},
+
+			_isFocusable: function(item) {
+				return (item.tagName === 'D2L-MENU-ITEM'
+					&& window.getComputedStyle(item, null).getPropertyValue("display") !== 'none');
+			},
+
+			_handleItemsChanged: function() {
+				var items = this.queryAllEffectiveChildren('d2l-menu-item');
+				for(var i=0; i<items.length; i++) {
+					Polymer.dom(items[i]).setAttribute('tabindex', i===0 ? 0 : -1 );
+				}
+			},
+
+			_tryGetPreviousFocusable: function(item) {
+				item = Polymer.dom(item).previousSibling;
+				while (item) {
+					if (this._isFocusable(item)) {
+							return item;
+					}
+					item = Polymer.dom(item).previousSibling;
+				}
+				return;
+			},
+
+			_tryGetNextFocusable: function(item) {
+				if (item) {
+					item = Polymer.dom(item).nextSibling;
+				} else {
+					item = this.queryEffectiveChildren('d2l-menu-item');
+				}
+				while (item) {
+					if (this._isFocusable(item)) {
+							return item;
+					}
+					item = Polymer.dom(item).nextSibling;
+				}
+				return;
+			}
+
+		});
+	</script>
+
+</dom-module>
