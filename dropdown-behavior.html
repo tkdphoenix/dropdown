@@ -79,14 +79,14 @@
 				this.addEventListener('keyup', this._handleKeyUp);
 				window.addEventListener('resize', this._handleResize);
 				this._container.focus();
-				this.fire('open');
+				this.fire('d2l-dropdown-opened');
 
 			} else {
 
 				this.removeEventListener('blur', this._handleBlur);
 				this.removeEventListener('keyup', this._handleKeyUp);
 				window.removeEventListener('resize', this._handleResize);
-				this.fire('close');
+				this.fire('d2l-dropdown-closed');
 
 				return;
 			}
