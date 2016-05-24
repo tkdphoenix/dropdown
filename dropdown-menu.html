@@ -86,7 +86,7 @@
 				this._opener.focus();
 			},
 
-			_addMenuItemClass: function(elem, classSuffix) {
+			_addFirstLastMenuItemClass: function(elem, classSuffix) {
 				var items = this.queryAllEffectiveChildren('d2l-menu-item');
 				if (elem === items[0]) {
 					this._container.classList.add('d2l-dropdown-menu-item-first-' + classSuffix);
@@ -96,22 +96,22 @@
 			},
 
 			_handleMenuItemFocus: function(e) {
-				this._addMenuItemClass(e.target, 'focus');
+				this._addFirstLastMenuItemClass(e.target, 'focus');
 			},
 
 			_handleMenuItemBlur: function(e) {
-				this._removeMenuItemClass(e.target, 'focus');
+				this._removeFirstLastMenuItemClass(e.target, 'focus');
 			},
 
 			_handleMenuItemOver: function(e) {
-				this._addMenuItemClass(e.target, 'hover');
+				this._addFirstLastMenuItemClass(e.target, 'hover');
 			},
 
 			_handleMenuItemOut: function(e) {
-				this._removeMenuItemClass(e.target, 'hover');
+				this._removeFirstLastMenuItemClass(e.target, 'hover');
 			},
 
-			_removeMenuItemClass: function(elem, classSuffix) {
+			_removeFirstLastMenuItemClass: function(elem, classSuffix) {
 				var items = this.queryAllEffectiveChildren('d2l-menu-item');
 				if (elem === items[0]) {
 					this._container.classList.remove('d2l-dropdown-menu-item-first-' + classSuffix);
