@@ -34,7 +34,7 @@
 			}
 
 		</style>
-		<div class="d2l-dropdown-container" tabindex="0">
+		<div class="d2l-dropdown-container">
 			<div class="d2l-dropdown-pointer"></div>
 			<div class="d2l-dropdown-content-container">
 				<d2l-menu>
@@ -56,15 +56,34 @@
 				'd2l-menu-item-focus': '_handleMenuItemFocus',
 				'd2l-menu-item-blur': '_handleMenuItemBlur',
 				'd2l-menu-item-over': '_handleMenuItemOver',
-				'd2l-menu-item-out': '_handleMenuItemOut'
+				'd2l-menu-item-out': '_handleMenuItemOut',
+				'd2l-menu-item-selected': '_handleMenuItemSelected',
+				'd2l-dropdown-opened': '_handleDropdownOpen',
+				'd2l-dropdown-closed': '_handleDropdownClosed'
 			},
 
-			_handleMenuItemFocus: function(e) {
-				this._addMenuItemClass(e.target, 'focus');
+			ready: function() {
+				this._container = this.$$('.d2l-dropdown-container');
 			},
 
-			_handleMenuItemBlur: function(e) {
-				this._removeMenuItemClass(e.target, 'focus');
+			_handleMenuItemSelected: function() {
+				this.close();
+			},
+
+			_handleDropdownOpen: function(e) {
+				var menu = this.$$('d2l-menu');
+				menu.focus();
+			},
+
+			_handleDropdownClosed: function(e) {
+				if (!document.activeElement) {
+					return;
+				}
+				if (document.activeElement.tagName !== 'D2L-MENU-ITEM'
+					|| !this._isDeepChild(document.activeElement)){
+					return;
+				}
+				this._opener.focus();
 			},
 
 			_addMenuItemClass: function(elem, classSuffix) {
@@ -76,13 +95,12 @@
 				}
 			},
 
-			_removeMenuItemClass: function(elem, classSuffix) {
-				var items = this.queryAllEffectiveChildren('d2l-menu-item');
-				if (elem === items[0]) {
-					this._container.classList.remove('d2l-dropdown-menu-item-first-' + classSuffix);
-				} else if (elem === items[items.length-1]) {
-					this._container.classList.remove('d2l-dropdown-menu-item-last-' + classSuffix);
-				}
+			_handleMenuItemFocus: function(e) {
+				this._addMenuItemClass(e.target, 'focus');
+			},
+
+			_handleMenuItemBlur: function(e) {
+				this._removeMenuItemClass(e.target, 'focus');
 			},
 
 			_handleMenuItemOver: function(e) {
@@ -93,8 +111,13 @@
 				this._removeMenuItemClass(e.target, 'hover');
 			},
 
-			ready: function() {
-				this._container = this.$$('.d2l-dropdown-container');
+			_removeMenuItemClass: function(elem, classSuffix) {
+				var items = this.queryAllEffectiveChildren('d2l-menu-item');
+				if (elem === items[0]) {
+					this._container.classList.remove('d2l-dropdown-menu-item-first-' + classSuffix);
+				} else if (elem === items[items.length-1]) {
+					this._container.classList.remove('d2l-dropdown-menu-item-last-' + classSuffix);
+				}
 			}
 
 		});
