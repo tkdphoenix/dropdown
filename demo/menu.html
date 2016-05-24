@@ -62,7 +62,7 @@
 		window.addEventListener('WebComponentsReady', function(e) {
 			page_menu = document.getElementById('menu');
 			page_menu_items = Polymer.dom(page_menu).children;
-			page_menu.addEventListener('d2l-menu-item-selected', function(e) {
+			page_menu.addEventListener('select', function(e) {
 				console.log('item selected:', e);
 			});
 		});
