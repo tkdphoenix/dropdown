@@ -8,6 +8,7 @@
 
 		_container: null,
 		_offset: { vertical: 20, horizontal: 0},
+		_opener: null,
 		_target: null,
 
 		properties: {
@@ -19,6 +20,7 @@
 				observer: '_openedChanged',
 				reflectToAttribute: true
 			},
+			openerId: String,
 			targetId: String
 		},
 
@@ -32,6 +34,18 @@
 			window.removeEventListener('resize', this._handleResize);
 		},
 
+		close: function() {
+			this.opened = false;
+		},
+
+		open: function(target, opener) {
+			if (!opener) {
+				this._opener = target;
+			}
+			this._target = target;
+			this.opened = true;
+		},
+
 		_handleBlur: function() {
 
 			if (this.noAutoClose) {
@@ -42,15 +56,9 @@
 				if (!this.opened || !document.activeElement) {
 					return;
 				}
-
-				var parentNode = document.activeElement.parentNode;
-				while (parentNode) {
-					if (Polymer.dom(parentNode).node === this) {
-						return;
-					}
-					parentNode = parentNode.parentNode;
+				if (this._isDeepChild(document.activeElement)){
+					return;
 				}
-
 				Polymer.dom(this).removeAttribute('opened');
 			}.bind(this), 0);
 
@@ -59,7 +67,7 @@
 		_handleKeyUp: function(e) {
 			if (e.keyCode === 27) {
 				// escape
-				Polymer.dom(this).removeAttribute('opened');
+				this.opened = false;
 			}
 		},
 
@@ -67,11 +75,30 @@
 			this._position();
 		},
 
+		_isDeepChild: function(elem) {
+			var parentNode = elem.parentNode;
+			while (parentNode) {
+				if (Polymer.dom(parentNode).node === this) {
+					return true;
+				}
+				parentNode = parentNode.parentNode;
+			}
+			return false;
+		},
+
 		_openedChanged: function(newValue) {
 
-			this._target = document.getElementById(this.targetId);
 			if (!this._target) {
-				return;
+				this._target = document.getElementById(this.targetId);
+				if (!this._target) {
+					return;
+				}
+			}
+			if (!this._opener && this.openerId) {
+				this._opener = document.getElementById(this.openerId);
+			}
+			if (!this._opener) {
+				this._opener = this._target;
 			}
 
 			if (newValue) {
@@ -79,14 +106,14 @@
 				this.addEventListener('keyup', this._handleKeyUp);
 				window.addEventListener('resize', this._handleResize);
 				this._container.focus();
-				this.fire('open');
+				this.fire('d2l-dropdown-opened');
 
 			} else {
 
 				this.removeEventListener('blur', this._handleBlur);
 				this.removeEventListener('keyup', this._handleKeyUp);
 				window.removeEventListener('resize', this._handleResize);
-				this.fire('close');
+				this.fire('d2l-dropdown-closed');
 
 				return;
 			}
