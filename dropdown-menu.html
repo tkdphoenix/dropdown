@@ -53,30 +53,36 @@
 			],
 
 			listeners: {
-				'd2l-menu-item-focus': '_handleMenuItemFocus',
-				'd2l-menu-item-blur': '_handleMenuItemBlur',
-				'd2l-menu-item-over': '_handleMenuItemOver',
-				'd2l-menu-item-out': '_handleMenuItemOut',
-				'd2l-menu-item-selected': '_handleMenuItemSelected',
-				'd2l-dropdown-opened': '_handleDropdownOpen',
-				'd2l-dropdown-closed': '_handleDropdownClosed'
+				'_focus': '_handleMenuItemFocus',
+				'_blur': '_handleMenuItemBlur',
+				'_mouseenter': '_handleMenuItemMouseEnter',
+				'_mouseleave': '_handleMenuItemMouseLeave',
+				'select': '_handleSelect',
+				'open': '_handleOpen',
+				'close': '_handleClose'
 			},
 
 			ready: function() {
 				this._container = this.$$('.d2l-dropdown-container');
 			},
 
-			_handleMenuItemSelected: function() {
+			_handleSelect: function(e) {
+				if (e.target.tagName !== 'D2L-MENU-ITEM') {
+					return;
+				}
 				this.close();
 			},
 
-			_handleDropdownOpen: function(e) {
+			_handleOpen: function(e) {
+				if (e.target !== this) {
+					return;
+				}
 				var menu = this.$$('d2l-menu');
 				menu.focus();
 			},
 
-			_handleDropdownClosed: function(e) {
-				if (!document.activeElement) {
+			_handleClose: function(e) {
+				if (e.target !== this || !document.activeElement) {
 					return;
 				}
 				if (document.activeElement.tagName !== 'D2L-MENU-ITEM'
@@ -103,11 +109,11 @@
 				this._removeFirstLastMenuItemClass(e.target, 'focus');
 			},
 
-			_handleMenuItemOver: function(e) {
+			_handleMenuItemMouseEnter: function(e) {
 				this._addFirstLastMenuItemClass(e.target, 'hover');
 			},
 
-			_handleMenuItemOut: function(e) {
+			_handleMenuItemMouseLeave: function(e) {
 				this._removeFirstLastMenuItemClass(e.target, 'hover');
 			},
 

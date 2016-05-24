@@ -92,15 +92,7 @@
 			}
 		});
 
-		page_dropdown.addEventListener('d2l-dropdown-opened', function(e) {
-			console.log('opened', e);
-		});
-
-		page_dropdown.addEventListener('d2l-dropdown-closed', function(e) {
-			console.log('closed', e);
-		});
-
-		page_dropdown.addEventListener('d2l-menu-item-selected', function(e) {
+		page_dropdown.addEventListener('select', function(e) {
 			console.log('selected', e);
 		})
 

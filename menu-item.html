@@ -56,11 +56,11 @@
 			},
 
 			_handleBlur: function(e) {
-				this.fire('d2l-menu-item-blur');
+				this.fire('_blur');
 			},
 
 			_handleFocus: function(e) {
-				this.fire('d2l-menu-item-focus');
+				this.fire('_focus');
 			},
 
 			_handleKeyUp: function(e) {
@@ -71,11 +71,11 @@
 			},
 
 			_handleMouseEnter: function(e) {
-				this.fire('d2l-menu-item-over');
+				this.fire('_mouseenter');
 			},
 
 			_handleMouseLeave: function(e) {
-				this.fire('d2l-menu-item-out');
+				this.fire('_mouseleave');
 			},
 
 			_handleTap: function() {
@@ -86,7 +86,7 @@
 				if (this.disabled) {
 					return;
 				}
-				this.fire('d2l-menu-item-selected');
+				this.fire('select');
 			}
 
 		});
