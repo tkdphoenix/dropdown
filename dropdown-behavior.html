@@ -7,7 +7,6 @@
 	var DropdownBehavior = {
 
 		_container: null,
-		_offset: { vertical: 20, horizontal: 0},
 		_opener: null,
 		_target: null,
 
@@ -21,7 +20,15 @@
 				reflectToAttribute: true
 			},
 			openerId: String,
-			targetId: String
+			targetId: String,
+			horizontalOffset: {
+				type: Number,
+				value: 0
+			},
+			verticalOffset: {
+				type: Number,
+				value: 20
+			}
 		},
 
 		ready: function() {
@@ -122,12 +129,20 @@
 
 		},
 
+		_getOffset: function() {
+			console.log(this.verticalOffset);
+			return {
+				horizontal: this.horizontalOffset,
+				vertical: this.verticalOffset
+			};
+		},
+
 		_position: function() {
 
 			var position = this._autoPosition(
 					this._container,
 					this._target,
-					this._offset
+					this._getOffset()
 				);
 
 			if (position.vertical !== 'above') {
