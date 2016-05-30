@@ -53,10 +53,10 @@
 				if ((spaceAround.left + targetRect.width - spaceRequired.width < 0)
 					&& (spaceAround.right + targetRect.width > spaceRequired.width)) {
 					position.horizontal = 'left';
-					position.left = target.offsetLeft + elementRect.width + offset.horizontal;
+					position.left = target.offsetLeft + offset.horizontal;
 				} else {
 					position.horizontal = 'right';
-					position.left = target.offsetLeft + targetRect.width - offset.horizontal;
+					position.left = target.offsetLeft - (spaceRequired.width - targetRect.width);
 				}
 			}
 
