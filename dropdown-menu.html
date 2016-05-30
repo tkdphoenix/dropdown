@@ -81,17 +81,6 @@
 				menu.focus();
 			},
 
-			_handleClose: function(e) {
-				if (e.target !== this || !document.activeElement) {
-					return;
-				}
-				if (document.activeElement.tagName !== 'D2L-MENU-ITEM'
-					|| !this._isDeepChild(document.activeElement)){
-					return;
-				}
-				this._opener.focus();
-			},
-
 			_addFirstLastMenuItemClass: function(elem, classSuffix) {
 				var items = this.queryAllEffectiveChildren('d2l-menu-item');
 				if (elem === items[0]) {

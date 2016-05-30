@@ -32,6 +32,10 @@
 			}
 		},
 
+		listeners: {
+			'close': '_handleClose'
+		},
+
 		ready: function() {
 			this._handleResize = this._handleResize.bind(this);
 		},
@@ -70,6 +74,16 @@
 				this.opened = false;
 			}.bind(this), 0);
 
+		},
+
+		_handleClose: function(e) {
+			if (e.target !== this || !document.activeElement) {
+				return;
+			}
+			if (!this._isDeepChild(document.activeElement)){
+				return;
+			}
+			this._opener.focus();
 		},
 
 		_handleKeyUp: function(e) {
