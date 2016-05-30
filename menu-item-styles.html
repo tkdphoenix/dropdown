@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="../vui-typography/small-text.html">
+
+<dom-module id="d2l-menu-item-styles">
+	<template>
+		<style include="vui-colors"></style>
+		<style include="vui-small-text"></style>
+		<style>
+
+			:host {
+				box-sizing: border-box;
+				cursor: pointer;
+				display: block;
+				outline: none;
+				padding: 0.75rem 1rem;
+				@apply(--vui-small-text);
+			}
+			:host([disabled]), :host([disabled]:hover), :host([disabled]:focus) {
+				cursor: default;
+				opacity: 0.5;
+			}
+			/*
+			:host ::content > [sub-view] {
+				display: none;
+			}
+			:host([show-sub-menu]) {
+				padding: 0;
+			}
+			:host([sub-view-displayed]) ::content > [sub-view] {
+				display: block;
+			}
+			*/
+			:host ::content > [sub-view] {
+				display: none;
+			}
+			:host([sub-view-displayed]) {
+				padding: 0;
+			}
+			:host([sub-view-displayed]) ::content > [sub-view] {
+				display: block;
+			}
+			:host iron-icon {
+				float: right;
+				height: 18px;
+				width: 18px;
+			}
+		</style>
+	</template>
+</dom-module>

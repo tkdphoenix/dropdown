@@ -1,10 +1,10 @@
 <html>
 <head>
-	<title>D2L Menu Web Component</title>
+	<title>D2L Nested Menu Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
-		//window.Polymer = window.Polymer || {};
-		//window.Polymer.dom = 'shadow';
+		window.Polymer = window.Polymer || {};
+		window.Polymer.dom = 'shadow';
 	</script>
 	<link rel="import" href="../menu.html">
 	<style is="custom-style">
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-	<h1>d2l-menu web component</h1>
+	<h1>d2l-menu (nested) web component</h1>
 
 	<div>
 		<h2>Configuration</h2>
@@ -42,14 +42,29 @@
 		<div id="content">
 			<h2>Component</h2>
 
-			<d2l-menu id="menu" label="Seven Summits">
+			<d2l-menu id="menu" label="Apples">
 				<d2l-menu-item text="Mount Everest (29,029 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Aconcagua (22,838 ft)"></d2l-menu-item>
-				<d2l-menu-item-separator></d2l-menu-item-separator>
 				<d2l-menu-item text="Denali (20,322 ft)"></d2l-menu-item>
-				<d2l-menu-item text="Kilimanjaro (19,341 ft)" disabled></d2l-menu-item>
-				<d2l-menu-item text="Mount Elbrus (18,510 ft)" style="display:none;"></d2l-menu-item>
+				<d2l-menu-item text="Kilimanjaro (19,341 ft)"></d2l-menu-item>
+				<d2l-menu-item text="Mount Elbrus (18,510 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Mount Vinson (16,050 ft)"></d2l-menu-item>
+				<d2l-menu-item text="2nd Seven">
+					<d2l-menu>
+						<d2l-menu-item text="K2 (28,251 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Ojos del Salado (22,615 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Tyree (15,919 ft)">
+							<d2l-menu>
+								<d2l-menu-item text="Apples"></d2l-menu-item>
+								<d2l-menu-item text="Bananas"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="Puncak Mandala (15,617 ft)"></d2l-menu-item>
+					</d2l-menu>
+				</d2l-menu-item>
 			</d2l-menu>
 
 		</div>
