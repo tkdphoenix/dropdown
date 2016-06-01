@@ -31,7 +31,8 @@
 				'select': '_handleReturn'
 			},
 
-			_handleReturn: function() {
+			_handleReturn: function(e) {
+				e.stopPropagation();
 				this.fire('_sub-view-hidden');
 			}
 
