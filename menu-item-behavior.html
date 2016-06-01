@@ -57,7 +57,6 @@
 			}
 
 			if (this._children && this._children.length > 0) {
-				//this.setAttribute('sub-view-displayed', true);
 				this.setAttribute('sub-view-displayed', true);
 				this.fire('_sub-view-displayed');
 				// assumption: single, focusable child view
@@ -77,14 +76,14 @@
 		},
 
 		_handleSubViewHidden: function(e) {
-			//if (e.target === this) {
-			//	return;
-			//}
-			//this.removeAttribute('show-sub-menu');
 			if (e.target === this) {
 				return;
 			}
+			if (this._children.indexOf(Polymer.dom(e).localTarget) === -1) {
+				return;
+			}
 			this.removeAttribute('sub-view-displayed');
+			this.focus()
 		},
 
 		_handleKeyUp: function(e) {

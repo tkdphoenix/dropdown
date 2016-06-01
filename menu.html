@@ -11,8 +11,13 @@
 		<style>
 
 			:host {
+				background-color: var(--vui-color-white);
 				box-sizing: border-box;
 				display: block;
+				position: relative;
+				width: 600px;
+				height:800px;
+				overflow: hidden;
 			}
 			:host ::content > [role="menuitem"] {
 				border: 1px solid var(--vui-color-titanius);
@@ -62,28 +67,36 @@
 			:host ::content > [role="menuitem"]:hover + d2l-menu-item-separator + [role="menuitem"] {
 				border-top-color: transparent;
 			}
-			/*
-			:host([show-sub-menu]) > d2l-menu-item-return[role="menuitem"],
-			:host([show-sub-menu]) ::content > [role="menuitem"],
-			:host([show-sub-menu]) ::content > d2l-menu-item-separator {
-				display: none;
-			}
-			:host ::content > [role="menuitem"][show-sub-menu] {
-				background-color: transparent;
-				border-style: none;
-				display: block;
-			}
-			*/
-			:host([sub-view-displayed]) > d2l-menu-item-return[role="menuitem"],
 			:host([sub-view-displayed]) ::content > [role="menuitem"],
 			:host([sub-view-displayed]) ::content > d2l-menu-item-separator {
-				display: none;
+				position: absolute;
+				top: 0;
+				left: -100%;
 			}
-			:host ::content > [role="menuitem"][sub-view-displayed] {
-				background-color: transparent;
-				border-style: none;
-				display: block;
+			/*
+			animation: d2l-menu-animation 3000ms linear;
+			-webkit-animation: d2l-menu-animation 3000ms linear;
+			*/
+			/*
+			@keyframes d2l-menu-animation {
+				0% { transform: translate(0,0); }
+				100% { transform: translate(-100%,0); }
 			}
+			@-webkit-keyframes d2l-menu-animation {
+				0% { -webkit-transform: translate(0,0); }
+				100% { -webkit-transform: translate(-100%,0); }
+			}
+			*/
+			/*
+			@keyframes d2l-menu-animation {
+				0% { left: 0; top: 0; }
+				100% { left: -100%; top: 0; }
+			}
+			@-webkit-keyframes d2l-menu-animation {
+				0% { left: 0; top: 0; }
+				100% { left: -100%; top: 0; }
+			}
+			*/
 			</style>
 		<content></content>
 	</template>
@@ -261,8 +274,8 @@
 					}
 					return;
 				}
-				if (this.subMenu && (e.keyCode === this._keyCodes.ESCAPE || e.keyCode === this._keyCodes.LEFT)) {
-					this.fire('_hide-sub-menu');
+				if (this.subView && (e.keyCode === this._keyCodes.ESCAPE || e.keyCode === this._keyCodes.LEFT)) {
+					this.fire('_sub-view-hidden');
 					e.stopPropagation();
 					return;
 				}
@@ -278,39 +291,19 @@
 			},
 
 			_handleSubViewDisplayed: function(e) {
-				//console.log('show the sub view');
-				//var rootTarget = Polymer.dom(e).rootTarget;
-				//this._subViewOpenerIndex = this._items.indexOf(rootTarget)
-				//this.setAttribute('show-sub-menu', true);
-				var rootTarget = Polymer.dom(e).rootTarget;
-				this._subViewOpenerIndex = this._items.indexOf(rootTarget)
+				if (this._items.indexOf(Polymer.dom(e).localTarget) === -1) {
+					return;
+				}
 				this.setAttribute('sub-view-displayed', true);
 			},
 
 			_handleSubViewHidden: function(e) {
-				/*
 				var localTarget = Polymer.dom(e).localTarget;
 				if (localTarget === this) {
 					return;
 				}
-				if (this.getAttribute('show-sub-menu') === 'true') {
-					e.stopPropagation();
-					this.removeAttribute('show-sub-menu');
-					if (this._subViewOpenerIndex !== -1) {
-						this._items[this._subViewOpenerIndex].focus();
-					}
-				}
-				*/
-				var localTarget = Polymer.dom(e).localTarget;
-				if (localTarget === this) {
-					return;
-				}
-				if (this.getAttribute('sub-view-displayed') === 'true') {
-					e.stopPropagation();
+				if (this.querySelector('[sub-view-displayed]') === null) {
 					this.removeAttribute('sub-view-displayed');
-					if (this._subViewOpenerIndex !== -1) {
-						this._items[this._subViewOpenerIndex].focus();
-					}
 				}
 			},
 

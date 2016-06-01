@@ -8,6 +8,13 @@
 
 	<template>
 		<style include="d2l-menu-item-styles"></style>
+		<style>
+			:host iron-icon {
+				float: right;
+				height: 18px;
+				width: 18px;
+			}
+		</style>
 		[[text]]
 		<content></content>
 	</template>
@@ -29,6 +36,7 @@
 						this.$$('content')
 					);
 				}
+
 			}
 
 		});
