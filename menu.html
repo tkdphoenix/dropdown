@@ -11,13 +11,11 @@
 		<style>
 
 			:host {
-				background-color: var(--vui-color-white);
 				box-sizing: border-box;
 				display: block;
-				position: absolute;
-				width: 600px;
-				height:800px;
-				clip: rect(auto, auto, auto, auto);
+				position: relative;
+				width: 100%;
+				overflow: hidden;
 			}
 			.d2l-menu-items {
 				position: absolute;
@@ -73,7 +71,7 @@
 				border-top-color: transparent;
 			}
 			.d2l-menu-items.d2l-menu-sub-view-displayed {
-				left: -100%;
+				left: -100%; /* strangely, this is needed for FF */
 				animation: d2l-menu-animation 300ms linear;
 				-webkit-animation: d2l-menu-animation 300ms linear;
 			}
@@ -83,21 +81,22 @@
 			}
 
 			@keyframes d2l-menu-animation {
-				0% { left: 0; }
-				100% { left: -100%; }
+				0% { transform: translate(0,0); }
+				100% { transform: translate(-100%,0); }
 			}
 			@-webkit-keyframes d2l-menu-animation {
-				0% { left: 0; }
-				100% { left: -100%; }
+				0% { -webkit-transform: translate(0,0); }
+				100% { -webkit-transform: translate(-100%,0); }
 			}
 			@keyframes d2l-menu-hide-animation {
-				0% { left: -100%; }
-				100% { left: 0; }
+				0% { transform: translate(-100%,0); }
+				100% { transform: translate(0,0); }
 			}
 			@-webkit-keyframes d2l-menu-hide-animation {
-				0% { left: -100%; }
-				100% { left: 0; }
+				0% { -webkit-transform: translate(-100%,0); }
+				100% { -webkit-transform: translate(0,0); }
 			}
+
 		</style>
 		<div class="d2l-menu-items"><content></content></div>
 	</template>
@@ -115,6 +114,7 @@
 				'_blur': '_handleMenuItemBlur',
 				'_mouseenter': '_handleMenuItemMouseEnter',
 				'_mouseleave': '_handleMenuItemMouseLeave',
+				'_resize-requested': '_handleResizeRequested',
 				'_sub-view-hidden': '_handleSubViewHidden',
 				'_sub-view-displayed': '_handleSubViewDisplayed',
 				'keydown': '_handleKeyDown',
@@ -151,6 +151,11 @@
 				this._labelChanged(this.label);
 				this._items = this._getMenuItems();
 				Polymer.dom(this).observeNodes(this._handleItemsChanged);
+			},
+
+			attached: function() {
+				var items = this.$$('.d2l-menu-items').getBoundingClientRect();
+				this.style.height = items.height + 'px';
 			},
 
 			focus: function() {
@@ -305,23 +310,50 @@
 				}
 			},
 
+			_getSize: function() {
+				var items = this.$$('.d2l-menu-items').getBoundingClientRect();
+				this.style.height = items.height + 'px';
+				return {
+					height: items.height,
+					width: items.width
+				};
+			},
+
+			_handleResizeRequested: function(e, detail) {
+				if (!this.subView) {
+					var view = detail.view;
+					if (view._getSize) {
+						var size = view._getSize();
+						this.style.height = size.height + 'px';
+					} else {
+						this.style.height = view.getBoundingClientRect().height + 'px';
+					}
+				}
+			},
+
 			_handleSubViewDisplayed: function(e) {
+
 				if (this._items.indexOf(Polymer.dom(e).localTarget) === -1) {
 					return;
 				}
 				Polymer.dom(this.$$('.d2l-menu-items')).classList.add('d2l-menu-sub-view-displayed');
 				Polymer.dom(this.$$('.d2l-menu-items')).classList.remove('d2l-menu-sub-view-hidden');
+
 			},
 
 			_handleSubViewHidden: function(e) {
+
 				var localTarget = Polymer.dom(e).localTarget;
 				if (localTarget === this) {
 					return;
 				}
 				if (this.querySelector('[sub-view-displayed]') === null) {
+					e.stopPropagation();
 					Polymer.dom(this.$$('.d2l-menu-items')).classList.remove('d2l-menu-sub-view-displayed');
 					Polymer.dom(this.$$('.d2l-menu-items')).classList.add('d2l-menu-sub-view-hidden');
+					this.fire('_resize-requested', { view: this });
 				}
+
 			},
 
 			_isFocusable: function(item) {

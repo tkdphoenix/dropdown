@@ -60,6 +60,7 @@
 				this.setAttribute('sub-view-displayed', true);
 				this.fire('_sub-view-displayed');
 				// assumption: single, focusable child view
+				this.fire('_resize-requested', { view: this._children[0] });
 				this._children[0].focus();
 			} else {
 				this.fire('select');

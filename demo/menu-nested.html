@@ -3,8 +3,8 @@
 	<title>D2L Nested Menu Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
-		//window.Polymer = window.Polymer || {};
-		//window.Polymer.dom = 'shadow';
+		window.Polymer = window.Polymer || {};
+		window.Polymer.dom = 'shadow';
 	</script>
 	<link rel="import" href="../menu.html">
 	<style is="custom-style">
@@ -19,7 +19,7 @@
 			margin: 40px 20px;
 		}
 		button {
-				font-size: 0.7rem;
+			font-size: 0.7rem;
 		}
 	</style>
 </head>
@@ -42,7 +42,7 @@
 		<div id="content">
 			<h2>Component</h2>
 
-			<d2l-menu id="menu" label="Apples">
+			<d2l-menu id="menu" label="Seven Summits" style="width:400px;">
 				<d2l-menu-item text="Mount Everest (29,029 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Aconcagua (22,838 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Denali (20,322 ft)"></d2l-menu-item>
@@ -63,6 +63,9 @@
 							</d2l-menu>
 						</d2l-menu-item>
 						<d2l-menu-item text="Puncak Mandala (15,617 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
 					</d2l-menu>
 				</d2l-menu-item>
 				<d2l-menu-item text="Puncak Jaya (16,024 ft)"></d2l-menu-item>
