@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="../vui-typography/small-text.html">
+
+<dom-module id="d2l-menu-item-styles">
+	<template>
+		<style include="vui-colors"></style>
+		<style include="vui-small-text"></style>
+		<style>
+
+			:host {
+				background-color: var(--vui-color-white);
+				box-sizing: border-box;
+				cursor: pointer;
+				display: block;
+				outline: none;
+				padding: 0.75rem 1rem;
+				width: 100%;
+				@apply(--vui-small-text);
+			}
+			:host([disabled]), :host([disabled]:hover), :host([disabled]:focus) {
+				cursor: default;
+				opacity: 0.75;
+			}
+			:host ::content > [sub-view] {
+				position: absolute;
+				left: 100%;
+				top: 0;
+			}
+
+		</style>
+	</template>
+</dom-module>

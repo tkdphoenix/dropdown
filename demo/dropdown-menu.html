@@ -3,8 +3,8 @@
 	<title>D2L Dropdown Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
-		//window.Polymer = window.Polymer || {};
-		//window.Polymer.dom = 'shadow';
+		window.Polymer = window.Polymer || {};
+		window.Polymer.dom = 'shadow';
 	</script>
 	<link rel="import" href="../dropdown-menu.html">
 	<link rel="import" href="content.html">
@@ -26,7 +26,7 @@
 </head>
 <body>
 
-	<h1>d2l-dropdown web component</h1>
+	<h1>d2l-dropdown-menu web component</h1>
 
 	<div>
 		<h2>Configuration</h2>
@@ -55,14 +55,34 @@
 		<div style="clear:both;"></div>
 
 		<div id="dropdown-container">
-			<d2l-dropdown-menu id="dropdown" style="max-width: 10rem;">
-				<d2l-menu-item>Mount Everest (29,029 ft)</d2l-menu-item>
-				<d2l-menu-item>Aconcagua (22,838 ft)</d2l-menu-item>
+			<d2l-dropdown-menu id="dropdown" label="Seven Summits" style="max-width: 40rem; width: 300px;">
+				<d2l-menu-item text="Mount Everest (29,029 ft)"></d2l-menu-item>
+				<d2l-menu-item text="Aconcagua (22,838 ft)"></d2l-menu-item>
 				<d2l-menu-item-separator></d2l-menu-item-separator>
-				<d2l-menu-item>Denali (20,322 ft)</d2l-menu-item>
-				<d2l-menu-item disabled>Kilimanjaro (19,341 ft)</d2l-menu-item>
-				<d2l-menu-item style="display:none;">Mount Elbrus (18,510 ft)</d2l-menu-item>
-				<d2l-menu-item>Mount Vinson (16,050 ft)</d2l-menu-item>
+				<d2l-menu-item text="Denali (20,322 ft)"></d2l-menu-item>
+				<d2l-menu-item text="Kilimanjaro (19,341 ft)" disabled></d2l-menu-item>
+				<d2l-menu-item text="Mount Elbrus (18,510 ft)" style="display:none;"></d2l-menu-item>
+				<d2l-menu-item text="Mount Vinson (16,050 ft)"></d2l-menu-item>
+				<d2l-menu-item text="2nd Seven">
+					<d2l-menu>
+						<d2l-menu-item text="K2 (28,251 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Ojos del Salado (22,615 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Tyree (15,919 ft)">
+							<d2l-menu>
+								<d2l-menu-item text="Apples"></d2l-menu-item>
+								<d2l-menu-item text="Bananas"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="Puncak Mandala (15,617 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
+					</d2l-menu>
+				</d2l-menu-item>
+				<d2l-menu-item text="Puncak Jaya (16,024 ft)"></d2l-menu-item>
 			</d2l-dropdown-menu>
 		</div>
 

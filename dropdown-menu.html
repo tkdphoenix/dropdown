@@ -62,6 +62,14 @@
 				'close': '_handleClose'
 			},
 
+			properties: {
+				label: {
+					type: String,
+					observer: '_labelChanged',
+					reflectToAttribute: true
+				}
+			},
+
 			ready: function() {
 				this._container = this.$$('.d2l-dropdown-container');
 			},
@@ -77,6 +85,10 @@
 				if (e.target !== this) {
 					return;
 				}
+				var menu = this.$$('d2l-menu');
+				var parentNode = Polymer.dom(menu).parentNode;
+				Polymer.dom(parentNode).removeChild(menu);
+				Polymer.dom(parentNode).appendChild(menu);
 				var menu = this.$$('d2l-menu');
 				menu.focus();
 			},
@@ -104,6 +116,10 @@
 
 			_handleMenuItemMouseLeave: function(e) {
 				this._removeFirstLastMenuItemClass(e.target, 'hover');
+			},
+
+			_labelChanged: function(newValue) {
+				Polymer.dom(this.$$('d2l-menu')).setAttribute('label', newValue);
 			},
 
 			_removeFirstLastMenuItemClass: function(elem, classSuffix) {

@@ -4,39 +4,36 @@
 <link rel="import" href="menu-item-styles.html">
 <link rel="import" href="menu-item-behavior.html">
 
-<dom-module id="d2l-menu-item">
+<dom-module id="d2l-menu-item-return">
 
 	<template>
 		<style include="d2l-menu-item-styles"></style>
 		<style>
 			:host iron-icon {
-				float: right;
 				height: 18px;
+				margin-right: 1rem;
 				width: 18px;
 			}
 		</style>
-		[[text]]
+		<iron-icon icon="menu-t1:chevron-left"></iron-icon>[[text]]
 		<content></content>
 	</template>
 
 	<script>
 		Polymer({
-			is: 'd2l-menu-item',
+			is: 'd2l-menu-item-return',
 
 			behaviors: [
 				window.D2L.PolymerBehaviors.MenuItemBehavior
 			],
 
-			ready: function() {
-				if (this._children !== null) {
-					var icon = document.createElement('iron-icon');
-					Polymer.dom(icon).setAttribute('icon', 'menu-t1:chevron-right');
-					Polymer.dom(this.root).insertBefore(
-						icon,
-						this.$$('content')
-					);
-				}
+			listeners: {
+				'select': '_handleReturn'
+			},
 
+			_handleReturn: function(e) {
+				e.stopPropagation();
+				this.fire('_sub-view-hidden');
 			}
 
 		});
