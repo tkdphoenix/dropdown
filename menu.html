@@ -118,8 +118,7 @@
 				'_sub-view-hidden': '_handleSubViewHidden',
 				'_sub-view-displayed': '_handleSubViewDisplayed',
 				'keydown': '_handleKeyDown',
-				'keypress': '_handleKeyPress',
-				'keyup': '_handleKeyUp'
+				'keypress': '_handleKeyPress'
 			},
 
 			properties: {
@@ -221,10 +220,22 @@
 			},
 
 			_handleKeyDown: function(e) {
+				var rootTarget = Polymer.dom(e).rootTarget;
 				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
 					// prevent scrolling when up/down arrows pressed
 					e.preventDefault();
 					e.stopPropagation();
+					if (e.keyCode === this._keyCodes.DOWN) {
+						this._focusNext(rootTarget);
+					} else if (e.keyCode === this._keyCodes.UP) {
+						this._focusPrevious(rootTarget);
+					}
+					return;
+				}
+				if (this.subView && (e.keyCode === this._keyCodes.ESCAPE || e.keyCode === this._keyCodes.LEFT)) {
+					this.fire('_sub-view-hidden');
+					e.stopPropagation();
+					return;
 				}
 			},
 
@@ -272,24 +283,6 @@
 					itemIndex = getNextOrFirstIndex(itemIndex);
 				}
 
-			},
-
-			_handleKeyUp: function(e) {
-				var rootTarget = Polymer.dom(e).rootTarget;
-				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
-					e.stopPropagation();
-					if (e.keyCode === this._keyCodes.DOWN) {
-						this._focusNext(rootTarget);
-					} else if (e.keyCode === this._keyCodes.UP) {
-						this._focusPrevious(rootTarget);
-					}
-					return;
-				}
-				if (this.subView && (e.keyCode === this._keyCodes.ESCAPE || e.keyCode === this._keyCodes.LEFT)) {
-					this.fire('_sub-view-hidden');
-					e.stopPropagation();
-					return;
-				}
 			},
 
 			_handleMenuItemBlur: function(e) {

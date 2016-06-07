@@ -127,7 +127,13 @@
 				this.addEventListener('blur', this._handleBlur, true);
 				this.addEventListener('keyup', this._handleKeyUp);
 				window.addEventListener('resize', this._handleResize);
-				this._container.focus();
+
+				this._position();
+
+				if (this._container.getAttribute('tabindex') === '0') {
+					this._container.focus();
+				}
+
 				this.fire('open');
 
 			} else {
@@ -139,8 +145,6 @@
 
 				return;
 			}
-
-			this._position();
 
 		},
 

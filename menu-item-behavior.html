@@ -15,7 +15,7 @@
 			'_sub-view-hidden': '_handleSubViewHidden',
 			'blur': '_handleBlur',
 			'focus': '_handleFocus',
-			'keyup': '_handleKeyUp',
+			'keydown': '_handleKeyDown',
 			'mouseenter': '_handleMouseEnter',
 			'mouseleave': '_handleMouseLeave',
 			'tap': '_handleTap'
@@ -87,7 +87,7 @@
 			this.focus()
 		},
 
-		_handleKeyUp: function(e) {
+		_handleKeyDown: function(e) {
 			if (e.keyCode === this._keyCodes.ENTER || e.keyCode === this._keyCodes.SPACE) {
 				e.stopPropagation();
 				this._action();
