@@ -78,8 +78,13 @@
 				right: 30px;
 			}
 
-			.d2l-dropdown-content-container {
+			:host .d2l-dropdown-content-container {
 				overflow: hidden;
+				text-align: left;
+			}
+
+			:host-context([dir="rtl"]) .d2l-dropdown-content-container {
+				text-align: right;
 			}
 
 			@keyframes d2l-dropdown-animation {
