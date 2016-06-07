@@ -31,14 +31,14 @@
 				border-top-left-radius: 0.4rem;
 				border-top-right-radius: 0.4rem;
 			}
-			.d2l-menu-items ::content > [role="menuitem"]:first-child {
+			.d2l-menu-items ::content > [role="menuitem"]:first-of-type {
 				border-top-left-radius: 0.4rem;
 				border-top-right-radius: 0.4rem;
 			}
-			:host([sub-view]) ::content > [role="menuitem"]:first-child {
+			:host([sub-view]) ::content > [role="menuitem"]:first-of-type {
 				border-radius: 0;
 			}
-			.d2l-menu-items ::content > [role="menuitem"]:last-child {
+			.d2l-menu-items ::content > [role="menuitem"]:last-of-type {
 				border-bottom-left-radius: 0.4rem;
 				border-bottom-right-radius: 0.4rem;
 				border-bottom-color: var(--vui-color-titanius);
@@ -50,12 +50,12 @@
 				background-color: var(--vui-color-celestine-light-1);
 				border: 1px solid var(--vui-color-celestine-light-2);
 			}
-			.d2l-menu-items ::content > [role="menuitem"]:focus:last-child,
-			.d2l-menu-items ::content > [role="menuitem"]:hover:last-child {
+			.d2l-menu-items ::content > [role="menuitem"]:focus:last-of-type,
+			.d2l-menu-items ::content > [role="menuitem"]:hover:last-of-type {
 				border-bottom-color: var(--vui-color-celestine-light-2);
 			}
-			.d2l-menu-items.d2l-menu-item-return-hover ::content > [role="menuitem"]:first-child,
-			.d2l-menu-items.d2l-menu-item-return-focus ::content > [role="menuitem"]:first-child,
+			.d2l-menu-items.d2l-menu-item-return-hover ::content > [role="menuitem"]:first-of-type,
+			.d2l-menu-items.d2l-menu-item-return-focus ::content > [role="menuitem"]:first-of-type,
 			.d2l-menu-items ::content > [role="menuitem"]:focus + [role="menuitem"],
 			.d2l-menu-items ::content > [role="menuitem"]:hover + [role="menuitem"] {
 				border-top-color: transparent;
@@ -154,12 +154,22 @@
 			},
 
 			attached: function() {
-				var items = this.$$('.d2l-menu-items').getBoundingClientRect();
-				this.style.height = items.height + 'px';
+				this.async(function() {
+					this._autoSize();
+				}.bind(this));
 			},
 
 			focus: function() {
 				this._focusFirst();
+			},
+
+			_autoSize: function() {
+				var itemsRect = this.$$('.d2l-menu-items').getBoundingClientRect();
+				this.style.height = itemsRect.height + 'px';
+				return {
+					height: itemsRect.height,
+					width: itemsRect.width
+				};
 			},
 
 			_handleMenuItemFocus: function(e) {
@@ -310,20 +320,11 @@
 				}
 			},
 
-			_getSize: function() {
-				var items = this.$$('.d2l-menu-items').getBoundingClientRect();
-				this.style.height = items.height + 'px';
-				return {
-					height: items.height,
-					width: items.width
-				};
-			},
-
 			_handleResizeRequested: function(e, detail) {
 				if (!this.subView) {
 					var view = detail.view;
-					if (view._getSize) {
-						var size = view._getSize();
+					if (view._autoSize) {
+						var size = view._autoSize();
 						this.style.height = size.height + 'px';
 					} else {
 						this.style.height = view.getBoundingClientRect().height + 'px';
