@@ -104,7 +104,9 @@
 				Polymer.dom(parentNode).removeChild(menu);
 				Polymer.dom(parentNode).appendChild(menu);
 				var menu = this.$$('d2l-menu');
-				menu.focus();
+				setTimeout(function() {
+					menu.focus();
+				}, 0);
 			},
 
 			_addFirstLastMenuItemClass: function(elem, classSuffix) {
