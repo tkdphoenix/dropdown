@@ -42,17 +42,19 @@
 			:host .d2l-dropdown-pointer {
 				position: absolute;
 				display: inline-block;
+				clip: rect(-5px, 21px, 8px, -3px);
+				left: 30px;
+				top: -8px;
+				z-index: 1;
+			}
+
+			:host .d2l-dropdown-pointer > div {
 				background-color: var(--vui-color-white);
 				border: 1px solid var(--vui-color-titanius);
-				border-right: 1px solid transparent;
-				border-bottom: 1px solid transparent;
 				border-radius: 0.1rem;
 				box-shadow: -4px -4px 12px -5px rgba(86, 90, 92, .2);
-				left: 30px;
-				top: -0.40rem;
-				height: 14px;
-				width: 14px;
-				z-index: 1;
+				height: 16px;
+				width: 16px;
 				transform: rotate(45deg);
 				-webkit-transform: rotate(45deg);
 			}
@@ -63,8 +65,11 @@
 
 			:host .d2l-dropdown-flip-x > .d2l-dropdown-pointer {
 				top: auto;
-				bottom: -0.40rem;
-				border-color: transparent var(--vui-color-titanius) var(--vui-color-titanius) transparent;
+				clip: rect(9px, 21px, 22px, -3px);
+				bottom: -9px;
+			}
+
+			:host .d2l-dropdown-flip-x > .d2l-dropdown-pointer > div {
 				box-shadow: 4px 4px 12px -5px rgba(86, 90, 92, .2);
 			}
 
