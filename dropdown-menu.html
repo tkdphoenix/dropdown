@@ -15,27 +15,37 @@
 				border-style: none;
 			}
 
-			:host .d2l-dropdown-menu-item-first-hover > .d2l-dropdown-pointer,
-			:host .d2l-dropdown-menu-item-first-focus > .d2l-dropdown-pointer {
-				background-color: var(--vui-color-celestine-light-1);
-				border-color: var(--vui-color-celestine-light-2) transparent transparent var(--vui-color-celestine-light-2);
+			:host .d2l-dropdown-pointer {
+				top: -7px;
 			}
 
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-first-hover > .d2l-dropdown-pointer,
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-first-focus > .d2l-dropdown-pointer {
+			:host .d2l-dropdown-flip-x > .d2l-dropdown-pointer {
+				bottom: -8px;
+			}
+
+			:host .d2l-dropdown-menu-item-first-hover > .d2l-dropdown-pointer > div,
+			:host .d2l-dropdown-menu-item-first-focus > .d2l-dropdown-pointer > div {
+				background-color: var(--vui-color-celestine-light-1);
+				border-color: var(--vui-color-celestine-light-2);
+			}
+
+			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-first-hover > .d2l-dropdown-pointer > div,
+			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-first-focus > .d2l-dropdown-pointer > div {
 				background-color: var(--vui-color-white);
-				border-color: transparent var(--vui-color-titanius) var(--vui-color-titanius) transparent;
+				border-color: var(--vui-color-titanius);
 			}
 
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-last-hover > .d2l-dropdown-pointer,
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-last-focus > .d2l-dropdown-pointer {
+			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-last-hover > .d2l-dropdown-pointer > div,
+			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-last-focus > .d2l-dropdown-pointer > div {
 				background-color: var(--vui-color-celestine-light-1);
-				border-color: transparent var(--vui-color-celestine-light-2) var(--vui-color-celestine-light-2) transparent;
+				border-color: var(--vui-color-celestine-light-2);
 			}
 
 		</style>
 		<div class="d2l-dropdown-container">
-			<div class="d2l-dropdown-pointer"></div>
+			<div class="d2l-dropdown-pointer">
+				<div></div>
+			</div>
 			<div class="d2l-dropdown-content-container">
 				<d2l-menu>
 					<content></content>
