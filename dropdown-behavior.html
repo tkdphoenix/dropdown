@@ -166,7 +166,9 @@
 
 			var content = this.$$('.d2l-dropdown-content-container');
 
-			content.style.maxHeight = 'none';
+			if (!this.noAutoFit) {
+				content.style.maxHeight = 'none';
+			}
 
 			var position = this._autoPosition(
 					this._container,
