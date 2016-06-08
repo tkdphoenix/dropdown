@@ -15,6 +15,9 @@
 			noAutoClose: {
 				type: Boolean
 			},
+			noAutoFit: {
+				type: Boolean
+			},
 			opened: {
 				type: Boolean,
 				observer: '_openedChanged',
@@ -128,6 +131,10 @@
 				this.addEventListener('keyup', this._handleKeyUp);
 				window.addEventListener('resize', this._handleResize);
 
+				if (!this.noAutoFit) {
+					this.$$('.d2l-dropdown-content-container').scrollTop = 0;
+				}
+
 				this._position();
 
 				if (this._container.getAttribute('tabindex') === '0') {
@@ -157,16 +164,31 @@
 
 		_position: function() {
 
+			var content = this.$$('.d2l-dropdown-content-container');
+
+			if (!this.noAutoFit) {
+				content.style.maxHeight = 'none';
+			}
+
 			var position = this._autoPosition(
 					this._container,
 					this._target,
 					this._getOffset()
 				);
 
+			var maxHeight;
+
 			if (position.vertical !== 'above') {
+				var maxHeight = position.spaceAround.below - 40;
 				this._container.classList.remove('d2l-dropdown-flip-x');
 			} else {
+				var maxHeight = position.spaceAround.above - 40;
 				this._container.classList.add('d2l-dropdown-flip-x');
+			}
+
+			if (!this.noAutoFit && maxHeight && maxHeight > 0) {
+				content.style.maxHeight = maxHeight + 'px';
+				content.style.overflowY = 'auto';
 			}
 
 			if (position.horizontal !== 'right') {
