@@ -1,6 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../vui-colors/colors.html">
-<link rel="import" href="../vui-typography/small-text.html">
 
 <dom-module id="d2l-menu-item-styles">
 	<template>
@@ -13,11 +12,15 @@
 				box-sizing: border-box;
 				cursor: pointer;
 				display: block;
+				line-height: 1rem;
+				overflow-x: hidden;
 				outline: none;
-				padding: 0.75rem 1rem;
+				padding: 1rem;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 				width: 100%;
-				@apply(--vui-small-text);
 			}
+
 			:host([disabled]), :host([disabled]:hover), :host([disabled]:focus) {
 				cursor: default;
 				opacity: 0.75;
