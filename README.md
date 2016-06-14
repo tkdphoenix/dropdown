@@ -15,14 +15,14 @@ bower install d2l-dropdown
 
 ## Usage
 
-Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `dropdown.html`:
+Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-dropdown.html`:
 
 ### Dropdown
 
 ```html
 <head>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
-	<link rel="import" href="../d2l-dropdown/dropdown.html">
+	<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
 </head>
 ```
 

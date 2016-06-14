@@ -1,7 +1,7 @@
 {
   "name": "d2l-dropdown",
-  "version": "0.0.1",
-  "description": "Web component for dropdown",
+  "private": true,
+  "description": "Polymer-based web component for a D2L dropdown",
   "scripts": {
     "postinstall": "bower install",
     "test": "npm run test:lint:js && npm run test:lint:wc",
