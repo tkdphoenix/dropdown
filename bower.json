@@ -1,6 +1,11 @@
 {
   "name": "d2l-dropdown",
-  "main": "dropdown.html",
+  "description": "Polymer-based web component for a D2L dropdown",
+  "main": [
+      "d2l-dropdown.html",
+      "d2l-menu.html",
+      "d2l-dropdown-menu.html"
+  ],
   "license": "Apache-2.0",
   "ignore": [
     "test",
@@ -10,10 +15,10 @@
     "package.json"
   ],
   "dependencies": {
+    "d2l-colors": "~2.0.0",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
-    "polymer": "^1.3.1",
-    "vui-colors": "^1.0.1"
+    "polymer": "^1.5.0"
   },
   "devDependencies": {
     "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.1.5",

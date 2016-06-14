@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="menu-item.html">
 <link rel="import" href="menu-item-return.html">
 <link rel="import" href="menu-item-separator.html">
@@ -7,8 +7,7 @@
 <dom-module id="d2l-menu">
 
 	<template>
-		<style include="vui-colors"></style>
-		<style>
+		<style include="d2l-colors">
 
 			:host {
 				box-sizing: border-box;
@@ -22,40 +21,40 @@
 				width: 100%;
 			}
 			.d2l-menu-items ::content > [role="menuitem"] {
-				border: 1px solid var(--vui-color-titanius);
-				border-top-color: var(--vui-color-gypsum);
+				border: 1px solid var(--d2l-color-titanius);
+				border-top-color: var(--d2l-color-gypsum);
 				border-bottom-color: transparent;
 			}
 			.d2l-menu-items d2l-menu-item-return[role="menuitem"] {
-				border: 1px solid var(--vui-color-titanius);
+				border: 1px solid var(--d2l-color-titanius);
 				border-bottom-color: transparent;
 				border-top-left-radius: 0.3rem;
 				border-top-right-radius: 0.3rem;
 			}
 			.d2l-menu-items ::content > [role="menuitem"]:first-of-type {
-				border-top-color: var(--vui-color-titanius);
+				border-top-color: var(--d2l-color-titanius);
 				border-top-left-radius: 0.3rem;
 				border-top-right-radius: 0.3rem;
 			}
 			:host([sub-view]) ::content > [role="menuitem"]:first-of-type {
-				border-top-color: var(--vui-color-gypsum);
+				border-top-color: var(--d2l-color-gypsum);
 				border-radius: 0;
 			}
 			.d2l-menu-items ::content > [role="menuitem"]:last-of-type {
 				border-bottom-left-radius: 0.3rem;
 				border-bottom-right-radius: 0.3rem;
-				border-bottom-color: var(--vui-color-titanius);
+				border-bottom-color: var(--d2l-color-titanius);
 			}
 			.d2l-menu-items d2l-menu-item-return[role="menuitem"]:focus,
 			.d2l-menu-items d2l-menu-item-return[role="menuitem"]:hover,
 			.d2l-menu-items ::content > [role="menuitem"]:focus,
 			.d2l-menu-items ::content > [role="menuitem"]:hover {
-				background-color: var(--vui-color-celestine-light-1);
-				border: 1px solid var(--vui-color-celestine-light-2);
+				background-color: var(--d2l-color-celestine-light-1);
+				border: 1px solid var(--d2l-color-celestine-light-2);
 			}
 			.d2l-menu-items ::content > [role="menuitem"]:focus:last-of-type,
 			.d2l-menu-items ::content > [role="menuitem"]:hover:last-of-type {
-				border-bottom-color: var(--vui-color-celestine-light-2);
+				border-bottom-color: var(--d2l-color-celestine-light-2);
 			}
 			.d2l-menu-items.d2l-menu-item-return-hover ::content > [role="menuitem"]:first-of-type,
 			.d2l-menu-items.d2l-menu-item-return-focus ::content > [role="menuitem"]:first-of-type,
@@ -67,7 +66,7 @@
 				border: 0;
 			}
 			.d2l-menu-items ::content > d2l-menu-item-separator + [role="menuitem"] {
-				border-top: 1px solid var(--vui-color-pressicus);
+				border-top: 1px solid var(--d2l-color-pressicus);
 			}
 			.d2l-menu-items ::content > [role="menuitem"]:focus + d2l-menu-item-separator + [role="menuitem"],
 			.d2l-menu-items ::content > [role="menuitem"]:hover + d2l-menu-item-separator + [role="menuitem"] {
