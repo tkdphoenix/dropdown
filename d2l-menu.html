@@ -198,7 +198,7 @@
 				if (item.getAttribute('tabindex') !== '0' && item.getAttribute('tabindex') !== '-1') {
 					return false;
 				}
-				if (window.getComputedStyle(item, null).getPropertyValue("display") === 'none') {
+				if (window.getComputedStyle(item, null).getPropertyValue('display') === 'none') {
 					return false;
 				}
 				return true;
@@ -243,9 +243,8 @@
 				e.stopPropagation();
 
 				var startsWith = function(item, value) {
-					if (item.text && item.text.length > 0
-						&& item.text.substr(0,1) === value) {
-							return true;
+					if (item.text && item.text.length > 0 && item.text.substr(0, 1) === value) {
+						return true;
 					}
 					return false;
 				};
@@ -281,7 +280,7 @@
 			_fireFirstLast: function(eventName, target) {
 				if (target === this._items[0]) {
 					this.fire('_first-' + eventName);
-				} else if (target === this._items[this._items.length-1]) {
+				} else if (target === this._items[this._items.length - 1]) {
 					this.fire('_last-' + eventName);
 				}
 			},
@@ -320,9 +319,9 @@
 
 			_onMenuItemsChanged: function() {
 				this._items = this._getMenuItems();
-				for(var i=0; i<this._items.length; i++) {
+				for (var i = 0; i < this._items.length; i++) {
 					if (this._items[i].tagName !== 'D2L-MENU-ITEM-SEPARATOR') {
-						Polymer.dom(this._items[i]).setAttribute('tabindex', i===0 ? 0 : -1 );
+						Polymer.dom(this._items[i]).setAttribute('tabindex', i === 0 ? 0 : -1 );
 					}
 				}
 			},
