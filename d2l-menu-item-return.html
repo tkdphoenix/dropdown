@@ -7,8 +7,7 @@
 <dom-module id="d2l-menu-item-return">
 
 	<template>
-		<style include="d2l-menu-item-styles"></style>
-		<style>
+		<style include="d2l-menu-item-styles">
 			:host iron-icon {
 				height: 18px;
 				margin-right: 1rem;
@@ -25,16 +24,7 @@
 
 			behaviors: [
 				window.D2L.PolymerBehaviors.MenuItemBehavior
-			],
-
-			listeners: {
-				'select': '_handleReturn'
-			},
-
-			_handleReturn: function(e) {
-				e.stopPropagation();
-				this.fire('_sub-view-hidden');
-			}
+			]
 
 		});
 	</script>

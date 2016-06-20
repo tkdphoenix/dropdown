@@ -1,0 +1,212 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="d2l-hierarchical-view-styles">
+	<template>
+		<style>
+
+			:host {
+				box-sizing: border-box;
+				display: inline-block;
+				position: relative;
+				left: 0;
+				overflow: hidden;
+				width: 100%;
+				-webkit-transition: height 300ms linear;
+				transition: height 300ms linear;
+			}
+			:host([child-view]),
+			:host ::content [child-view] {
+				display: none;
+				position: absolute;
+				top: 0;
+				left: 100%;
+			}
+			:host([shown]),
+			:host ::content [shown] {
+				display: inline-block;
+			}
+			.d2l-hierarchical-view-content.d2l-child-view-show {
+				-webkit-animation: show-child-view-animation forwards 300ms linear;
+				animation: show-child-view-animation 300ms forwards linear;
+			}
+			.d2l-hierarchical-view-content.d2l-child-view-hide {
+				-webkit-animation: hide-child-view-animation forwards 300ms linear;
+				animation: hide-child-view-animation 300ms forwards linear;
+			}
+
+			@keyframes show-child-view-animation {
+				0% { transform: translate(0,0); }
+				100% { transform: translate(-100%,0); }
+			}
+			@-webkit-keyframes show-child-view-animation {
+				0% { -webkit-transform: translate(0,0); }
+				100% { -webkit-transform: translate(-100%,0); }
+			}
+			@keyframes hide-child-view-animation {
+				0% { transform: translate(-100%,0); }
+				100% { transform: translate(0,0); }
+			}
+			@-webkit-keyframes hide-child-view-animation {
+				0% { -webkit-transform: translate(-100%,0); }
+				100% { -webkit-transform: translate(0,0); }
+			}
+
+		</style>
+	</template>
+</dom-module>
+<script>
+(function() {
+	'use strict';
+
+	/** @polymerBehavior */
+	var HierarchicalViewBehavior = {
+
+		properties: {
+			shown: {
+				type: Boolean,
+				reflectToAttribute: true,
+				value: false
+			},
+			childView: {
+				type: Boolean,
+				reflectToAttribute: true,
+				value: false
+			},
+			isHierarchicalView: {
+				type: Boolean,
+				readOnly: true,
+				value: true
+			}
+		},
+
+		listeners: {
+			'hide-start': '_onHideStart',
+			'show-start': '_onShowStart'
+		},
+
+		attached: function() {
+
+			var parentNode = Polymer.dom(this).parentNode;
+			while (parentNode) {
+				if (parentNode.isHierarchicalView) {
+					this.childView = true;
+					break;
+				}
+				parentNode = Polymer.dom(parentNode).parentNode;
+			}
+
+			this.async(function() {
+				this._autoSize(this);
+			}.bind(this));
+
+		},
+
+		show: function(sourceTarget) {
+			this.shown = true;
+			if (!sourceTarget) {
+				sourceTarget = this;
+			}
+			this.fire('show-start', {isSource: sourceTarget === this, sourceTarget: sourceTarget});
+		},
+
+		hide: function() {
+			this.fire('hide-start');
+		},
+
+		_autoSize: function(view) {
+			if (this.childView) {
+				return;
+			}
+			var rect;
+			if (view === this) {
+				rect = this.$$('.d2l-hierarchical-view-content').getBoundingClientRect();
+			} else {
+				rect = view.getBoundingClientRect();
+			}
+			this.style.height = rect.height + 'px';
+		},
+
+		_getParentView: function(e) {
+			var path = e.path;
+			for(var i=1; i<e.path.length; i++) {
+				if (path[i].isHierarchicalView) {
+					return path[i];
+				}
+			}
+		},
+
+		_onShowStart: function(e) {
+
+			var rootTarget = Polymer.dom(e).rootTarget;
+			if (rootTarget === this || !rootTarget.isHierarchicalView) {
+				return;
+			}
+
+			if (this.childView && !this.shown) {
+				/* deep link scenario */
+				this.show(e.detail.sourceTarget);
+			}
+			var content = this.$$('.d2l-hierarchical-view-content');
+
+			if (e.detail.isSource && this._getParentView(e) === this) {
+				var animationEnd = function() {
+					content.removeEventListener('animationend', animationEnd);
+					e.detail.sourceTarget._fireShowComplete(e.detail);
+				}.bind(this);
+				content.addEventListener('animationend', animationEnd);
+			}
+
+			content.classList.add('d2l-child-view-show');
+
+			if (!this.childView) {
+				this._autoSize(rootTarget);
+			}
+
+		},
+
+		_fireShowComplete: function() {
+			this.fire('show-complete');
+		},
+
+		_fireHideComplete: function() {
+			this.fire('hide-complete');
+		},
+
+		_onHideStart: function(e) {
+
+			e = Polymer.dom(e);
+			var rootTarget = e.rootTarget;
+			if (rootTarget === this || !rootTarget.isHierarchicalView) {
+				return;
+			}
+
+			var parentView = this._getParentView(e);
+			if (parentView === this) {
+				var content = this.$$('.d2l-hierarchical-view-content');
+
+				var animationEnd = function(e) {
+					content.removeEventListener('animationend', animationEnd);
+					Polymer.dom(e).rootTarget.classList.remove('d2l-child-view-hide');
+					rootTarget.shown = false;
+					rootTarget._fireHideComplete();
+				}.bind(this);
+				content.addEventListener('animationend', animationEnd);
+
+				content.classList.add('d2l-child-view-hide');
+				content.classList.remove('d2l-child-view-show');
+				this._childViewTarget = rootTarget;
+			}
+
+			if (!this.childView) {
+				this._autoSize(parentView);
+			}
+		}
+
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.HierarchicalViewBehavior = [HierarchicalViewBehavior];
+})();
+</script>

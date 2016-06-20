@@ -9,11 +9,13 @@
 	<template>
 		<style include="d2l-menu-item-styles"></style>
 		<style>
+
 			:host iron-icon {
 				float: right;
 				height: 18px;
 				width: 18px;
 			}
+
 		</style>
 		[[text]]
 		<content></content>
@@ -28,15 +30,13 @@
 			],
 
 			ready: function() {
-				if (this._children !== null) {
+				if (this.hasChildView) {
 					var icon = document.createElement('iron-icon');
 					Polymer.dom(icon).setAttribute('icon', 'menu-t1:chevron-right');
 					Polymer.dom(this.root).insertBefore(
-						icon,
-						this.$$('content')
+						icon, Polymer.dom(this.root).childNodes[0]
 					);
 				}
-
 			}
 
 		});

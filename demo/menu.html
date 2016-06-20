@@ -3,25 +3,11 @@
 	<title>D2L Menu Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
-		window.Polymer = window.Polymer || {};
-		window.Polymer.dom = 'shadow';
+		//window.Polymer = window.Polymer || {};
+		//window.Polymer.dom = 'shadow';
 	</script>
+	<link rel="stylesheet" href="demo-styles.css">
 	<link rel="import" href="../d2l-menu.html">
-	<style is="custom-style">
-		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
-		html {
-			color: #565a5c;
-			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-			font-weight: 300;
-			font-size: 20px;
-		}
-		body {
-			margin: 40px 20px;
-		}
-		button {
-				font-size: 0.7rem;
-		}
-	</style>
 </head>
 <body>
 
@@ -34,6 +20,7 @@
 			<button onclick="toggleFloat();">Toggle Float</button>
 			<button onclick="setFocus();">Set Focus</button>
 			<button onclick="addItem();">Add Top Item</button>
+			<button onclick="showDeepMenu();">Show Deep Menu</button>
 		</div>
 		<div style="margin-bottom: 0.75rem;"></div>
 	</div>
@@ -42,14 +29,41 @@
 		<div id="content">
 			<h2>Component</h2>
 
-			<d2l-menu id="menu" label="Seven Summits">
+			<d2l-menu id="menu" label="Seven Summits" style="width:400px;">
 				<d2l-menu-item text="Mount Everest (29,029 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Aconcagua (22,838 ft)"></d2l-menu-item>
-				<d2l-menu-item-separator></d2l-menu-item-separator>
+
+				<d2l-menu-item text="Some Others">
+					<d2l-menu>
+						<d2l-menu-item text="K2 (28,251 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Ojos del Salado (22,615 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+					</d2l-menu>
+				</d2l-menu-item>
+
 				<d2l-menu-item text="Denali (20,322 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Kilimanjaro (19,341 ft)" disabled></d2l-menu-item>
-				<d2l-menu-item text="Mount Elbrus (18,510 ft)" style="display:none;"></d2l-menu-item>
+				<d2l-menu-item text="Mount Elbrus (18,510 ft)"></d2l-menu-item>
 				<d2l-menu-item text="Mount Vinson (16,050 ft)"></d2l-menu-item>
+				<d2l-menu-item text="2nd Seven">
+					<d2l-menu>
+						<d2l-menu-item text="K2 (28,251 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Ojos del Salado (22,615 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Tyree (15,919 ft)">
+							<d2l-menu id="deepMenu">
+								<d2l-menu-item text="Apples"></d2l-menu-item>
+								<d2l-menu-item text="Bananas"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="Puncak Mandala (15,617 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
+						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
+					</d2l-menu>
+				</d2l-menu-item>
 				<d2l-menu-item text="Puncak Jaya (16,024 ft)"></d2l-menu-item>
 			</d2l-menu>
 
@@ -82,11 +96,17 @@
 
 		function addItem() {
 			var item = document.createElement('d2l-menu-item');
-			item.appendChild(document.createTextNode('Puncak Jaya (16,024 ft)'));
+			item.setAttribute('text', 'Puncak Jaya (16,024 ft)');
+
 			Polymer.dom(page_menu).insertBefore(
 				item,
-				page_menu.children[0]
+				Polymer.dom(page_menu).children[0]
 			);
+		}
+
+		function showDeepMenu() {
+			var deepMenu = document.getElementById('deepMenu');
+			deepMenu.show();
 		}
 
 		function toggleRTL() {

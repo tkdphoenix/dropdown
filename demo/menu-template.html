@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title>D2L Menu Web Component (Template)</title>
+
+	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
+	<script>
+		//window.Polymer = window.Polymer || {};
+		//window.Polymer.dom = 'shadow';
+	</script>
+	<link rel="stylesheet" href="demo-styles.css">
+	<link rel="import" href="../d2l-menu.html">
+</head>
+<body unresolved>
+	<dom-module id="d2l-memu-template">
+		<template>
+			<d2l-menu label="Seven Summits" style="width: 400px;">
+				<template is="dom-repeat" items="{{menuItems}}">
+					<d2l-menu-item text="{{item.text}}">
+					</d2l-menu-item>
+				</template>
+			</d2l-menu>
+		</template>
+		<script>
+			Polymer({
+				is: 'd2l-memu-template',
+
+				properties: {
+					menuItems: {
+						type: Object,
+						value: [
+							{text: 'Mount Everest (29,029 ft)', more: []},
+							{text: 'Aconcagua (22,838 ft)', more: []},
+							{text: 'Denali (20,322 ft)', more: []},
+							{text: 'Kilimanjaro (19,341 ft)', more: []},
+							{text: 'Mount Elbrus (18,510 ft)', more: []},
+							{text: 'Mount Vinson (16,050 ft)', more: []}
+						]
+					}
+				}
+
+			});
+		</script>
+	</dom-module>
+
+	<h1>d2l-menu web component (template)</h1>
+
+	<div>
+		<div id="content">
+			<h2>Component</h2>
+			<d2l-memu-template id="menu"></d2l-memu-template>
+		</div>
+	</div>
+
+	<script>
+		var page_menu, page_menu_items;
+
+		window.addEventListener('WebComponentsReady', function(e) {
+			page_menu = document.getElementById('menu');
+			page_menu_items = Polymer.dom(page_menu).children;
+			page_menu.addEventListener('select', function(e) {
+				console.log('item selected:', e);
+			});
+		});
+	</script>
+</body>
+</html>
