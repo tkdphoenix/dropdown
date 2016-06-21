@@ -81,7 +81,8 @@
 
 		listeners: {
 			'hide-start': '_onHideStart',
-			'show-start': '_onShowStart'
+			'show-start': '_onShowStart',
+			'resize': '_onResize'
 		},
 
 		attached: function() {
@@ -109,8 +110,11 @@
 			this.fire('show-start', {isSource: sourceTarget === this, sourceTarget: sourceTarget});
 		},
 
-		hide: function() {
-			this.fire('hide-start');
+		hide: function(sourceTarget) {
+			if (!sourceTarget) {
+				sourceTarget = this;
+			}
+			this.fire('hide-start', {isSource: sourceTarget === this, sourceTarget: sourceTarget});
 		},
 
 		_autoSize: function(view) {
@@ -133,6 +137,10 @@
 					return path[i];
 				}
 			}
+		},
+
+		_onResize: function(e) {
+			this.style.height = e.detail.height + 'px';
 		},
 
 		_onShowStart: function(e) {
@@ -158,8 +166,8 @@
 
 			content.classList.add('d2l-child-view-show');
 
-			if (!this.childView) {
-				this._autoSize(rootTarget);
+			if (e.detail.isSource && this._getParentView(e) === this) {
+				this.fire('resize', e.detail.sourceTarget.getBoundingClientRect());
 			}
 
 		},
@@ -174,8 +182,7 @@
 
 		_onHideStart: function(e) {
 
-			e = Polymer.dom(e);
-			var rootTarget = e.rootTarget;
+			var rootTarget = Polymer.dom(e).rootTarget;
 			if (rootTarget === this || !rootTarget.isHierarchicalView) {
 				return;
 			}
@@ -194,12 +201,10 @@
 
 				content.classList.add('d2l-child-view-hide');
 				content.classList.remove('d2l-child-view-show');
-				this._childViewTarget = rootTarget;
+
+				this.fire('resize', content.getBoundingClientRect());
 			}
 
-			if (!this.childView) {
-				this._autoSize(parentView);
-			}
 		}
 
 	};
