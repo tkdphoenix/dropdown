@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="icons.html">
+<link rel="import" href="../d2l-icons/tier1-icons.html">
 <link rel="import" href="menu-item-styles.html">
 <link rel="import" href="menu-item-behavior.html">
 
@@ -32,7 +32,7 @@
 			ready: function() {
 				if (this.hasChildView) {
 					var icon = document.createElement('iron-icon');
-					Polymer.dom(icon).setAttribute('icon', 'menu-t1:chevron-right');
+					Polymer.dom(icon).setAttribute('icon', 'd2l-tier1:chevron-right');
 					Polymer.dom(this.root).insertBefore(
 						icon, Polymer.dom(this.root).childNodes[0]
 					);
