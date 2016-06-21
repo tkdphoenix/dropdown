@@ -3,26 +3,12 @@
 	<title>D2L Dropdown Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
-		window.Polymer = window.Polymer || {};
-		window.Polymer.dom = 'shadow';
+		//window.Polymer = window.Polymer || {};
+		//window.Polymer.dom = 'shadow';
 	</script>
+	<link rel="stylesheet" href="demo-styles.css">
 	<link rel="import" href="../d2l-dropdown-menu.html">
 	<link rel="import" href="content.html">
-	<style is="custom-style">
-		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
-		html {
-			color: #565a5c;
-			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-			font-weight: 300;
-			font-size: 20px;
-		}
-		body {
-			margin: 40px 20px;
-		}
-		button {
-			font-size: 0.7rem;
-		}
-	</style>
 </head>
 <body>
 
@@ -55,34 +41,71 @@
 		<div style="clear:both;"></div>
 
 		<div id="dropdown-container">
-			<d2l-dropdown-menu id="dropdown" label="Seven Summits" style="max-width: 40rem; width: 300px;">
-				<d2l-menu-item text="Mount Everest (29,029 ft)"></d2l-menu-item>
-				<d2l-menu-item text="Aconcagua (22,838 ft)"></d2l-menu-item>
-				<d2l-menu-item-separator></d2l-menu-item-separator>
-				<d2l-menu-item text="Denali (20,322 ft)"></d2l-menu-item>
-				<d2l-menu-item text="Kilimanjaro (19,341 ft)" disabled></d2l-menu-item>
-				<d2l-menu-item text="Mount Elbrus (18,510 ft)" style="display:none;"></d2l-menu-item>
-				<d2l-menu-item text="Mount Vinson (16,050 ft)"></d2l-menu-item>
-				<d2l-menu-item text="2nd Seven">
+			<d2l-dropdown-menu id="dropdown" label="Astronomy" style="max-width: 40rem; width: 300px;">
+				<d2l-menu-item text="Introduction"></d2l-menu-item>
+				<d2l-menu-item text="Searching the Heavens"></d2l-menu-item>
+				<d2l-menu-item text="The Solar System">
 					<d2l-menu>
-						<d2l-menu-item text="K2 (28,251 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Ojos del Salado (22,615 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Mount Tyree (15,919 ft)">
+						<d2l-menu-item text="Formation"></d2l-menu-item>
+						<d2l-menu-item text="Modern Solar System"></d2l-menu-item>
+						<d2l-menu-item text="Future Solar System"></d2l-menu-item>
+						<d2l-menu-item text="The Planets">
 							<d2l-menu>
-								<d2l-menu-item text="Apples"></d2l-menu-item>
-								<d2l-menu-item text="Bananas"></d2l-menu-item>
+								<d2l-menu-item text="Mercury"></d2l-menu-item>
+								<d2l-menu-item text="Venus"></d2l-menu-item>
+								<d2l-menu-item text="Earth"></d2l-menu-item>
+								<d2l-menu-item text="Mars"></d2l-menu-item>
+								<d2l-menu-item text="Jupiter"></d2l-menu-item>
+								<d2l-menu-item text="Saturn"></d2l-menu-item>
+								<d2l-menu-item text="Uranus"></d2l-menu-item>
+								<d2l-menu-item text="Neptune"></d2l-menu-item>
+								<d2l-menu-item text="Dwarf Planets"></d2l-menu-item>
 							</d2l-menu>
 						</d2l-menu-item>
-						<d2l-menu-item text="Puncak Mandala (15,617 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Mount Logan (19,551 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Dykh-Tau (17,077 ft)"></d2l-menu-item>
-						<d2l-menu-item text="Mount Kenya (17,057 ft)"></d2l-menu-item>
+						<d2l-menu-item text="The Sun"></d2l-menu-item>
+						<d2l-menu-item text="Solar &amp; Lunar Eclipses"></d2l-menu-item>
+						<d2l-menu-item text="Meteors &amp; Meteorites"></d2l-menu-item>
+						<d2l-menu-item text="Asteroids"></d2l-menu-item>
+						<d2l-menu-item text="Comets"></d2l-menu-item>
 					</d2l-menu>
 				</d2l-menu-item>
-				<d2l-menu-item text="Puncak Jaya (16,024 ft)"></d2l-menu-item>
+				<d2l-menu-item text="Stars &amp; Galaxies">
+					<d2l-menu>
+						<d2l-menu-item text="What is a Star?"></d2l-menu-item>
+						<d2l-menu-item text="Lifecycle of a Star"></d2l-menu-item>
+						<d2l-menu-item text="Binaries &amp; Multiples"></d2l-menu-item>
+						<d2l-menu-item text="Star Clusters"></d2l-menu-item>
+						<d2l-menu-item text="Star Death">
+							<d2l-menu>
+								<d2l-menu-item text="Supernovae"></d2l-menu-item>
+								<d2l-menu-item text="Black Holes"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="Star Clusters"></d2l-menu-item>
+						<d2l-menu-item text="Galaxies">
+							<d2l-menu>
+								<d2l-menu-item text="Classification"></d2l-menu-item>
+								<d2l-menu-item text="Birth &amp; Evolution"></d2l-menu-item>
+								<d2l-menu-item text="Spiral"></d2l-menu-item>
+								<d2l-menu-item text="Elliptical"></d2l-menu-item>
+								<d2l-menu-item text="Lenticular"></d2l-menu-item>
+								<d2l-menu-item text="Irregular"></d2l-menu-item>
+								<d2l-menu-item text="Active &amp; Radio"></d2l-menu-item>
+								<d2l-menu-item text="Quasars"></d2l-menu-item>
+								<d2l-menu-item text="Galaxy Clusters"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+					</d2l-menu>
+				</d2l-menu-item>
+				<d2l-menu-item text="The Night Sky">
+					<d2l-menu>
+						<d2l-menu-item text="Constellations"></d2l-menu-item>
+						<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
+						<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
+						<d2l-menu-item text="Telescopes"></d2l-menu-item>
+					</d2l-menu>
+				</d2l-menu-item>
+				<d2l-menu-item text="The Universe"></d2l-menu-item>
 			</d2l-dropdown-menu>
 		</div>
 

@@ -6,25 +6,27 @@
 		//window.Polymer = window.Polymer || {};
 		//window.Polymer.dom = 'shadow';
 	</script>
+	<link rel="stylesheet" href="demo-styles.css">
 	<link rel="import" href="../d2l-dropdown.html">
-	<link rel="import" href="content.html">
-	<style is="custom-style">
-		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
-		html {
-			color: #565a5c;
-			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-			font-weight: 300;
-			font-size: 20px;
-		}
-		body {
-			margin: 40px 20px;
-		}
-		button {
-			font-size: 0.7rem;
-		}
-	</style>
 </head>
 <body>
+
+	<dom-module id="d2l-demo-content">
+		<template>
+			<style>
+				:host {
+					display: block;
+				}
+			</style>
+			<content></content>
+			<a href="http://www.desire2learn.com">D2L</a>
+		</template>
+		<script>
+			Polymer({
+				is: 'd2l-demo-content'
+			});
+		</script>
+	</dom-module>
 
 	<h1>d2l-dropdown web component</h1>
 
