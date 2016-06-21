@@ -10,14 +10,25 @@
 		<style include="d2l-menu-item-styles"></style>
 		<style>
 
-			:host iron-icon {
-				float: right;
+			:host {
+				display: flex;
+			}
+
+			:host > span {
+				flex: auto;
+			}
+
+			:host > iron-icon {
 				height: 18px;
 				width: 18px;
 			}
 
+			:host-context([dir="rtl"]) > iron-icon {
+				transform: scaleX(-1);
+			}
+
 		</style>
-		[[text]]
+		<span>[[text]]</span>
 		<content></content>
 	</template>
 
@@ -34,7 +45,7 @@
 					var icon = document.createElement('iron-icon');
 					Polymer.dom(icon).setAttribute('icon', 'd2l-tier1:chevron-right');
 					Polymer.dom(this.root).insertBefore(
-						icon, Polymer.dom(this.root).childNodes[0]
+						icon, this.$$('content')
 					);
 				}
 			}

@@ -8,13 +8,30 @@
 
 	<template>
 		<style include="d2l-menu-item-styles">
-			:host iron-icon {
+
+			:host {
+				display: flex;
+			}
+
+			:host > span {
+				flex: auto;
+			}
+
+			:host > iron-icon {
 				height: 18px;
 				margin-right: 1rem;
 				width: 18px;
 			}
+
+			:host-context([dir="rtl"]) > iron-icon {
+				margin-right: 0;
+				margin-left: 1rem;
+				transform: scaleX(-1);
+			}
+
 		</style>
-		<iron-icon icon="d2l-tier1:chevron-left"></iron-icon>[[text]]
+		<iron-icon icon="d2l-tier1:chevron-left"></iron-icon>
+		<span>[[text]]</span>
 		<content></content>
 	</template>
 
