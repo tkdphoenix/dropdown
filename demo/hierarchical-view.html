@@ -33,31 +33,6 @@
 		<button onclick="showSubView('v3');">show 3</button>
 	</div>
 
-	<!--
-	<d2l-hierarchical-view id="v1" style="background-color: blue; color: white; border: 1px solid black;">
-		<div style="height: 200px; width: 200px;">
-			view 1
-			<button onclick="showSubView('v2a');">show 2a</button>
-			<button onclick="showSubView('v2b');">show 2b</button>
-			<div>
-				<d2l-hierarchical-view id="v2a" style=" background-color: yellow; color: black;">
-					<div style="height: 400px; width: 300px;">
-						view 2a
-						<button onclick="showSubView('v3');">show 3</button>
-						<button onclick="showParentView('v2a');">show 1 (parent)</button>
-						<d2l-hierarchical-view id="v3" style="height: 300px; width: 500px; background-color: orange;">
-							view 3
-							<button onclick="showParentView('v3');">show 2a (parent)</button>
-						</d2l-hierarchical-view>
-					</div>
-				</d2l-hierarchical-view>
-				<d2l-hierarchical-view id="v2b" style="height: 200px; width: 200px; background-color: green;">
-					view 2b
-					<button onclick="showParentView('v2b');">show 2a (parent)</button>
-				</d2l-hierarchical-view>
-		</div>
-	</d2l-hierarchical-view>
-	-->
 	<div style="width: 600px;">
 	<d2l-hierarchical-view id="v1" style="background-color: blue; color: white; border: 1px solid black;">
 		<div style="height: 200px;">
@@ -84,7 +59,7 @@
 				</d2l-hierarchical-view>
 				<d2l-hierarchical-view id="v2b" style="height: 200px; background-color: green;">
 					view 2b
-					<div style="floay: right;">
+					<div style="float: right;">
 						<button onclick="showParentView('v2b');">show 2a (parent)</button>
 					</div>
 				</d2l-hierarchical-view>
