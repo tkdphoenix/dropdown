@@ -3,8 +3,7 @@
 
 <dom-module id="d2l-menu-item-styles">
 	<template>
-		<style include="d2l-colors"></style>
-		<style>
+		<style include="d2l-colors">
 
 			:host {
 				background-color: var(--d2l-color-white);
@@ -23,11 +22,6 @@
 			:host([disabled]), :host([disabled]:hover), :host([disabled]:focus) {
 				cursor: default;
 				opacity: 0.75;
-			}
-			:host ::content > [sub-view] {
-				position: absolute;
-				left: 100%;
-				top: 0;
 			}
 
 		</style>

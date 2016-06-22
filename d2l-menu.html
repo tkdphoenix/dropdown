@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="hierarchical-view-behavior.html">
 <link rel="import" href="d2l-menu-item.html">
 <link rel="import" href="d2l-menu-item-return.html">
 <link rel="import" href="d2l-menu-item-separator.html">
@@ -7,40 +8,26 @@
 <dom-module id="d2l-menu">
 
 	<template>
-		<style include="d2l-colors">
+		<style include="d2l-colors d2l-hierarchical-view-styles">
 
 			:host {
 				box-sizing: border-box;
 				display: block;
-				position: relative;
-				width: 100%;
-				overflow: hidden;
-			}
-			.d2l-menu-items {
-				position: absolute;
 				width: 100%;
 			}
+			.d2l-menu-items d2l-menu-item-return[role="menuitem"],
 			.d2l-menu-items ::content > [role="menuitem"] {
 				border: 1px solid var(--d2l-color-titanius);
 				border-top-color: var(--d2l-color-gypsum);
 				border-bottom-color: transparent;
 			}
-			.d2l-menu-items d2l-menu-item-return[role="menuitem"] {
-				border: 1px solid var(--d2l-color-titanius);
-				border-bottom-color: transparent;
-				border-top-left-radius: 0.3rem;
-				border-top-right-radius: 0.3rem;
-			}
-			.d2l-menu-items ::content > [role="menuitem"]:first-of-type {
+			.d2l-menu-items d2l-menu-item-return[role="menuitem"],
+			.d2l-menu-items ::content > .d2l-menu-item-first[role="menuitem"] {
 				border-top-color: var(--d2l-color-titanius);
 				border-top-left-radius: 0.3rem;
 				border-top-right-radius: 0.3rem;
 			}
-			:host([sub-view]) ::content > [role="menuitem"]:first-of-type {
-				border-top-color: var(--d2l-color-gypsum);
-				border-radius: 0;
-			}
-			.d2l-menu-items ::content > [role="menuitem"]:last-of-type {
+			.d2l-menu-items ::content > .d2l-menu-item-last[role="menuitem"] {
 				border-bottom-left-radius: 0.3rem;
 				border-bottom-right-radius: 0.3rem;
 				border-bottom-color: var(--d2l-color-titanius);
@@ -52,12 +39,12 @@
 				background-color: var(--d2l-color-celestine-light-1);
 				border: 1px solid var(--d2l-color-celestine-light-2);
 			}
-			.d2l-menu-items ::content > [role="menuitem"]:focus:last-of-type,
-			.d2l-menu-items ::content > [role="menuitem"]:hover:last-of-type {
+			.d2l-menu-items ::content > .d2l-menu-item-last[role="menuitem"]:focus,
+			.d2l-menu-items ::content > .d2l-menu-item-last[role="menuitem"]:hover {
 				border-bottom-color: var(--d2l-color-celestine-light-2);
 			}
-			.d2l-menu-items.d2l-menu-item-return-hover ::content > [role="menuitem"]:first-of-type,
-			.d2l-menu-items.d2l-menu-item-return-focus ::content > [role="menuitem"]:first-of-type,
+			.d2l-menu-items.d2l-menu-item-return-hover ::content > [role="menuitem"]:first-child,
+			.d2l-menu-items.d2l-menu-item-return-focus ::content > [role="menuitem"]:first-child,
 			.d2l-menu-items ::content > [role="menuitem"]:focus + [role="menuitem"],
 			.d2l-menu-items ::content > [role="menuitem"]:hover + [role="menuitem"] {
 				border-top-color: transparent;
@@ -72,63 +59,35 @@
 			.d2l-menu-items ::content > [role="menuitem"]:hover + d2l-menu-item-separator + [role="menuitem"] {
 				border-top-color: transparent;
 			}
-			.d2l-menu-items.d2l-menu-sub-view-displayed {
-				left: -100%; /* strangely, this is needed for FF */
-				animation: d2l-menu-animation 300ms linear;
-				-webkit-animation: d2l-menu-animation 300ms linear;
-			}
-			.d2l-menu-items.d2l-menu-sub-view-hidden {
-				animation: d2l-menu-hide-animation 300ms linear;
-				-webkit-animation: d2l-menu-hide-animation 300ms linear;
-			}
-
-			@keyframes d2l-menu-animation {
-				0% { transform: translate(0,0); }
-				100% { transform: translate(-100%,0); }
-			}
-			@-webkit-keyframes d2l-menu-animation {
-				0% { -webkit-transform: translate(0,0); }
-				100% { -webkit-transform: translate(-100%,0); }
-			}
-			@keyframes d2l-menu-hide-animation {
-				0% { transform: translate(-100%,0); }
-				100% { transform: translate(0,0); }
-			}
-			@-webkit-keyframes d2l-menu-hide-animation {
-				0% { -webkit-transform: translate(-100%,0); }
-				100% { -webkit-transform: translate(0,0); }
-			}
-
 		</style>
-		<div class="d2l-menu-items"><content></content></div>
+		<div class="d2l-menu-items d2l-hierarchical-view-content">
+			<content></content>
+		</div>
 	</template>
 
 	<script>
 		Polymer({
 			is: 'd2l-menu',
 
+			behaviors: [
+				window.D2L.PolymerBehaviors.HierarchicalViewBehavior
+			],
+
 			hostAttributes: {
 				'role': 'menu'
 			},
 
 			listeners: {
-				'_focus': '_handleMenuItemFocus',
-				'_blur': '_handleMenuItemBlur',
-				'_mouseenter': '_handleMenuItemMouseEnter',
-				'_mouseleave': '_handleMenuItemMouseLeave',
-				'_resize-requested': '_handleResizeRequested',
-				'_sub-view-hidden': '_handleSubViewHidden',
-				'_sub-view-displayed': '_handleSubViewDisplayed',
-				'keydown': '_handleKeyDown',
-				'keypress': '_handleKeyPress'
+				'_blur': '_onMenuItemBlur',
+				'_focus': '_onMenuItemFocus',
+				'_mouseenter': '_onMenuItemMouseEnter',
+				'_mouseleave': '_onMenuItemMouseLeave',
+				'keydown': '_onKeyDown',
+				'keypress': '_onKeyPress',
+				'show-complete': '_onShowComplete'
 			},
 
 			properties: {
-				subView: {
-					type: Boolean,
-					observer: '_subViewChanged',
-					reflectToAttribute: true
-				},
 				label: {
 					type: String,
 					observer: '_labelChanged',
@@ -150,31 +109,40 @@
 
 			ready: function() {
 				this._labelChanged(this.label);
-				this._items = this._getMenuItems();
-				Polymer.dom(this).observeNodes(this._handleItemsChanged);
+				Polymer.dom(this).observeNodes(this._onMenuItemsChanged);
 			},
 
 			attached: function() {
-				this.async(function() {
-					this._autoSize();
-				}.bind(this));
+
+				var returnItem = this.$$('d2l-menu-item-return');
+				if (!this.childView && returnItem) {
+
+					Polymer.dom(this.root).removeChild(returnItem);
+
+				} else if (this.childView && !returnItem) {
+
+					var items = this.$$('.d2l-menu-items');
+					Polymer.dom(items).insertBefore(
+						this._createReturnItem(),
+						Polymer.dom(items).childNodes[0]
+					);
+
+				}
+
+				this._onMenuItemsChanged();
+
 			},
 
 			focus: function() {
 				this._focusFirst();
 			},
 
-			_autoSize: function() {
-				var itemsRect = this.$$('.d2l-menu-items').getBoundingClientRect();
-				this.style.height = itemsRect.height + 'px';
-				return {
-					height: itemsRect.height,
-					width: itemsRect.width
-				};
-			},
-
 			_createReturnItem: function() {
 				var item = document.createElement('d2l-menu-item-return');
+				item.addEventListener('select', function(e) {
+					e.stopPropagation();
+					this.hide();
+				}.bind(this));
 				Polymer.dom(item).setAttribute('text', this.label);
 				return item;
 			},
@@ -204,25 +172,44 @@
 			},
 
 			_getMenuItems: function() {
-					var items = this.getEffectiveChildren();
-					var returnItem = this.$$('d2l-menu-item-return');
-					if (returnItem) {
-						items.unshift(returnItem);
-					}
-					return items;
+				var items = this.getEffectiveChildren();
+				var returnItem = this.$$('d2l-menu-item-return');
+				if (returnItem) {
+					items.unshift(returnItem);
+				}
+				return items.filter(function(item) {
+					return (item.getAttribute('role') === 'menuitem');
+				});
 			},
 
-			_handleItemsChanged: function() {
-				this._items = this._getMenuItems();
-				for(var i=0; i<this._items.length; i++) {
-					if (this._items[i].tagName !== 'D2L-MENU-ITEM-SEPARATOR') {
-						Polymer.dom(this._items[i]).setAttribute('tabindex', i===0 ? 0 : -1 );
-					}
+			_isFocusable: function(item) {
+				if (item.nodeType !== 1) {
+					return false;
+				}
+				if (item.getAttribute('tabindex') !== '0' && item.getAttribute('tabindex') !== '-1') {
+					return false;
+				}
+				if (window.getComputedStyle(item, null).getPropertyValue('display') === 'none') {
+					return false;
+				}
+				return true;
+			},
+
+			_labelChanged: function(newValue) {
+				this.setAttribute('aria-label', newValue);
+				var returnItem = this.$$('d2l-menu-item-return');
+				if (returnItem) {
+					Polymer.dom(returnItem).setAttribute('text', newValue);
 				}
 			},
 
-			_handleKeyDown: function(e) {
+			_onKeyDown: function(e) {
+
 				var rootTarget = Polymer.dom(e).rootTarget;
+				if (this._items.indexOf(rootTarget) === -1) {
+					return;
+				}
+
 				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
 					// prevent scrolling when up/down arrows pressed
 					e.preventDefault();
@@ -234,14 +221,20 @@
 					}
 					return;
 				}
-				if (this.subView && (e.keyCode === this._keyCodes.ESCAPE || e.keyCode === this._keyCodes.LEFT)) {
-					this.fire('_sub-view-hidden');
+
+				if (this.childView && e.keyCode === this._keyCodes.LEFT) {
 					e.stopPropagation();
+					this.hide();
 					return;
 				}
+
 			},
 
-			_handleKeyPress: function(e) {
+			_onKeyPress: function(e) {
+
+				if (this._items.indexOf(Polymer.dom(e).rootTarget) === -1) {
+					return;
+				}
 
 				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP
 					|| e.keyCode === this._keyCodes.SPACE || e.keyCode === this._keyCodes.ENTER
@@ -252,9 +245,8 @@
 				e.stopPropagation();
 
 				var startsWith = function(item, value) {
-					if (item.text && item.text.length > 0
-						&& item.text.substr(0,1) === value) {
-							return true;
+					if (item.text && item.text.length > 0 && item.text.substr(0, 1) === value) {
+						return true;
 					}
 					return false;
 				};
@@ -287,106 +279,69 @@
 
 			},
 
-			_handleMenuItemBlur: function(e) {
+			_fireFirstLast: function(eventName, target) {
+				if (target === this._items[0]) {
+					this.fire('_first-' + eventName);
+				} else if (target === this._items[this._items.length - 1]) {
+					this.fire('_last-' + eventName);
+				}
+			},
+
+			_onMenuItemBlur: function(e) {
 				var rootTarget = Polymer.dom(e).rootTarget;
 				if (rootTarget === this.$$('d2l-menu-item-return')) {
 					Polymer.dom(this.$$('.d2l-menu-items')).classList.remove('d2l-menu-item-return-focus');
 				}
+				this._fireFirstLast('blur', rootTarget);
 			},
 
-			_handleMenuItemFocus: function(e) {
+			_onMenuItemFocus: function(e) {
 				var rootTarget = Polymer.dom(e).rootTarget;
 				if (rootTarget === this.$$('d2l-menu-item-return')) {
 					Polymer.dom(this.$$('.d2l-menu-items')).classList.add('d2l-menu-item-return-focus');
 				}
+				this._fireFirstLast('focus', rootTarget);
 			},
 
-			_handleMenuItemMouseEnter: function(e) {
+			_onMenuItemMouseEnter: function(e) {
 				var rootTarget = Polymer.dom(e).rootTarget;
 				if (rootTarget === this.$$('d2l-menu-item-return')) {
 					Polymer.dom(this.$$('.d2l-menu-items')).classList.add('d2l-menu-item-return-hover');
 				}
+				this._fireFirstLast('mouseenter', rootTarget);
 			},
 
-			_handleMenuItemMouseLeave: function(e) {
+			_onMenuItemMouseLeave: function(e) {
 				var rootTarget = Polymer.dom(e).rootTarget;
 				if (rootTarget === this.$$('d2l-menu-item-return')) {
 					Polymer.dom(this.$$('.d2l-menu-items')).classList.remove('d2l-menu-item-return-hover');
 				}
+				this._fireFirstLast('mouseleave', rootTarget);
 			},
 
-			_handleResizeRequested: function(e, detail) {
-				if (!this.subView) {
-					var view = detail.view;
-					if (view._autoSize) {
-						var size = view._autoSize();
-						this.style.height = size.height + 'px';
-					} else {
-						this.style.height = view.getBoundingClientRect().height + 'px';
-					}
-				}
-			},
+			_onMenuItemsChanged: function() {
 
-			_handleSubViewDisplayed: function(e) {
-
-				if (this._items.indexOf(Polymer.dom(e).localTarget) === -1) {
+				this._items = this._getMenuItems();
+				if (!this._items || this._items.length === 0) {
 					return;
 				}
-				Polymer.dom(this.$$('.d2l-menu-items')).classList.add('d2l-menu-sub-view-displayed');
-				Polymer.dom(this.$$('.d2l-menu-items')).classList.remove('d2l-menu-sub-view-hidden');
+
+				for (var i = 0; i < this._items.length; i++) {
+					var item = this._items[i];
+					Polymer.dom(item).setAttribute('tabindex', i === 0 ? 0 : -1 );
+					Polymer.dom(item).classList.remove('d2l-menu-item-first');
+					Polymer.dom(item).classList.remove('d2l-menu-item-last');
+				}
+				Polymer.dom(this._items[0]).classList.add('d2l-menu-item-first');
+				Polymer.dom(this._items[this._items.length - 1]).classList.add('d2l-menu-item-last');
 
 			},
 
-			_handleSubViewHidden: function(e) {
-
-				var localTarget = Polymer.dom(e).localTarget;
-				if (localTarget === this) {
+			_onShowComplete: function(e) {
+				if (this.childView) {
 					return;
 				}
-				if (this.querySelector('[sub-view-displayed]') === null) {
-					e.stopPropagation();
-					Polymer.dom(this.$$('.d2l-menu-items')).classList.remove('d2l-menu-sub-view-displayed');
-					Polymer.dom(this.$$('.d2l-menu-items')).classList.add('d2l-menu-sub-view-hidden');
-					this.fire('_resize-requested', { view: this });
-				}
-
-			},
-
-			_isFocusable: function(item) {
-				if (item.nodeType !== 1) {
-					return false;
-				}
-				if (item.getAttribute('tabindex') !== '0' && item.getAttribute('tabindex') !== '-1') {
-					return false;
-				}
-				if (window.getComputedStyle(item, null).getPropertyValue("display") === 'none') {
-					return false;
-				}
-				return true;
-			},
-
-			_labelChanged: function(newValue) {
-				this.setAttribute('aria-label', newValue);
-				var returnItem = this.$$('d2l-menu-item-return');
-				if (returnItem) {
-					Polymer.dom(returnItem).setAttribute('text', newValue);
-				}
-			},
-
-			_subViewChanged: function(newValue) {
-				var returnItem = this.$$('d2l-menu-item-return');
-				if (!newValue && returnItem) {
-
-					Polymer.dom(this.root).removeChild(returnItem);
-
-				} else if (newValue && !returnItem) {
-
-					var items = this.$$('.d2l-menu-items');
-					Polymer.dom(items).insertBefore(
-						this._createReturnItem(),
-						Polymer.dom(items).childNodes[0]
-					);
-				}
+				Polymer.dom(e).rootTarget.focus();
 			},
 
 			_tryGetPreviousFocusable: function(item) {

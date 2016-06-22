@@ -71,7 +71,7 @@
 				if (!this.opened || !document.activeElement) {
 					return;
 				}
-				if (this._isDeepChild(document.activeElement)){
+				if (this._isDeepChild(document.activeElement)) {
 					return;
 				}
 				this.opened = false;
@@ -83,7 +83,7 @@
 			if (e.target !== this || !document.activeElement) {
 				return;
 			}
-			if (!this._isDeepChild(document.activeElement)){
+			if (!this._isDeepChild(document.activeElement)) {
 				return;
 			}
 			this._opener.focus();
@@ -179,10 +179,10 @@
 			var maxHeight;
 
 			if (position.vertical !== 'above') {
-				var maxHeight = position.spaceAround.below - 40;
+				maxHeight = position.spaceAround.below - 40;
 				this._container.classList.remove('d2l-dropdown-flip-x');
 			} else {
-				var maxHeight = position.spaceAround.above - 40;
+				maxHeight = position.spaceAround.above - 40;
 				this._container.classList.add('d2l-dropdown-flip-x');
 			}
 

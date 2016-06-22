@@ -7,8 +7,7 @@
 <dom-module id="d2l-dropdown-menu">
 
 	<template>
-		<style include="d2l-dropdown-styles"></style>
-		<style include="d2l-colors"></style>
+		<style include="d2l-colors d2l-dropdown-styles"></style>
 		<style>
 
 			:host {
@@ -67,13 +66,16 @@
 			],
 
 			listeners: {
-				'_focus': '_handleMenuItemFocus',
-				'_blur': '_handleMenuItemBlur',
-				'_mouseenter': '_handleMenuItemMouseEnter',
-				'_mouseleave': '_handleMenuItemMouseLeave',
-				'select': '_handleSelect',
-				'open': '_handleOpen',
-				'close': '_handleClose'
+				'_first-blur': '_onFirstMenuItemBlur',
+				'_last-blur': '_onLastMenuItemBlur',
+				'_first-focus': '_onFirstMenuItemFocus',
+				'_last-focus': '_onLastMenuItemFocus',
+				'_first-mouseenter': '_onFirstMenuItemMouseEnter',
+				'_last-mouseenter': '_onLastMenuItemMouseEnter',
+				'_first-mouseleave': '_onFirstMenuItemMouseLeave',
+				'_last-mouseleave': '_onLastMenuItemMouseLeave',
+				'select': '_onSelect',
+				'open': '_onOpen'
 			},
 
 			properties: {
@@ -81,6 +83,11 @@
 					type: String,
 					observer: '_labelChanged',
 					reflectToAttribute: true
+				},
+				isHierarchicalView: {
+					type: Boolean,
+					readOnly: true,
+					value: true
 				}
 			},
 
@@ -89,14 +96,43 @@
 				this._container = this.$$('.d2l-dropdown-container');
 			},
 
-			_handleSelect: function(e) {
-				if (e.target.tagName !== 'D2L-MENU-ITEM') {
-					return;
-				}
-				this.close();
+			_labelChanged: function(newValue) {
+				Polymer.dom(this.$$('d2l-menu')).setAttribute('label', newValue);
 			},
 
-			_handleOpen: function(e) {
+			_onFirstMenuItemBlur: function() {
+				this._container.classList.remove('d2l-dropdown-menu-item-first-focus');
+			},
+
+			_onLastMenuItemBlur: function() {
+				this._container.classList.remove('d2l-dropdown-menu-item-last-focus');
+			},
+
+			_onFirstMenuItemFocus: function() {
+				this._container.classList.add('d2l-dropdown-menu-item-first-focus');
+			},
+
+			_onLastMenuItemFocus: function() {
+				this._container.classList.add('d2l-dropdown-menu-item-last-focus');
+			},
+
+			_onFirstMenuItemMouseEnter: function() {
+				this._container.classList.add('d2l-dropdown-menu-item-first-hover');
+			},
+
+			_onLastMenuItemMouseEnter: function() {
+				this._container.classList.add('d2l-dropdown-menu-item-last-hover');
+			},
+
+			_onFirstMenuItemMouseLeave: function() {
+				this._container.classList.remove('d2l-dropdown-menu-item-first-hover');
+			},
+
+			_onLastMenuItemMouseLeave: function() {
+				this._container.classList.remove('d2l-dropdown-menu-item-last-hover');
+			},
+
+			_onOpen: function(e) {
 				if (e.target !== this) {
 					return;
 				}
@@ -111,42 +147,11 @@
 				}, 0);
 			},
 
-			_addFirstLastMenuItemClass: function(elem, classSuffix) {
-				var items = this.queryAllEffectiveChildren('d2l-menu-item');
-				if (elem === items[0]) {
-					this._container.classList.add('d2l-dropdown-menu-item-first-' + classSuffix);
-				} else if (elem === items[items.length-1]) {
-					this._container.classList.add('d2l-dropdown-menu-item-last-' + classSuffix);
+			_onSelect: function(e) {
+				if (e.target.tagName !== 'D2L-MENU-ITEM') {
+					return;
 				}
-			},
-
-			_handleMenuItemFocus: function(e) {
-				this._addFirstLastMenuItemClass(e.target, 'focus');
-			},
-
-			_handleMenuItemBlur: function(e) {
-				this._removeFirstLastMenuItemClass(e.target, 'focus');
-			},
-
-			_handleMenuItemMouseEnter: function(e) {
-				this._addFirstLastMenuItemClass(e.target, 'hover');
-			},
-
-			_handleMenuItemMouseLeave: function(e) {
-				this._removeFirstLastMenuItemClass(e.target, 'hover');
-			},
-
-			_labelChanged: function(newValue) {
-				Polymer.dom(this.$$('d2l-menu')).setAttribute('label', newValue);
-			},
-
-			_removeFirstLastMenuItemClass: function(elem, classSuffix) {
-				var items = this.queryAllEffectiveChildren('d2l-menu-item');
-				if (elem === items[0]) {
-					this._container.classList.remove('d2l-dropdown-menu-item-first-' + classSuffix);
-				} else if (elem === items[items.length-1]) {
-					this._container.classList.remove('d2l-dropdown-menu-item-last-' + classSuffix);
-				}
+				this.close();
 			}
 
 		});

@@ -12,13 +12,13 @@
 		},
 
 		listeners: {
-			'_sub-view-hidden': '_handleSubViewHidden',
-			'blur': '_handleBlur',
-			'focus': '_handleFocus',
-			'keydown': '_handleKeyDown',
-			'mouseenter': '_handleMouseEnter',
-			'mouseleave': '_handleMouseLeave',
-			'tap': '_handleTap'
+			'blur': '__onBlur',
+			'focus': '__onFocus',
+			'hide-complete': '__onHideComplete',
+			'keydown': '__onKeyDown',
+			'mouseenter': '__onMouseEnter',
+			'mouseleave': '__onMouseLeave',
+			'tap': '__onTap'
 		},
 
 		properties: {
@@ -27,90 +27,90 @@
 				reflectToAttribute: true,
 				value: false
 			},
+			hasChildView: {
+				type: Boolean,
+				value: false
+			},
 			text: String
 		},
 
-		_keyCodes: {
+		__keyCodes: {
 			ENTER: 13,
 			LEFT: 37,
 			RIGHT: 39,
 			SPACE: 32
 		},
 
-		_children: null,
+		__children: null,
 
 		ready: function() {
 			var children = this.getEffectiveChildren();
 			if (children && children.length > 0) {
-				this._children = children;
+				this.hasChildView = true;
+				this.__children = children;
 				this.setAttribute('aria-haspopup', true);
 				// assumption: single, focusable child view
-				this._children[0].setAttribute('label', this.text);
-				this._children[0].setAttribute('sub-view', true);
+				this.__children[0].setAttribute('label', this.text);
 			}
 		},
 
-		_action: function() {
+		__action: function() {
 
 			if (this.disabled) {
 				return;
 			}
 
-			if (this._children && this._children.length > 0) {
-				this.setAttribute('sub-view-displayed', true);
-				this.fire('_sub-view-displayed');
+			if (this.__children && this.__children.length > 0 && this.__children[0].isHierarchicalView) {
 				// assumption: single, focusable child view
-				this.fire('_resize-requested', { view: this._children[0] });
-				this._children[0].focus();
+				this.__children[0].show();
 			} else {
 				this.fire('select');
 			}
 
 		},
 
-		_handleBlur: function(e) {
+		__onBlur: function() {
 			this.fire('_blur');
 		},
 
-		_handleFocus: function(e) {
+		__onFocus: function() {
 			this.fire('_focus');
 		},
 
-		_handleSubViewHidden: function(e) {
-			if (e.target === this) {
+		__onHideComplete: function(e) {
+			if (this.__children.indexOf(Polymer.dom(e).localTarget) === -1) {
 				return;
 			}
-			if (this._children.indexOf(Polymer.dom(e).localTarget) === -1) {
-				return;
-			}
-			this.removeAttribute('sub-view-displayed');
-			this.focus()
+			this.focus();
 		},
 
-		_handleKeyDown: function(e) {
-			if (e.keyCode === this._keyCodes.ENTER || e.keyCode === this._keyCodes.SPACE) {
-				e.stopPropagation();
-				this._action();
+		__onKeyDown: function(e) {
+			if (Polymer.dom(e).localTarget !== this) {
 				return;
 			}
-			if (this._children && this._children.length > 0 && e.keyCode === this._keyCodes.RIGHT) {
+			if (e.keyCode === this.__keyCodes.ENTER || e.keyCode === this.__keyCodes.SPACE) {
 				e.stopPropagation();
-				this._action();
+				this.__action();
+				return;
+			}
+			if (this.__children && this.__children.length > 0 && e.keyCode === this.__keyCodes.RIGHT) {
+				e.stopPropagation();
+				this.__action();
 				return;
 			}
 		},
 
-		_handleMouseEnter: function(e) {
+		__onMouseEnter: function() {
 			this.fire('_mouseenter');
 		},
 
-		_handleMouseLeave: function(e) {
+		__onMouseLeave: function() {
 			this.fire('_mouseleave');
 		},
 
-		_handleTap: function(e) {
+		__onTap: function(e) {
 			e.stopPropagation();
-			this._action();
+			this.__action();
 		}
 
 	};

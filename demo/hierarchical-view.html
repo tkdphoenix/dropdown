@@ -1,0 +1,84 @@
+<html>
+<head>
+
+	<title>Hierarchical View Concept</title>
+	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
+	<script>
+		window.Polymer = window.Polymer || {};
+		window.Polymer.dom = 'shadow';
+	</script>
+	<link rel="import" href="../hierarchical-view.html">
+	<style is="custom-style">
+		@import 'https://fonts.googleapis.com/css?family=Lato:400,300';
+		html {
+			color: #565a5c;
+			font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+			font-weight: 300;
+			font-size: 14px;
+		}
+		body {
+			margin: 40px 20px;
+		}
+		button {
+			font-size: 0.7rem;
+		}
+	</style>
+</head>
+
+</head>
+<body unresolved>
+	<h1>hierarchical view transition concept</h1>
+
+	<div>
+		<button onclick="showSubView('v3');">show 3</button>
+	</div>
+
+	<div style="width: 600px;">
+	<d2l-hierarchical-view id="v1" style="background-color: blue; color: white; border: 1px solid black;">
+		<div style="height: 200px;">
+			view 1
+			<div style="float:right;">
+				<button onclick="showSubView('v2a');">show 2a</button>
+				<button onclick="showSubView('v2b');">show 2b</button>
+			</div>
+			<div>
+				<d2l-hierarchical-view id="v2a" style="background-color: yellow; color: black;">
+					<div style="height: 400px;">
+						view 2a
+						<div style="float:right;">
+							<button onclick="showParentView('v2a');">show 1 (parent)</button>
+							<button onclick="showSubView('v3');">show 3</button>
+						</div>
+						<d2l-hierarchical-view id="v3" style="height: 300px; background-color: orange;">
+							view 3
+							<div style="float:right;">
+								<button onclick="showParentView('v3');">show 2a (parent)</button>
+							</div>
+						</d2l-hierarchical-view>
+					</div>
+				</d2l-hierarchical-view>
+				<d2l-hierarchical-view id="v2b" style="height: 200px; background-color: green;">
+					view 2b
+					<div style="float: right;">
+						<button onclick="showParentView('v2b');">show 2a (parent)</button>
+					</div>
+				</d2l-hierarchical-view>
+		</div>
+	</d2l-hierarchical-view>
+	</div>
+
+	<script>
+
+		function showSubView(id) {
+			var view = document.getElementById(id);
+			view.show();
+		}
+
+		function showParentView(id) {
+			var view = document.getElementById(id);
+			view.hide();
+		}
+
+	</script>
+</body>
+</html>
