@@ -90,6 +90,10 @@
 			'resize': '__onResize'
 		},
 
+		ready: function() {
+			this.__focusCapture = this.__focusCapture.bind(this);
+		},
+
 		attached: function() {
 
 			var parentNode = Polymer.dom(this).parentNode;
@@ -105,6 +109,16 @@
 				this.__autoSize(this);
 			}.bind(this));
 
+			if (!this.childView) {
+				this.addEventListener('focus', this.__focusCapture, true);
+			}
+
+		},
+
+		detached: function() {
+			if (!this.childView) {
+				this.removeEventListener('focus', this.__focusCapture, true);
+			}
 		},
 
 		show: function(sourceTarget) {
@@ -135,6 +149,20 @@
 			this.style.height = rect.height + 'px';
 		},
 
+		__getActiveView: function() {
+			var rootView = this.__getRootView();
+			var childViews = Polymer.dom(rootView).querySelectorAll('[child-view][shown]');
+			if (!childViews || childViews.length === 0) {
+				return this;
+			}
+			for (var i = 0; i < childViews.length; i++) {
+				var childView = childViews[i];
+				if (childView.__isActive()) {
+					return childView;
+				}
+			}
+		},
+
 		__getParentView: function(e) {
 			var path = e.path;
 			for (var i = 1; i < e.path.length; i++) {
@@ -142,6 +170,40 @@
 					return path[i];
 				}
 			}
+		},
+
+		__getRootView: function() {
+			if (!this.childView) {
+				return this;
+			}
+			var parentNode = Polymer.dom(this).parentNode;
+			while (parentNode) {
+				if (parentNode.isHierarchicalView && !parentNode.childView) {
+					return parentNode;
+				}
+				parentNode = Polymer.dom(parentNode).parentNode;
+			}
+		},
+
+		__isActive: function() {
+			var content = this.$$('.d2l-hierarchical-view-content');
+			if (this.childView && !this.shown) {
+				return false;
+			} else {
+				return !content.classList.contains('d2l-child-view-show');
+			}
+		},
+
+		__focusCapture: function(e) {
+
+			var parentView = this.__getParentView(e);
+			if (!parentView.__isActive()) {
+				var activeView = this.__getActiveView();
+				if (activeView.focus) {
+					activeView.focus();
+				}
+			}
+
 		},
 
 		__onKeyDown: function(e) {
