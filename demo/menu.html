@@ -64,7 +64,7 @@
 						<d2l-menu-item text="Binaries &amp; Multiples"></d2l-menu-item>
 						<d2l-menu-item text="Star Clusters"></d2l-menu-item>
 						<d2l-menu-item text="Star Death">
-							<d2l-menu>
+							<d2l-menu id="stardeath">
 								<d2l-menu-item text="Supernovae"></d2l-menu-item>
 								<d2l-menu-item text="Black Holes"></d2l-menu-item>
 							</d2l-menu>
@@ -86,7 +86,7 @@
 					</d2l-menu>
 				</d2l-menu-item>
 				<d2l-menu-item text="The Night Sky">
-					<d2l-menu>
+					<d2l-menu id="thenightsky">
 						<d2l-menu-item text="Constellations"></d2l-menu-item>
 						<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
 						<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
@@ -134,7 +134,7 @@
 		}
 
 		function showDeepMenu() {
-			var deepMenu = document.getElementById('deepMenu');
+			var deepMenu = document.getElementById('stardeath');
 			deepMenu.show();
 		}
 

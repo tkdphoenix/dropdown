@@ -85,6 +85,9 @@
 		},
 
 		_onKeyDown: function(e) {
+			if (Polymer.dom(e).localTarget !== this) {
+				return;
+			}
 			if (e.keyCode === this._keyCodes.ENTER || e.keyCode === this._keyCodes.SPACE) {
 				e.stopPropagation();
 				this._action();

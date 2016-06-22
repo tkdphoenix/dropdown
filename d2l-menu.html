@@ -204,7 +204,12 @@
 			},
 
 			_onKeyDown: function(e) {
+
 				var rootTarget = Polymer.dom(e).rootTarget;
+				if (this._items.indexOf(rootTarget) === -1) {
+					return;
+				}
+
 				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
 					// prevent scrolling when up/down arrows pressed
 					e.preventDefault();
@@ -216,14 +221,20 @@
 					}
 					return;
 				}
-				if (this.childView && (e.keyCode === this._keyCodes.ESCAPE || e.keyCode === this._keyCodes.LEFT)) {
+
+				if (this.childView && e.keyCode === this._keyCodes.LEFT) {
 					e.stopPropagation();
 					this.hide();
 					return;
 				}
+
 			},
 
 			_onKeyPress: function(e) {
+
+				if (this._items.indexOf(Polymer.dom(e).rootTarget) === -1) {
+					return;
+				}
 
 				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP
 					|| e.keyCode === this._keyCodes.SPACE || e.keyCode === this._keyCodes.ENTER

@@ -3,8 +3,8 @@
 	<title>D2L Menu Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
-		window.Polymer = window.Polymer || {};
-		window.Polymer.dom = 'shadow';
+		//window.Polymer = window.Polymer || {};
+		//window.Polymer.dom = 'shadow';
 	</script>
 	<link rel="stylesheet" href="demo-styles.css">
 	<link rel="import" href="../menu-item-styles.html">
@@ -55,9 +55,19 @@
 					height: 500px;
 					padding: 1rem;
 				}
+				:host .back-container {
+					margin-top: 1rem;
+				}
+				:host a {
+					color: white;
+					font-size: 0.7rem;
+				}
 			</style>
 			<div class="d2l-hierarchical-view-content">
 				<content></content>
+				<div class="back-container">
+					<a href="javascript:void(0);" on-tap="_handleHide" tabindex="-1">Go Back</a>
+				</div>
 			</div>
 		</template>
 		<script>
@@ -65,14 +75,18 @@
 				is: 'd2l-custom-view',
 
 				listeners: {
-					'tap': '_onTap'
+					'show-complete': '_onShowComplete'
 				},
 
 				behaviors: [
 					window.D2L.PolymerBehaviors.HierarchicalViewBehavior
 				],
 
-				_onTap: function(e) {
+				_onShowComplete: function() {
+					this.$$('.back-container > a').focus();
+				},
+
+				_handleHide: function(e) {
 					e.stopPropagation();
 					this.hide();
 				}
