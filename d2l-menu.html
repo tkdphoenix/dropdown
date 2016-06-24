@@ -32,6 +32,16 @@
 				border-bottom-right-radius: 0.3rem;
 				border-bottom-color: var(--d2l-color-titanius);
 			}
+			:host-context([no-side-borders]) .d2l-menu-items d2l-menu-item-return[role="menuitem"],
+			:host-context([no-side-borders]) .d2l-menu-items ::content > [role="menuitem"] {
+				border-left-color: transparent;
+				border-right-color: transparent;
+			}
+			:host-context([no-side-borders]) .d2l-menu-items d2l-menu-item-return[role="menuitem"],
+			:host-context([no-side-borders]) .d2l-menu-items ::content > .d2l-menu-item-first[role="menuitem"],
+			:host-context([no-side-borders]) .d2l-menu-items ::content > .d2l-menu-item-last[role="menuitem"] {
+				border-radius: 0;
+			}
 			.d2l-menu-items d2l-menu-item-return[role="menuitem"]:focus,
 			.d2l-menu-items d2l-menu-item-return[role="menuitem"]:hover,
 			.d2l-menu-items ::content > [role="menuitem"]:focus,
@@ -91,6 +101,10 @@
 				label: {
 					type: String,
 					observer: '_labelChanged',
+					reflectToAttribute: true
+				},
+				noSideBorders: {
+					type: Boolean,
 					reflectToAttribute: true
 				}
 			},
