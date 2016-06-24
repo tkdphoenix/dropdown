@@ -13,8 +13,8 @@
 
 		listeners: {
 			'blur': '__onBlur',
-			'focus': '__onFocus',
 			'dom-change': '__onDomChange',
+			'focus': '__onFocus',
 			'hide-complete': '__onHideComplete',
 			'keydown': '__onKeyDown',
 			'mouseenter': '__onMouseEnter',
@@ -64,10 +64,6 @@
 			}
 		},
 
-		__onDomChange: function() {
-			this.__initialize();
-		},
-
 		__action: function() {
 
 			if (this.disabled) {
@@ -85,6 +81,10 @@
 
 		__onBlur: function() {
 			this.fire('_blur');
+		},
+
+		__onDomChange: function() {
+			this.__initialize();
 		},
 
 		__onFocus: function() {
