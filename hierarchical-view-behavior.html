@@ -161,16 +161,14 @@
 
 			} else {
 
-				if (!this.getAttribute('clone')) {
-					var clone = Polymer.dom(this).cloneNode(true);
-					clone.setAttribute('clone', 'true');
-					document.body.appendChild(clone);
-					setTimeout(function() {
-						var rect = clone.getBoundingClientRect();
-						this.style.height = rect.height + 'px';
-						document.body.removeChild(clone);
-					}.bind(this), 0);
-				}
+				var clone = Polymer.dom(this).cloneNode(true);
+				clone.setAttribute('clone', 'true');
+				document.body.appendChild(clone);
+				setTimeout(function() {
+					var rect = clone.getBoundingClientRect();
+					this.style.height = rect.height + 'px';
+					document.body.removeChild(clone);
+				}.bind(this), 0);
 
 			}
 
