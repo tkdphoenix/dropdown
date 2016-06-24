@@ -40,8 +40,8 @@
 				window.D2L.PolymerBehaviors.MenuItemBehavior
 			],
 
-			ready: function() {
-				if (this.hasChildView) {
+			_initialize: function() {
+				if (this.hasChildView && !this.$$('iron-icon')) {
 					var icon = document.createElement('iron-icon');
 					Polymer.dom(icon).setAttribute('icon', 'd2l-tier1:chevron-right');
 					Polymer.dom(this.root).insertBefore(

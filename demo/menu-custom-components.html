@@ -95,6 +95,13 @@
 		<d2l-menu label="Seven Summits" style="width: 400px;">
 			<template is="dom-repeat" items="{{menuItems}}">
 				<d2l-menu-item text="{{item.text}}">
+					<template is="dom-if" if="{{item.hasSubMenu}}">
+						<d2l-menu label="{{item.text}}">
+							<template is="dom-repeat" items="{{item.menuItems}}">
+								<d2l-menu-item text="{{item.text}}"></d2l-menu-item>
+							</template>
+						</d2l-menu>
+					</template>
 				</d2l-menu-item>
 			</template>
 		</d2l-menu>
@@ -107,12 +114,17 @@
 				menuItems: {
 					type: Object,
 					value: [
-						{text: 'Introduction', more: []},
-						{text: 'Searching the Heavens', more: []},
-						{text: 'The Solar System', more: []},
-						{text: 'Stars & Galaxies', more: []},
-						{text: 'The Night Sky', more: []},
-						{text: 'The Universe', more: []}
+						{text: 'Introduction'},
+						{text: 'Searching the Heavens'},
+						{text: 'The Solar System', hasSubMenu: true, menuItems: [
+							{text: 'Formation'},
+							{text: 'Modern Solar System'},
+							{text: 'Future Solar System'},
+							{text: 'The Planets'}
+						]},
+						{text: 'Stars & Galaxies'},
+						{text: 'The Night Sky'},
+						{text: 'The Universe'}
 					]
 				}
 			}
