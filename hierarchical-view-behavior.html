@@ -147,7 +147,7 @@
 			this.fire('hide-start', {isSource: sourceTarget === this, sourceTarget: sourceTarget});
 		},
 
-		__observeNodes: function(e) {
+		__observeNodes: function() {
 			if (this.isAttached && this.__getActiveView() === this) {
 				var content = this.$$('.d2l-hierarchical-view-content');
 				this.fire('resize', content.getBoundingClientRect());
