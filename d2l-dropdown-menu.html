@@ -139,8 +139,7 @@
 				var menu = this.$$('d2l-menu');
 				var parentNode = Polymer.dom(menu).parentNode;
 
-				Polymer.dom(parentNode).removeChild(menu);
-				Polymer.dom(parentNode).appendChild(menu);
+				menu.resize();
 
 				setTimeout(function() {
 					menu.focus();

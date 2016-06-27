@@ -14,12 +14,6 @@
 				-webkit-transition: height 300ms linear;
 				transition: height 300ms linear;
 			}
-			:host([clone]) {
-				display: inline-block;
-				position: absolute;
-				left: -10000px;
-			}
-
 			:host([child-view]),
 			:host ::content [child-view] {
 				display: none;
@@ -147,42 +141,34 @@
 			this.fire('hide-start', {isSource: sourceTarget === this, sourceTarget: sourceTarget});
 		},
 
+		resize: function() {
+			this.__fireResize();
+		},
+
+		__fireResize: function() {
+			var content = this.$$('.d2l-hierarchical-view-content');
+			this.fire('resize', content.getBoundingClientRect());
+		},
+
 		__observeNodes: function() {
 			if (this.isAttached && this.__getActiveView() === this) {
-				var content = this.$$('.d2l-hierarchical-view-content');
-				this.fire('resize', content.getBoundingClientRect());
+				this.__fireResize();
 			}
 		},
 
 		__autoSize: function(view) {
 
-			if (this.childView || this.getAttribute('clone')) {
+			if (this.childView) {
 				return;
 			}
 
-			/* clone to get height only if not displayed */
-			if (this.offsetHeight) {
-
-				var rect;
-				if (view === this) {
-					rect = this.$$('.d2l-hierarchical-view-content').getBoundingClientRect();
-				} else {
-					rect = view.getBoundingClientRect();
-				}
-				this.style.height = rect.height + 'px';
-
+			var rect;
+			if (view === this) {
+				rect = this.$$('.d2l-hierarchical-view-content').getBoundingClientRect();
 			} else {
-
-				var clone = Polymer.dom(this).cloneNode(true);
-				clone.setAttribute('clone', 'true');
-				document.body.appendChild(clone);
-				setTimeout(function() {
-					var rect = clone.getBoundingClientRect();
-					this.style.height = rect.height + 'px';
-					document.body.removeChild(clone);
-				}.bind(this), 0);
-
+				rect = view.getBoundingClientRect();
 			}
+			this.style.height = rect.height + 'px';
 
 		},
 
