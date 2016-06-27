@@ -78,6 +78,9 @@
 				reflectToAttribute: true,
 				value: false
 			},
+			isAttached: {
+				type: Boolean
+			},
 			isHierarchicalView: {
 				type: Boolean,
 				readOnly: true,
@@ -98,10 +101,11 @@
 
 		ready: function() {
 			this.__focusCapture = this.__focusCapture.bind(this);
+			Polymer.dom(this).observeNodes(this.__observeNodes);
 		},
 
 		attached: function() {
-
+			this.isAttached = true;
 			var parentNode = Polymer.dom(this).parentNode;
 			while (parentNode) {
 				if (parentNode.isHierarchicalView) {
@@ -122,6 +126,7 @@
 		},
 
 		detached: function() {
+			this.isAttached = false;
 			if (!this.childView) {
 				this.removeEventListener('focus', this.__focusCapture, true);
 			}
@@ -140,6 +145,13 @@
 				sourceTarget = this;
 			}
 			this.fire('hide-start', {isSource: sourceTarget === this, sourceTarget: sourceTarget});
+		},
+
+		__observeNodes: function(e) {
+			if (this.isAttached && this.__getActiveView() === this) {
+				var content = this.$$('.d2l-hierarchical-view-content');
+				this.fire('resize', content.getBoundingClientRect());
+			}
 		},
 
 		__autoSize: function(view) {
