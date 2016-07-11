@@ -97,7 +97,7 @@
 				'keydown': '_onKeyDown',
 				'keypress': '_onKeyPress',
 				'show-complete': '_onShowComplete',
-				'item-hidden-change': '_onMenuItemsChanged'
+				'visibility-change': '_onMenuItemsChanged'
 			},
 
 			properties: {
@@ -297,14 +297,14 @@
 			},
 
 			_fireFirstLast: function(eventName, target) {
-				if (target === this._getFirstViewableItem()) {
+				if (target === this._getFirstVisibleItem()) {
 					this.fire('_first-' + eventName);
-				} else if (target === this._getLastViewableItem) {
+				} else if (target === this._getLastVisibleItem()) {
 					this.fire('_last-' + eventName);
 				}
 			},
 
-			_getFirstViewableItem: function() {
+			_getFirstVisibleItem: function() {
 				for (var x = 0; x < this._items.length; x++) {
 					if (!this._items[x].hidden) {
 						return this._items[x];
@@ -313,7 +313,7 @@
 				return null;
 			},
 
-			_getLastViewableItem: function() {
+			_getLastVisibleItem: function() {
 				for (var x = this._items.length - 1; x >= 0; x--) {
 					if (!this._items[x].hidden) {
 						return this._items[x];
@@ -361,21 +361,20 @@
 					return;
 				}
 
+				var visibleItems = [];
+
 				for (var i = 0; i < this._items.length; i++) {
 					var item = this._items[i];
 					Polymer.dom(item).classList.remove('d2l-menu-item-first');
 					Polymer.dom(item).classList.remove('d2l-menu-item-last');
+					if (!item.hidden) {
+						Polymer.dom(item).setAttribute('tabindex', visibleItems.length === 0 ? 0 : -1 );
+						visibleItems.push(item);
+					}
 				}
 
-				var filteredItems = this._items.filter(function(item) {
-					return (item.getAttribute('hidden') === null);
-				});
-
-				filteredItems.forEach(function(item) {
-					Polymer.dom(item).setAttribute('tabindex', i === 0 ? 0 : -1 );
-				});
-				Polymer.dom(filteredItems[0]).classList.add('d2l-menu-item-first');
-				Polymer.dom(filteredItems[filteredItems.length - 1]).classList.add('d2l-menu-item-last');
+				Polymer.dom(visibleItems[0]).classList.add('d2l-menu-item-first');
+				Polymer.dom(visibleItems[visibleItems.length - 1]).classList.add('d2l-menu-item-last');
 
 			},
 
