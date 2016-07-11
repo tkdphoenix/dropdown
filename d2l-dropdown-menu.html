@@ -50,9 +50,7 @@
 				<div></div>
 			</div>
 			<div class="d2l-dropdown-content-container">
-				<d2l-menu>
-					<content></content>
-				</d2l-menu>
+				<content></content>
 			</div>
 		</div>
 	</template>
@@ -74,30 +72,14 @@
 				'_last-mouseenter': '_onLastMenuItemMouseEnter',
 				'_first-mouseleave': '_onFirstMenuItemMouseLeave',
 				'_last-mouseleave': '_onLastMenuItemMouseLeave',
-				'select': '_onSelect',
-				'open': '_onOpen'
-			},
-
-			properties: {
-				label: {
-					type: String,
-					observer: '_labelChanged',
-					reflectToAttribute: true
-				},
-				isHierarchicalView: {
-					type: Boolean,
-					readOnly: true,
-					value: true
-				}
+				'close': '_onClose',
+				'open': '_onOpen',
+				'select': '_onSelect'
 			},
 
 			ready: function() {
 				this.noAutoFit = true;
 				this._container = this.$$('.d2l-dropdown-container');
-			},
-
-			_labelChanged: function(newValue) {
-				Polymer.dom(this.$$('d2l-menu')).setAttribute('label', newValue);
 			},
 
 			_onFirstMenuItemBlur: function() {
@@ -132,17 +114,31 @@
 				this._container.classList.remove('d2l-dropdown-menu-item-last-hover');
 			},
 
-			_onOpen: function(e) {
+			_onClose: function(e) {
+
 				if (e.target !== this) {
 					return;
 				}
-				var menu = this.$$('d2l-menu');
 
+				// reset to root view
+				var menu = this.queryEffectiveChildren('[role="menu"]');
+				menu.show();
+
+			},
+
+			_onOpen: function(e) {
+
+				if (e.target !== this) {
+					return;
+				}
+
+				var menu = this.queryEffectiveChildren('[role="menu"]');
 				menu.resize();
 
 				setTimeout(function() {
 					menu.focus();
 				}, 0);
+
 			},
 
 			_onSelect: function(e) {
