@@ -21,6 +21,8 @@
 		<div style="margin-bottom: 0.75rem;">
 			<button onclick="toggleRTL();">Toggle RTL</button>
 			<button onclick="toggleFloat();">Toggle Float</button>
+			<button onclick="toggleHiddenFirst(4000);">Toggle First (4s delay)</button>
+			<button onclick="toggleHiddenLast(4000);">Toggle Last (4s delay)</button>
 		</div>
 		<div style="margin-bottom: 0.75rem;">
 			<label for="config-no-auto-close">
@@ -45,7 +47,7 @@
 		<div id="dropdown-container">
 			<d2l-dropdown-menu id="dropdown" style="max-width: 40rem; width: 300px;">
 				<d2l-menu label="Astronomy">
-					<d2l-menu-item text="Introduction"></d2l-menu-item>
+					<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
 					<d2l-menu-item text="Searching the Heavens"></d2l-menu-item>
 					<d2l-menu-item text="The Solar System">
 						<d2l-menu>
@@ -108,7 +110,7 @@
 							<d2l-menu-item text="Telescopes"></d2l-menu-item>
 						</d2l-menu>
 					</d2l-menu-item>
-					<d2l-menu-item text="The Universe"></d2l-menu-item>
+					<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</div>
@@ -180,6 +182,28 @@
 			} else {
 				content.style.cssFloat = 'right';
 			}
+		}
+
+		function toggleHiddenFirst(delayMs) {
+			var firstItem = document.getElementById('first-item');
+			toggleHidden(firstItem, delayMs);
+		}
+
+		function toggleHiddenLast(delayMs) {
+			var lastItem = document.getElementById('last-item');
+			toggleHidden(lastItem, delayMs);
+		}
+
+		function toggleHidden(item, delayMs) {
+			if (item.getAttribute('hidden') !== null) {
+				setTimeout(function() {
+					item.removeAttribute('hidden');
+				}, delayMs);
+			} else {
+				setTimeout(function() {
+					item.setAttribute('hidden', 'hidden');
+				}, delayMs);
+			};
 		}
 
 	</script>

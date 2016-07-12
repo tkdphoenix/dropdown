@@ -32,7 +32,12 @@
 				type: Boolean,
 				value: false
 			},
-			text: String
+			text: String,
+			hidden: {
+				type: Boolean,
+				observer: '_onHidden',
+				reflectToAttribute: true
+			}
 		},
 
 		__keyCodes: {
@@ -100,6 +105,10 @@
 				return;
 			}
 			this.focus();
+		},
+
+		_onHidden: function() {
+			this.fire('visibility-change');
 		},
 
 		__onKeyDown: function(e) {
