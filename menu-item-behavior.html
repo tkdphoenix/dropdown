@@ -104,6 +104,9 @@
 			if (this.__children.indexOf(Polymer.dom(e).localTarget) === -1) {
 				return;
 			}
+			if (e.detail.data && e.detail.data.preventFocus) {
+				return;
+			}
 			this.focus();
 		},
 
