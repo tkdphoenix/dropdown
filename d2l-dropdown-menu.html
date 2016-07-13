@@ -79,39 +79,39 @@
 
 			ready: function() {
 				this.noAutoFit = true;
-				this._container = this.$$('.d2l-dropdown-container');
+				this.__container = this.$$('.d2l-dropdown-container');
 			},
 
 			_onFirstMenuItemBlur: function() {
-				this._container.classList.remove('d2l-dropdown-menu-item-first-focus');
+				this.__container.classList.remove('d2l-dropdown-menu-item-first-focus');
 			},
 
 			_onLastMenuItemBlur: function() {
-				this._container.classList.remove('d2l-dropdown-menu-item-last-focus');
+				this.__container.classList.remove('d2l-dropdown-menu-item-last-focus');
 			},
 
 			_onFirstMenuItemFocus: function() {
-				this._container.classList.add('d2l-dropdown-menu-item-first-focus');
+				this.__container.classList.add('d2l-dropdown-menu-item-first-focus');
 			},
 
 			_onLastMenuItemFocus: function() {
-				this._container.classList.add('d2l-dropdown-menu-item-last-focus');
+				this.__container.classList.add('d2l-dropdown-menu-item-last-focus');
 			},
 
 			_onFirstMenuItemMouseEnter: function() {
-				this._container.classList.add('d2l-dropdown-menu-item-first-hover');
+				this.__container.classList.add('d2l-dropdown-menu-item-first-hover');
 			},
 
 			_onLastMenuItemMouseEnter: function() {
-				this._container.classList.add('d2l-dropdown-menu-item-last-hover');
+				this.__container.classList.add('d2l-dropdown-menu-item-last-hover');
 			},
 
 			_onFirstMenuItemMouseLeave: function() {
-				this._container.classList.remove('d2l-dropdown-menu-item-first-hover');
+				this.__container.classList.remove('d2l-dropdown-menu-item-first-hover');
 			},
 
 			_onLastMenuItemMouseLeave: function() {
-				this._container.classList.remove('d2l-dropdown-menu-item-last-hover');
+				this.__container.classList.remove('d2l-dropdown-menu-item-last-hover');
 			},
 
 			_onClose: function(e) {
