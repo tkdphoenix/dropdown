@@ -11,17 +11,9 @@
 	<body>
 		<button id="opener">opener</button>
 
-		<test-fixture id="ClosedDropdown">
+		<test-fixture id="Dropdown">
 			<template>
-				<d2l-dropdown id="dropdown" target-id="opener" >
-					<p>Lorem ipsum dolor sit...</p>
-				</d2l-dropdown>
-			</template>
-		</test-fixture>
-
-		<test-fixture id="OpenDropdown">
-			<template>
-				<d2l-dropdown id="dropdown" target-id="opener" open>
+				<d2l-dropdown id="dropdown" target-id="opener">
 					<p>Lorem ipsum dolor sit...</p>
 					<a id="dropdownLink" href="http://www.google.com">Google 1</a>
 				</d2l-dropdown>
@@ -32,68 +24,64 @@
 
 		describe('<d2l-dropdown>', function() {
 
-			describe('closed', function() {
+			var dropdown, dropdownLink, otherLink;
 
-				var dropdown;
-
-				beforeEach(function() {
-					fixture('ClosedDropdown');
-					dropdown = document.getElementById('dropdown');
-				});
-
-				it('distributes its children', function() {
-					var content = dropdown.getContentChildren();
-					expect(content.length).to.equal(1);
-					expect(content[0]).to.equal(dropdown.querySelector('p'));
-				});
-
-				it('should fire open event when open attribute is added', function(done) {
-					dropdown.addEventListener('open', function() {
-						expect(dropdown.open).to.be.true;
-						done();
-					});
-					dropdown.setAttribute('open', true);
-				});
-
+			beforeEach(function() {
+				fixture('Dropdown');
+				dropdown = document.getElementById('dropdown');
+				dropdownLink = document.getElementById('dropdownLink');
+				otherLink = document.getElementById('otherLink');
 			});
 
-			describe('open', function() {
+			it('distributes its children', function() {
+				var content = dropdown.getContentChildren();
+				expect(content.length).to.equal(2);
+				expect(content[0]).to.equal(dropdown.querySelector('p'));
+			});
 
-				var dropdown, dropdownLink, otherLink;
-
-				beforeEach(function() {
-					fixture('OpenDropdown');
-					dropdown = document.getElementById('dropdown');
-					dropdownLink = document.getElementById('dropdownLink');
-					otherLink = document.getElementById('otherLink');
+			it('should fire open event when open attribute is added', function(done) {
+				dropdown.addEventListener('open', function() {
+					expect(dropdown.opened).to.be.true;
+					done();
 				});
+				dropdown.setAttribute('opened', true);
+			});
 
-				it('should fire close event when open attribute is removed', function(done) {
-					dropdown.addEventListener('close', function() {
-						done();
-					});
-					dropdown.removeAttribute('open');
+
+			it('should fire close event when open attribute is removed', function(done) {
+				dropdown.addEventListener('open', function() {
+					dropdown.removeAttribute('opened');
 				});
+				dropdown.addEventListener('close', function() {
+					expect(dropdown.opened).to.be.false;
+					done();
+				});
+				dropdown.setAttribute('opened', true);
+			});
 
-				it('should close when focus lost and auto-close is specified', function(done) {
-					dropdown.addEventListener('close', function() {
-						expect(dropdown.open).to.be.false;
-						done();
-					});
+			it('should close when focus lost and auto-close is specified', function(done) {
+				dropdown.addEventListener('open', function() {
 					dropdownLink.focus();
 					otherLink.focus();
 				});
+				dropdown.addEventListener('close', function() {
+					expect(dropdown.opened).to.be.false;
+					done();
+				});
+				dropdown.setAttribute('opened', true);
+			});
 
-				it('should not close when focus lost and auto-close is not specified', function(done) {
-					dropdown.setAttribute('no-auto-close', true);
+			it('should not close when focus lost and auto-close is not specified', function(done) {
+				dropdown.addEventListener('open', function() {
+					dropdownLink.focus();
+					otherLink.focus();
 					setTimeout(function() {
-						expect(dropdown.open).to.be.true;
+						expect(dropdown.opened).to.be.true;
 						done();
 					},100);
-					dropdownLink.focus();
-					otherLink.focus();
 				});
-
+				dropdown.setAttribute('no-auto-close', true);
+				dropdown.setAttribute('opened', true);
 			});
 
 		});
