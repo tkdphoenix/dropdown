@@ -19,6 +19,10 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 
 ### Dropdown
 
+`d2l-dropdown` is a generic web component container that is positioned on the page and can be opened and closed.
+
+#### HTML
+
 ```html
 <head>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
@@ -32,54 +36,59 @@ Include the `d2l-dropdown` element on your page, and provide a `target-id` where
 <body>
 	...
 	<button id="my-opener">Open it!</button>
-	<d2l-dropdown target-id="my-opener" >
+	<d2l-dropdown id="dropdown" [no-auto-close] [no-auto-focus] [no-pointer] [target-id="my-opener"]>
 		your content
 	</d2l-dropdown>
 </body>
 ```
 
-Use the `opened` attribute to control the state of the dropdown.
+#### Methods
 
-```html
-<body>
-	...
-	<d2l-dropdown opened target-id="my-opener" >
-		your content
-	</d2l-dropdown>
-</body>
+```javascript
+// open with open method (target to position dropdown; opener to set focus when closing via [Esc])
+dropdown.open(target, opener);
+
+// open with attribute (requires setting target-id attribute)
+dropdown.setAttribute('opened');
+
+// close with close method
+dropdown.close();
+
+// close with attribute
+dropdown.removeAttribute('opened');
 ```
 
-Optionally add the `no-auto-close` attribute to have the dropdown remain open when focus is lost.
+#### Events
 
-```html
-<body>
-	...
-	<d2l-dropdown no-auto-close target-id="my-opener" >
-		your content
-	</d2l-dropdown>
-</body>
+The `d2l-dropdown` component fires events when opened or closed.
+
+```javascript
+// triggered when dropdown opened
+view.addEventListener('open', () => { ... });
+
+// triggered when dropdown closed
+view.addEventListener('close', () => { ... });
 ```
 
-Optionally add the `no-auto-focus` attribute to disable auto-focus on first focusable descendant.
+### Dropdown-Menu
+
+`d2l-dropdown-menu` component simplifies focus management and styling when using `d2l-dropdown` with `d2l-menu` as content.  It is opened and closed with the same methods as `d2l-dropdown`, and supports the same options.
+
+#### HTML
 
 ```html
-<body>
-	...
-	<d2l-dropdown no-auto-focus target-id="my-opener" >
-		your content
-	</d2l-dropdown>
-</body>
+<head>
+	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+</head>
 ```
 
-Optionally hide the pointer by specifying the `no-pointer` attribute.
-
 ```html
-<body>
-	...
-	<d2l-dropdown no-pointer target-id="my-opener" >
-		your content
-	</d2l-dropdown>
-</body>
+<d2l-dropdown-menu id="dropdown" style="max-width: 40rem; width: 300px;">
+	<d2l-menu label="...">
+		...
+	</d2l-menu>
+</d2l-dropdown-menu>
 ```
 
 ### Usage in Production
