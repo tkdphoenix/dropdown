@@ -60,6 +60,17 @@ Optionally add the `no-auto-close` attribute to have the dropdown remain open wh
 </body>
 ```
 
+Optionally add the `no-auto-focus` attribute to disable auto-focus on first focusable descendant.
+
+```html
+<body>
+	...
+	<d2l-dropdown no-auto-focus target-id="my-opener" >
+		your content
+	</d2l-dropdown>
+</body>
+```
+
 Optionally hide the pointer by specifying the `no-pointer` attribute.
 
 ```html
