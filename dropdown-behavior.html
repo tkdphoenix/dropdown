@@ -41,10 +41,12 @@
 
 		ready: function() {
 			this._handleResize = this._handleResize.bind(this);
+			this._handleAutoClose = this._handleAutoClose.bind(this);
 		},
 
 		detached: function() {
-			this.removeEventListener('blur', this._handleBlur);
+			this.removeEventListener('blur', this._handleAutoClose, true);
+			document.body.removeEventListener('focus', this._handleAutoClose, true);
 			this.removeEventListener('keyup', this._handleKeyUp);
 			window.removeEventListener('resize', this._handleResize);
 		},
@@ -61,7 +63,7 @@
 			this.opened = true;
 		},
 
-		_handleBlur: function() {
+		_handleAutoClose: function() {
 
 			if (this.noAutoClose) {
 				return;
@@ -127,7 +129,9 @@
 			}
 
 			if (newValue) {
-				this.addEventListener('blur', this._handleBlur, true);
+
+				this.addEventListener('blur', this._handleAutoClose, true);
+				document.body.addEventListener('focus', this._handleAutoClose, true);
 				this.addEventListener('keyup', this._handleKeyUp);
 				window.addEventListener('resize', this._handleResize);
 
@@ -145,7 +149,8 @@
 
 			} else {
 
-				this.removeEventListener('blur', this._handleBlur);
+				this.removeEventListener('blur', this._handleAutoClose, true);
+				document.body.removeEventListener('focus', this._handleAutoClose, true);
 				this.removeEventListener('keyup', this._handleKeyUp);
 				window.removeEventListener('resize', this._handleResize);
 				this.fire('close');
