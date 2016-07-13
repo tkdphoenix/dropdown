@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-polymer-behaviors/d2l-dom-focus.html">
 <link rel="import" href="position-behavior.html">
 <script>
 (function() {
@@ -18,17 +19,20 @@
 			noAutoFit: {
 				type: Boolean
 			},
+			noAutoFocus: {
+				type: Boolean
+			},
 			opened: {
 				type: Boolean,
 				observer: '__openedChanged',
 				reflectToAttribute: true
 			},
 			openerId: String,
-			targetId: String,
 			horizontalOffset: {
 				type: Number,
 				value: 0
 			},
+			targetId: String,
 			verticalOffset: {
 				type: Number,
 				value: 20
@@ -141,8 +145,11 @@
 
 				this.__position();
 
-				if (this.__container.getAttribute('tabindex') === '0') {
-					this.__container.focus();
+				if (!this.noAutoFocus) {
+					var focusable = D2L.Dom.Focus.getFirstFocusableDescendant(this);
+					if (focusable) {
+							focusable.focus();
+					}
 				}
 
 				this.fire('open');
