@@ -12,14 +12,21 @@
 
 			:host {
 				display: flex;
+				padding: 0.9rem 1rem;
 			}
 
 			:host > span {
 				flex: auto;
+				line-height: 1.2rem;
+				overflow-x: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
 			:host > iron-icon {
+				flex: none;
 				height: 18px;
+				margin-top: 0.2rem;
 				width: 18px;
 			}
 
