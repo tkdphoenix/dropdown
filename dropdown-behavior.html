@@ -149,6 +149,9 @@
 					var focusable = D2L.Dom.Focus.getFirstFocusableDescendant(this);
 					if (focusable) {
 						focusable.focus();
+					} else {
+						Polymer.dom(this.__container).setAttribute('tabindex', '-1');
+						this.__container.focus();
 					}
 				}
 

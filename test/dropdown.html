@@ -23,15 +23,25 @@
 				</div>
 			</template>
 		</test-fixture>
+
+		<test-fixture id="NoFocusable">
+			<template>
+				<d2l-dropdown id="dropdown" target-id="opener">
+					<p>Lorem ipsum dolor sit...</p>
+				</d2l-dropdown>
+			</template>
+		</test-fixture>
+
 		<script>
 
 		describe('<d2l-dropdown>', function() {
 
-			var dropdownFixture, dropdown;
+			var dropdownFixture, noFocusable, dropdown;
 
 			beforeEach(function() {
 				dropdownFixture = fixture('Dropdown');
 				dropdown = dropdownFixture.querySelector('#dropdown');
+				noFocusable = fixture('NoFocusable');
 			});
 
 			it('distributes its children', function() {
@@ -86,6 +96,7 @@
 
 			it('focuses on descendant when opened', function(done) {
 				dropdown.addEventListener('open', function() {
+					expect(noFocusable.__container.getAttribute('tabindex')).to.be.null;
 					expect(document.activeElement).to.equal(dropdown.querySelector('#link_1'));
 					done();
 				});
@@ -100,6 +111,15 @@
 				});
 				dropdown.setAttribute('no-auto-focus', true);
 				dropdown.setAttribute('opened', true);
+			});
+
+			it('focuses on container when opened and no focusable light descendant exists', function(done) {
+				noFocusable.addEventListener('open', function() {
+					expect(noFocusable.__container.getAttribute('tabindex')).to.equal('-1');
+					expect(document.activeElement).to.equal(noFocusable.__container);
+					done();
+				});
+				noFocusable.setAttribute('opened', true);
 			});
 
 		});
