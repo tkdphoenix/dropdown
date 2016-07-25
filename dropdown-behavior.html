@@ -40,7 +40,8 @@
 		},
 
 		listeners: {
-			'close': '__onClose'
+			'close': '__onClose',
+			'keyup': '__onKeyUp'
 		},
 
 		ready: function() {
@@ -48,10 +49,15 @@
 			this.__onAutoClose = this.__onAutoClose.bind(this);
 		},
 
+		attached: function() {
+			document.body.addEventListener('focus', this.__onAutoClose, true);
+			document.body.addEventListener('click', this.__onAutoClose, true);
+			window.addEventListener('resize', this.__onResize);
+		},
+
 		detached: function() {
 			document.body.removeEventListener('focus', this.__onAutoClose, true);
 			document.body.removeEventListener('click', this.__onAutoClose, true);
-			this.removeEventListener('keyup', this.__onKeyUp);
 			window.removeEventListener('resize', this.__onResize);
 		},
 
@@ -69,7 +75,7 @@
 
 		__onAutoClose: function() {
 
-			if (this.noAutoClose) {
+			if (!this.opened || this.noAutoClose) {
 				return;
 			}
 
@@ -96,6 +102,9 @@
 		},
 
 		__onKeyUp: function(e) {
+			if (!this.opened) {
+				return;
+			}
 			if (e.keyCode === 27) {
 				// escape
 				this.opened = false;
@@ -103,6 +112,9 @@
 		},
 
 		__onResize: function() {
+			if (!this.opened) {
+				return;
+			}
 			this.__position();
 		},
 
@@ -134,11 +146,6 @@
 
 			if (newValue) {
 
-				document.body.addEventListener('focus', this.__onAutoClose, true);
-				document.body.addEventListener('click', this.__onAutoClose, true);
-				this.addEventListener('keyup', this.__onKeyUp);
-				window.addEventListener('resize', this.__onResize);
-
 				if (!this.noAutoFit) {
 					this.$$('.d2l-dropdown-content-container').scrollTop = 0;
 				}
@@ -158,11 +165,6 @@
 				this.fire('open');
 
 			} else {
-
-				document.body.removeEventListener('focus', this.__onAutoClose, true);
-				document.body.removeEventListener('click', this.__onAutoClose, true);
-				this.removeEventListener('keyup', this.__onKeyUp);
-				window.removeEventListener('resize', this.__onResize);
 
 				this.fire('close');
 
