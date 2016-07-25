@@ -49,8 +49,8 @@
 		},
 
 		detached: function() {
-			this.removeEventListener('blur', this.__onAutoClose, true);
 			document.body.removeEventListener('focus', this.__onAutoClose, true);
+			document.body.removeEventListener('click', this.__onAutoClose, true);
 			this.removeEventListener('keyup', this.__onKeyUp);
 			window.removeEventListener('resize', this.__onResize);
 		},
@@ -134,8 +134,8 @@
 
 			if (newValue) {
 
-				this.addEventListener('blur', this.__onAutoClose, true);
 				document.body.addEventListener('focus', this.__onAutoClose, true);
+				document.body.addEventListener('click', this.__onAutoClose, true);
 				this.addEventListener('keyup', this.__onKeyUp);
 				window.addEventListener('resize', this.__onResize);
 
@@ -159,8 +159,8 @@
 
 			} else {
 
-				this.removeEventListener('blur', this.__onAutoClose, true);
 				document.body.removeEventListener('focus', this.__onAutoClose, true);
+				document.body.removeEventListener('click', this.__onAutoClose, true);
 				this.removeEventListener('keyup', this.__onKeyUp);
 				window.removeEventListener('resize', this.__onResize);
 

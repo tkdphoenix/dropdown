@@ -116,7 +116,11 @@
 			it('focuses on container when opened and no focusable light descendant exists', function(done) {
 				noFocusable.addEventListener('open', function() {
 					expect(noFocusable.__container.getAttribute('tabindex')).to.equal('-1');
-					expect(document.activeElement).to.equal(noFocusable.__container);
+					if (noFocusable.shadowRoot) {
+						expect(noFocusable.shadowRoot.activeElement).to.equal(noFocusable.__container);
+					} else {
+						expect(document.activeElement).to.equal(noFocusable.__container);
+					}
 					done();
 				});
 				noFocusable.setAttribute('opened', true);
