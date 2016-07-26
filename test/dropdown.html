@@ -23,83 +23,121 @@
 				</div>
 			</template>
 		</test-fixture>
+
+		<test-fixture id="NoFocusable">
+			<template>
+				<d2l-dropdown id="dropdown" target-id="opener">
+					<p>Lorem ipsum dolor sit...</p>
+				</d2l-dropdown>
+			</template>
+		</test-fixture>
+
 		<script>
 
 		describe('<d2l-dropdown>', function() {
 
-			var dropdownFixture, dropdown;
+			describe('focusable content', function() {
 
-			beforeEach(function() {
-				dropdownFixture = fixture('Dropdown');
-				dropdown = dropdownFixture.querySelector('#dropdown');
-			});
+				var dropdownFixture, dropdown;
 
-			it('distributes its children', function() {
-				var content = dropdown.getContentChildren();
-				expect(content.length).to.equal(3);
-				expect(content[0]).to.equal(dropdown.querySelector('p'));
-			});
-
-			it('fires open event when open attribute is added', function(done) {
-				dropdown.addEventListener('open', function() {
-					expect(dropdown.opened).to.be.true;
-					done();
+				beforeEach(function() {
+					dropdownFixture = fixture('Dropdown');
+					dropdown = dropdownFixture.querySelector('#dropdown');
 				});
-				dropdown.setAttribute('opened', true);
-			});
 
-			it('fires close event when open attribute is removed', function(done) {
-				dropdown.addEventListener('open', function() {
-					dropdown.removeAttribute('opened');
+				it('distributes its children', function() {
+					var content = dropdown.getContentChildren();
+					expect(content.length).to.equal(3);
+					expect(content[0]).to.equal(dropdown.querySelector('p'));
 				});
-				dropdown.addEventListener('close', function() {
-					expect(dropdown.opened).to.be.false;
-					done();
-				});
-				dropdown.setAttribute('opened', true);
-			});
 
-			it('closes when focus lost and auto-close is specified', function(done) {
-				dropdown.addEventListener('open', function() {
-					dropdown.querySelector('#link_1').focus();
-						dropdownFixture.querySelector('#other_link').focus();
-				});
-				dropdown.addEventListener('close', function() {
-					expect(dropdown.opened).to.be.false;
-					done();
-				});
-				dropdown.setAttribute('opened', true);
-			});
-
-			it('does not close when focus lost and auto-close is not specified', function(done) {
-				dropdown.addEventListener('open', function() {
-					dropdown.querySelector('#link_1').focus();
-					dropdownFixture.querySelector('#other_link').focus();
-					setTimeout(function() {
+				it('fires open event when open attribute is added', function(done) {
+					dropdown.addEventListener('open', function() {
 						expect(dropdown.opened).to.be.true;
 						done();
-					},100);
+					});
+					dropdown.setAttribute('opened', true);
 				});
-				dropdown.setAttribute('no-auto-close', true);
-				dropdown.setAttribute('opened', true);
+
+				it('fires close event when open attribute is removed', function(done) {
+					dropdown.addEventListener('open', function() {
+						dropdown.removeAttribute('opened');
+					});
+					dropdown.addEventListener('close', function() {
+						expect(dropdown.opened).to.be.false;
+						done();
+					});
+					dropdown.setAttribute('opened', true);
+				});
+
+				it('closes when focus lost and auto-close is specified', function(done) {
+					dropdown.addEventListener('open', function() {
+						dropdown.querySelector('#link_1').focus();
+							dropdownFixture.querySelector('#other_link').focus();
+					});
+					dropdown.addEventListener('close', function() {
+						expect(dropdown.opened).to.be.false;
+						done();
+					});
+					dropdown.setAttribute('opened', true);
+				});
+
+				it('does not close when focus lost and auto-close is not specified', function(done) {
+					dropdown.addEventListener('open', function() {
+						dropdown.querySelector('#link_1').focus();
+						dropdownFixture.querySelector('#other_link').focus();
+						setTimeout(function() {
+							expect(dropdown.opened).to.be.true;
+							done();
+						},100);
+					});
+					dropdown.setAttribute('no-auto-close', true);
+					dropdown.setAttribute('opened', true);
+				});
+
+				it('focuses on descendant when opened', function(done) {
+					dropdown.addEventListener('open', function() {
+						expect(dropdown.__container.getAttribute('tabindex')).to.be.null;
+						expect(document.activeElement).to.equal(dropdown.querySelector('#link_1'));
+						done();
+					});
+					dropdown.setAttribute('opened', true);
+				});
+
+				it('does not focus on descendant when opened and no-auto-focus attribute is specified', function(done) {
+					var activeElement = document.activeElement;
+					dropdown.addEventListener('open', function() {
+						expect(document.activeElement).to.equal(activeElement);
+						done();
+					});
+					dropdown.setAttribute('no-auto-focus', true);
+					dropdown.setAttribute('opened', true);
+				});
+
 			});
 
-			it('focuses on descendant when opened', function(done) {
-				dropdown.addEventListener('open', function() {
-					expect(document.activeElement).to.equal(dropdown.querySelector('#link_1'));
-					done();
-				});
-				dropdown.setAttribute('opened', true);
-			});
+			describe('no focusable content', function() {
 
-			it('does not focus on descendant when opened and no-auto-focus attribute is specified', function(done) {
-				var activeElement = document.activeElement;
-				dropdown.addEventListener('open', function() {
-					expect(document.activeElement).to.equal(activeElement);
-					done();
+				var noFocusable;
+
+				beforeEach(function() {
+					noFocusable = fixture('NoFocusable');
 				});
-				dropdown.setAttribute('no-auto-focus', true);
-				dropdown.setAttribute('opened', true);
+
+				it('focuses on container when opened and no focusable light descendant exists', function(done) {
+					noFocusable.addEventListener('open', function() {
+						expect(noFocusable.__container.getAttribute('tabindex')).to.equal('-1');
+						if (noFocusable.shadowRoot) {
+							expect(document.activeElement).to.equal(noFocusable);
+							expect(noFocusable.shadowRoot.activeElement).to.equal(noFocusable.__container);
+						} else {
+							expect(document.activeElement).to.equal(noFocusable.__container);
+						}
+						done();
+					});
+					noFocusable.setAttribute('opened', true);
+				});
+
 			});
 
 		});
