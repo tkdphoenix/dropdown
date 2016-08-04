@@ -106,6 +106,10 @@
 					observer: '_labelChanged',
 					reflectToAttribute: true
 				},
+				noReturnItem: {
+					type: Boolean,
+					reflectToAttribute: true
+				},
 				noSideBorders: {
 					type: Boolean,
 					reflectToAttribute: true
@@ -130,6 +134,10 @@
 			},
 
 			attached: function() {
+
+				if (this.noReturnItem) {
+					return;
+				}
 
 				var returnItem = this.$$('d2l-menu-item-return');
 				if (!this.childView && returnItem) {
@@ -379,10 +387,10 @@
 			},
 
 			_onShowComplete: function(e) {
-				if (this.childView) {
+				if (!this.isActive()) {
 					return;
 				}
-				Polymer.dom(e).rootTarget.focus();
+				this.focus();
 			},
 
 			_tryGetPreviousFocusable: function(item) {
