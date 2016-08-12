@@ -46,18 +46,19 @@
 
 		ready: function() {
 			this.__onResize = this.__onResize.bind(this);
-			this.__onAutoClose = this.__onAutoClose.bind(this);
+			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
+			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
 		},
 
 		attached: function() {
-			document.body.addEventListener('focus', this.__onAutoClose, true);
-			document.body.addEventListener('click', this.__onAutoClose, true);
+			document.body.addEventListener('focus', this.__onAutoCloseFocus, true);
+			document.body.addEventListener('click', this.__onAutoCloseClick, true);
 			window.addEventListener('resize', this.__onResize);
 		},
 
 		detached: function() {
-			document.body.removeEventListener('focus', this.__onAutoClose, true);
-			document.body.removeEventListener('click', this.__onAutoClose, true);
+			document.body.removeEventListener('focus', this.__onAutoCloseFocus, true);
+			document.body.removeEventListener('click', this.__onAutoCloseClick, true);
 			window.removeEventListener('resize', this.__onResize);
 		},
 
@@ -73,22 +74,26 @@
 			this.opened = true;
 		},
 
-		__onAutoClose: function() {
-
-			if (!this.opened || this.noAutoClose) {
-				return;
-			}
-
+		__onAutoCloseFocus: function() {
 			setTimeout(function() {
-				if (!this.opened || !document.activeElement) {
-					return;
-				}
-				if (this.__isDeepChild(document.activeElement)) {
+				if (!this.opened
+					|| this.noAutoClose
+					|| !document.activeElement
+					|| document.activeElement === document.body
+					|| this.__isDeepChild(document.activeElement)) {
 					return;
 				}
 				this.opened = false;
 			}.bind(this), 0);
+		},
 
+		__onAutoCloseClick: function(evt) {
+			if (!this.opened
+				|| this.noAutoClose
+				|| this.__isDeepChild(Polymer.dom(evt).rootTarget)) {
+				return;
+			}
+			this.opened = false;
 		},
 
 		__onClose: function(e) {
