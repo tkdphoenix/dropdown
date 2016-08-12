@@ -13,13 +13,13 @@
 
 		listeners: {
 			'blur': '__onBlur',
+			'click': '__onClick',
 			'dom-change': '__onDomChange',
 			'focus': '__onFocus',
 			'hide-complete': '__onHideComplete',
 			'keydown': '__onKeyDown',
 			'mouseenter': '__onMouseEnter',
-			'mouseleave': '__onMouseLeave',
-			'tap': '__onTap'
+			'mouseleave': '__onMouseLeave'
 		},
 
 		properties: {
@@ -93,6 +93,11 @@
 			this.fire('_blur');
 		},
 
+		__onClick: function(e) {
+			e.stopPropagation();
+			this.__action();
+		},
+
 		__onDomChange: function() {
 			this.__initialize();
 		},
@@ -137,11 +142,6 @@
 
 		__onMouseLeave: function() {
 			this.fire('_mouseleave');
-		},
-
-		__onTap: function(e) {
-			e.stopPropagation();
-			this.__action();
 		}
 
 	};
