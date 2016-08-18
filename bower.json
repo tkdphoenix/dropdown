@@ -15,7 +15,7 @@
     "package.json"
   ],
   "dependencies": {
-    "d2l-colors": "~2.0.0",
+    "d2l-colors": "^2.1.0",
     "d2l-hierarchical-view": "~0.0.9",
     "d2l-icons": "^2.5.0",
     "d2l-polymer-behaviors": "~0.0.2",
