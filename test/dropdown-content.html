@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>d2l-dropdown-content tests</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
+		<link rel="import" href="../d2l-dropdown.html">
+		<link rel="import" href="../d2l-dropdown-content.html">
+	</head>
+	<body tabindex="-1">
+
+		<test-fixture id="Dropdown">
+			<template>
+				<div>
+					<d2l-dropdown>
+						<button class="d2l-dropdown-opener"></button>
+						<d2l-dropdown-content>
+							<p id="non_focusable_inside"></p>
+							<a id="focusable_inside" href="http://www.desire2learn.com">D2L</a>
+						</d2l-dropdown-content>
+					</d2l-dropdown>
+					<p id="non_focusable_outside"></p>
+					<button id="focusable_outside">out here</button>
+				</div>
+			</template>
+		</test-fixture>
+
+		<script>
+
+		describe('<d2l-dropdown-content>', function() {
+
+			var dropdownFixture, content;
+
+			beforeEach(function() {
+				dropdownFixture = fixture('Dropdown');
+				content = dropdownFixture.querySelector('d2l-dropdown-content');
+			});
+
+			it('fires open event when open attribute is added', function(done) {
+				content.addEventListener('d2l-dropdown-open', function() {
+					expect(content.opened).to.be.true;
+					done();
+				});
+				content.setAttribute('opened', true);
+			});
+
+			it('fires close event when open attribute is removed', function(done) {
+				content.addEventListener('d2l-dropdown-open', function() {
+					content.removeAttribute('opened');
+				});
+				content.addEventListener('d2l-dropdown-close', function() {
+					expect(content.opened).to.be.false;
+					done();
+				});
+				content.setAttribute('opened', true);
+			});
+
+			describe('auto-focus', function() {
+
+				it('focuses on descendant when opened', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						expect(document.activeElement).to.equal(content.querySelector('#focusable_inside'));
+						done();
+					});
+					content.setAttribute('opened', true);
+				});
+
+				it('does not focus on descendant when opened and no-auto-focus attribute is specified', function(done) {
+					var activeElement = document.activeElement;
+					content.addEventListener('d2l-dropdown-open', function() {
+						expect(document.activeElement).to.equal(activeElement);
+						done();
+					});
+					content.setAttribute('no-auto-focus', true);
+					content.setAttribute('opened', true);
+				});
+
+			});
+
+			describe('auto-close', function() {
+
+				it('should close when focus element outside receives focus', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						dropdownFixture.querySelector('#focusable_outside').focus();
+					});
+					content.addEventListener('d2l-dropdown-close', function() {
+						expect(content.opened).to.be.false;
+						done();
+					});
+					content.setAttribute('opened', true);
+				});
+
+				it('should close when element outside is clicked', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						MockInteractions.tap(dropdownFixture.querySelector('#non_focusable_outside'));
+					});
+					content.addEventListener('d2l-dropdown-close', function() {
+						done();
+					});
+					content.setAttribute('opened', true);
+				});
+
+				it('should not close when element outside receives focus and no-auto-close is set', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						dropdownFixture.querySelector('#focusable_outside').focus();
+						setTimeout(function() {
+							expect(content.opened).to.be.true;
+							done();
+						},100);
+					});
+					content.setAttribute('no-auto-close', true);
+					content.setAttribute('opened', true);
+				});
+
+				it('should not close when element inside receives focus', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						content.querySelector('#focusable_inside').focus();
+						setTimeout(function() {
+							expect(content.opened).to.be.true;
+							done();
+						}, 100);
+					});
+					content.setAttribute('opened', true);
+				});
+
+				it('should not close when activeElement becomes body', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						// this simulates a click on an element inside the dropdown,
+						// which causes focus to be lost and activeElement to become
+						// document.body
+						document.body.focus();
+						setTimeout(function() {
+							expect(content.opened).to.be.true;
+							done();
+						}, 100);
+					});
+					content.setAttribute('opened', true);
+				});
+
+				it('should not close when element inside is clicked', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						MockInteractions.tap(content.querySelector('#non_focusable_inside'));
+						setTimeout(function() {
+							expect(content.opened).to.be.true;
+							done();
+						}, 100);
+					});
+					content.setAttribute('opened', true);
+				});
+
+				it('should not close when element outside is clicked and no-auto-close is set', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						MockInteractions.tap(dropdownFixture.querySelector('#non_focusable_outside'));
+						setTimeout(function() {
+							expect(content.opened).to.be.true;
+							done();
+						}, 100);
+					});
+					content.setAttribute('no-auto-close', true);
+					content.setAttribute('opened', true);
+				});
+
+				it('should focus on container when opened and no focusable light descendant exists', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						var contentContainer = content.__getContentContainer();
+						expect(contentContainer.getAttribute('tabindex')).to.equal('-1');
+						if (content.shadowRoot) {
+							expect(document.activeElement).to.equal(content);
+							expect(content.shadowRoot.activeElement).to.equal(contentContainer);
+						} else {
+							expect(document.activeElement).to.equal(contentContainer);
+						}
+						done();
+					});
+					content.querySelector('#focusable_inside').setAttribute('tabindex', '-1');
+					content.setAttribute('opened', true);
+				});
+
+			});
+
+		});
+		</script>
+	</body>
+</html>

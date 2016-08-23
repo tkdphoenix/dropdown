@@ -1,0 +1,51 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="d2l-dropdown-opener-styles">
+	<template>
+		<style>
+
+			:host {
+				display: inline-block;
+				outline: none;
+				overflow: visible;
+				position: relative;
+			}
+
+		</style>
+	</template>
+</dom-module>
+<script>
+(function() {
+	'use strict';
+
+	/** @polymerBehavior */
+	var DropdownOpenerBehavior = {
+
+		properties: {
+			isDropdownOpener: {
+				type: Boolean,
+				readOnly: true,
+				value: true
+			}
+		},
+
+		ready: function() {
+			var opener = this.getOpener();
+			if (!opener) {
+				return;
+			}
+			opener.setAttribute('aria-haspopup', true);
+		},
+
+		getOpener: function() {
+			return this;
+		}
+
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.DropdownOpenerBehavior = [DropdownOpenerBehavior];
+})();
+</script>

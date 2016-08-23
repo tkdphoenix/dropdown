@@ -1,56 +1,40 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
-<link rel="import" href="dropdown-styles.html">
-<link rel="import" href="dropdown-behavior.html">
+<link rel="import" href="d2l-dropdown-content-behavior.html">
 <link rel="import" href="d2l-menu.html">
 
 <dom-module id="d2l-dropdown-menu">
 
 	<template>
-		<style include="d2l-colors d2l-dropdown-styles"></style>
-		<style>
+		<style include="d2l-colors d2l-dropdown-content-styles">
 
-			:host {
-				min-width: 3.5rem;
-			}
-
-			:host .d2l-dropdown-container {
-				border-style: none;
-			}
-
-			:host .d2l-dropdown-pointer {
-				top: -7px;
-			}
-
-			:host .d2l-dropdown-flip-x > .d2l-dropdown-pointer {
-				bottom: -8px;
-			}
-
-			:host .d2l-dropdown-menu-item-first-hover > .d2l-dropdown-pointer > div,
-			:host .d2l-dropdown-menu-item-first-focus > .d2l-dropdown-pointer > div {
+			:host .d2l-dropdown-menu-item-first-hover > .d2l-dropdown-content-pointer > div,
+			:host .d2l-dropdown-menu-item-first-focus > .d2l-dropdown-content-pointer > div {
 				background-color: var(--d2l-color-celestine-light-1);
 				border-color: var(--d2l-color-celestine-light-2);
 			}
 
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-first-hover > .d2l-dropdown-pointer > div,
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-first-focus > .d2l-dropdown-pointer > div {
+			:host([opened-above]) .d2l-dropdown-menu-item-first-hover > .d2l-dropdown-content-pointer > div,
+			:host([opened-above]) .d2l-dropdown-menu-item-first-focus > .d2l-dropdown-content-pointer > div {
 				background-color: var(--d2l-color-white);
 				border-color: var(--d2l-color-titanius);
 			}
 
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-last-hover > .d2l-dropdown-pointer > div,
-			:host .d2l-dropdown-flip-x.d2l-dropdown-menu-item-last-focus > .d2l-dropdown-pointer > div {
+			:host([opened-above]) .d2l-dropdown-menu-item-last-hover > .d2l-dropdown-content-pointer > div,
+			:host([opened-above]) .d2l-dropdown-menu-item-last-focus > .d2l-dropdown-content-pointer > div {
 				background-color: var(--d2l-color-celestine-light-1);
 				border-color: var(--d2l-color-celestine-light-2);
 			}
 
 		</style>
-		<div class="d2l-dropdown-container">
-			<div class="d2l-dropdown-pointer">
-				<div></div>
+		<div class="d2l-dropdown-content-wrapper">
+			<div class="d2l-dropdown-content-width-reset">
+				<div class="d2l-dropdown-content-container">
+					<content></content>
+				</div>
 			</div>
-			<div class="d2l-dropdown-content-container">
-				<content></content>
+			<div class="d2l-dropdown-content-pointer">
+				<div></div>
 			</div>
 		</div>
 	</template>
@@ -60,7 +44,7 @@
 			is: 'd2l-dropdown-menu',
 
 			behaviors: [
-				window.D2L.PolymerBehaviors.DropdownBehavior
+				window.D2L.PolymerBehaviors.DropdownContentBehavior
 			],
 
 			listeners: {
@@ -72,47 +56,51 @@
 				'_last-mouseenter': '_onLastMenuItemMouseEnter',
 				'_first-mouseleave': '_onFirstMenuItemMouseLeave',
 				'_last-mouseleave': '_onLastMenuItemMouseLeave',
-				'close': '_onClose',
-				'open': '_onOpen',
+				'd2l-dropdown-close': '_onClose',
+				'd2l-dropdown-open': '_onOpen',
 				'select': '_onSelect'
 			},
+
+			_container: null,
 
 			ready: function() {
 				this.noAutoFit = true;
 				this.noAutoFocus = true;
-				this.__container = this.$$('.d2l-dropdown-container');
+				this.noBorder = true;
+				this.noPadding = true;
+				this._wrapper = this.$$('.d2l-dropdown-content-wrapper');
 			},
 
 			_onFirstMenuItemBlur: function() {
-				this.__container.classList.remove('d2l-dropdown-menu-item-first-focus');
+				this._wrapper.classList.remove('d2l-dropdown-menu-item-first-focus');
 			},
 
 			_onLastMenuItemBlur: function() {
-				this.__container.classList.remove('d2l-dropdown-menu-item-last-focus');
+				this._wrapper.classList.remove('d2l-dropdown-menu-item-last-focus');
 			},
 
 			_onFirstMenuItemFocus: function() {
-				this.__container.classList.add('d2l-dropdown-menu-item-first-focus');
+				this._wrapper.classList.add('d2l-dropdown-menu-item-first-focus');
 			},
 
 			_onLastMenuItemFocus: function() {
-				this.__container.classList.add('d2l-dropdown-menu-item-last-focus');
+				this._wrapper.classList.add('d2l-dropdown-menu-item-last-focus');
 			},
 
 			_onFirstMenuItemMouseEnter: function() {
-				this.__container.classList.add('d2l-dropdown-menu-item-first-hover');
+				this._wrapper.classList.add('d2l-dropdown-menu-item-first-hover');
 			},
 
 			_onLastMenuItemMouseEnter: function() {
-				this.__container.classList.add('d2l-dropdown-menu-item-last-hover');
+				this._wrapper.classList.add('d2l-dropdown-menu-item-last-hover');
 			},
 
 			_onFirstMenuItemMouseLeave: function() {
-				this.__container.classList.remove('d2l-dropdown-menu-item-first-hover');
+				this._wrapper.classList.remove('d2l-dropdown-menu-item-first-hover');
 			},
 
 			_onLastMenuItemMouseLeave: function() {
-				this.__container.classList.remove('d2l-dropdown-menu-item-last-hover');
+				this._wrapper.classList.remove('d2l-dropdown-menu-item-last-hover');
 			},
 
 			_onClose: function(e) {
