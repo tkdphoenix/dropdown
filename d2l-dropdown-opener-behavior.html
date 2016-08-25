@@ -30,15 +30,50 @@
 		},
 
 		ready: function() {
-			var opener = this.getOpener();
+			var opener = this.getOpenerElement();
 			if (!opener) {
 				return;
 			}
 			opener.setAttribute('aria-haspopup', true);
 		},
 
+		attached: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			this.listen(opener, 'click', '__onClick');
+		},
+
+		detached: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			this.unlisten(opener, 'click', '__onClick');
+		},
+
 		getOpener: function() {
 			return this;
+		},
+
+		getOpenerElement: function() {
+			return this;
+		},
+
+		__onClick: function() {
+			var content = this.queryEffectiveChildren('d2l-dropdown-content');
+			if (!content) {
+				content = this.queryEffectiveChildren('d2l-dropdown-menu');
+				if (!content) {
+					return;
+				}
+			}
+			if (content.opened) {
+				content.close();
+			} else {
+				content.open();
+			}
 		}
 
 	};

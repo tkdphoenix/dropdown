@@ -4,7 +4,7 @@
 <dom-module id="d2l-dropdown">
 	<template>
 		<style include="d2l-dropdown-opener-styles"></style>
-			<content></content>
+		<content></content>
 	</template>
 	<script>
 		Polymer({
@@ -14,31 +14,8 @@
 				window.D2L.PolymerBehaviors.DropdownOpenerBehavior
 			],
 
-			listeners: {
-				'click': '_onClick'
-			},
-
-			getOpener: function() {
+			getOpenerElement: function() {
 				return this.queryEffectiveChildren('.d2l-dropdown-opener');
-			},
-
-			_onClick: function(e) {
-				if (!Polymer.dom(e).rootTarget.classList.contains('d2l-dropdown-opener')) {
-					return;
-				}
-				var content = this.queryEffectiveChildren('d2l-dropdown-content');
-				if (!content) {
-					content = this.queryEffectiveChildren('d2l-dropdown-menu');
-					if (!content) {
-						return;
-					}
-				}
-
-				if (content.opened) {
-					content.close();
-				} else {
-					content.open();
-				}
 			}
 
 		});
