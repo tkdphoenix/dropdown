@@ -206,6 +206,14 @@
 			this.opened = true;
 		},
 
+		toggleOpen: function() {
+			if (this.opened) {
+				this.close();
+			} else {
+				this.open();
+			}
+		},
+
 		__getContentContainer: function() {
 			return this.$$('.d2l-dropdown-content-container');
 		},

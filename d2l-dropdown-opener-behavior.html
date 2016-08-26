@@ -26,6 +26,10 @@
 				type: Boolean,
 				readOnly: true,
 				value: true
+			},
+			noAutoOpen: {
+				type: Boolean,
+				reflectToAttribute: true
 			}
 		},
 
@@ -61,7 +65,7 @@
 			return this;
 		},
 
-		__onClick: function() {
+		toggleOpen: function() {
 			var content = this.queryEffectiveChildren('d2l-dropdown-content');
 			if (!content) {
 				content = this.queryEffectiveChildren('d2l-dropdown-menu');
@@ -69,11 +73,14 @@
 					return;
 				}
 			}
-			if (content.opened) {
-				content.close();
-			} else {
-				content.open();
+			content.toggleOpen();
+		},
+
+		__onClick: function() {
+			if (this.noAutoOpen) {
+				return;
 			}
+			this.toggleOpen();
 		}
 
 	};
