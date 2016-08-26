@@ -39,23 +39,94 @@
 				content = dropdownFixture.querySelector('d2l-dropdown-content');
 			});
 
-			it('fires open event when open attribute is added', function(done) {
-				content.addEventListener('d2l-dropdown-open', function() {
-					expect(content.opened).to.be.true;
-					done();
+			describe('events', function() {
+
+				it('fires open event when open attribute is added', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						expect(content.opened).to.be.true;
+						done();
+					});
+					content.setAttribute('opened', true);
 				});
-				content.setAttribute('opened', true);
+
+				it('fires close event when open attribute is removed', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						content.removeAttribute('opened');
+					});
+					content.addEventListener('d2l-dropdown-close', function() {
+						expect(content.opened).to.be.false;
+						done();
+					});
+					content.setAttribute('opened', true);
+				});
+
 			});
 
-			it('fires close event when open attribute is removed', function(done) {
-				content.addEventListener('d2l-dropdown-open', function() {
-					content.removeAttribute('opened');
+			describe('width', function() {
+
+				it('has default min-width 70px', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						expect(contentRect.width).to.equal(70);
+						done();
+					});
+					content.setAttribute('opened', true);
 				});
-				content.addEventListener('d2l-dropdown-close', function() {
-					expect(content.opened).to.be.false;
-					done();
+
+				it('overrides default min-width if provided', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						expect(contentRect.width).to.equal(150);
+						done();
+					});
+					content.setAttribute('min-width', '150');
+					content.setAttribute('opened', true);
 				});
-				content.setAttribute('opened', true);
+
+				it('has default max-width 370px', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						expect(contentRect.width).to.equal(370);
+						done();
+					});
+					content.querySelector('#non_focusable_inside').style.width = '1000px';
+					content.setAttribute('opened', true);
+				});
+
+				it('overrides default max-width if provided', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						expect(contentRect.width).to.equal(200);
+						done();
+					});
+					content.querySelector('#non_focusable_inside').style.width = '1000px';
+					content.setAttribute('max-width', '200');
+					content.setAttribute('opened', true);
+				});
+
+			});
+
+			describe('toggleOpen', function() {
+
+				it('opens dropdown when closed', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						expect(content.opened).to.be.true;
+						done();
+					});
+					content.toggleOpen();
+				});
+
+				it('closes dropdown when open', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						content.toggleOpen();
+					});
+					content.addEventListener('d2l-dropdown-close', function() {
+						expect(content.opened).to.be.false;
+						done();
+					});
+					content.toggleOpen();
+				});
+
 			});
 
 			describe('auto-focus', function() {
