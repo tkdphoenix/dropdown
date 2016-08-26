@@ -46,8 +46,8 @@
 	<div id="content" style="margin-bottom: 2rem; margin-top: 10rem;">
 		<h2>Component</h2>
 		<div style="padding-left:5%; padding-right: 0%;">
-			<d2l-dropdown-context-menu text="Open!">
-				<d2l-dropdown-content id="dropdown" max-width="400">
+			<d2l-dropdown-context-menu id="dropdown-context-menu" text="Open!">
+				<d2l-dropdown-content id="dropdown-content" max-width="400">
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 					<a href="http://www.desire2learn.com">D2L</a>
 				</d2l-dropdown-content>
@@ -60,15 +60,15 @@
 
 	<script>
 
-		var page_dropdown = document.getElementById('dropdown');
+		var dropdown_content = document.getElementById('dropdown-content');
 
 		function wireupConfig(propertyName) {
 			var configElem = document.getElementById('config-' + propertyName);
 			configElem.addEventListener('change', function(e) {
 				if (e.target.checked) {
-					page_dropdown.setAttribute(propertyName, true);
+					dropdown_content.setAttribute(propertyName, true);
 				} else {
-					page_dropdown.removeAttribute(propertyName);
+					dropdown_content.removeAttribute(propertyName);
 				}
 			});
 		}
@@ -79,10 +79,10 @@
 		wireupConfig('no-pointer');
 		wireupConfig('no-padding');
 
-		page_dropdown.addEventListener('d2l-dropdown-open', function(e) {
+		dropdown_content.addEventListener('d2l-dropdown-open', function(e) {
 			console.log('d2l-dropdown-open', e);
 		});
-		page_dropdown.addEventListener('d2l-dropdown-close', function(e) {
+		dropdown_content.addEventListener('d2l-dropdown-close', function(e) {
 			console.log('d2l-dropdown-close', e);
 		});
 
