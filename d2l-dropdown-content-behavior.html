@@ -78,6 +78,7 @@
 				border-radius: 0.3rem;
 				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
 				box-sizing: border-box;
+				display: inline-block;
 				min-width: 70px;
 				max-width: 370px;
 				outline: none;
@@ -127,6 +128,11 @@
 	var DropdownContentBehavior = {
 
 		properties: {
+			minWidth: {
+				type: Number,
+				observer: '__minWidthChanged',
+				reflectToAttribute: true
+			},
 			maxWidth: {
 				type: Number,
 				observer: '__maxWidthChanged',
@@ -211,6 +217,13 @@
 				}
 			});
 			return opener;
+		},
+
+		__minWidthChanged: function(newValue) {
+			if (!newValue) {
+				return;
+			}
+			this.__getContentContainer().style.minWidth = newValue + 'px';
 		},
 
 		__maxWidthChanged: function(newValue) {
