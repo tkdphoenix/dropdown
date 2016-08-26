@@ -15,7 +15,7 @@ bower install d2l-dropdown
 
 ## Usage
 
-Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import opener and content components as needed:
+Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import the opener and content components as needed:
 
 ```html
 <head>
@@ -41,7 +41,7 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 </d2l-dropdown>
 ```
 
-If the dropdown is initially empty when it's opened, the dropdown pointer will not be positioned correctly.  The `no-auto-open` attribute may be added to the opener, enabling you to take control of when the dropdown is actually opened:
+If the dropdown is initially empty when it's opened, the dropdown pointer will not be positioned correctly.  In such cases, the `no-auto-open` attribute may be added to the opener, enabling you to take control of when the dropdown is actually opened:
 
 ```html
 <d2l-dropdown no-auto-open>
@@ -51,7 +51,7 @@ If the dropdown is initially empty when it's opened, the dropdown pointer will n
 
 ```javascript
 dropdown.addEventListener('click', function() {
-	// fetch sine content
+	// fetch some content
 	...
 	// take control of when the dropdown is actually opened
 	dropdown.toggleOpen();
@@ -97,22 +97,26 @@ dropdown.addEventListener('click', function() {
 ```html
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
 
-<d2l-dropdown-content>
+<d2l-dropdown-content min-width="..." max-width="..." no-padding>
 	Some content...
 </d2l-dropdown-content>
 ```
 
+* min-width (number) - optionally override default min-width
+* max-width (number) - optionally override default max-width
+* no-padding - optionally render with no padding
+
 ```javascript
 // triggered when dropdown opened
-view.addEventListener('d2l-dropdown-open', () => { ... });
+content.addEventListener('d2l-dropdown-open', () => { ... });
 
 // triggered when dropdown closed
-view.addEventListener('d2l-dropdown-close', () => { ... });
+content.addEventListener('d2l-dropdown-close', () => { ... });
 ```
 
 #### Menu Content
 
-`d2l-dropdown-menu` is a container for a `d2l-menu` component.  It provides behavior in addition to the basic behavior of `d2l-dropdown-content` such as closing the menu when menu items are selected, resetting to the root of nested menus when reopening, etc.  See [d2l-menu](https://github.com/Brightspace/d2l-menu-ui) for more info on building menus.
+`d2l-dropdown-menu` is a container for a [d2l-menu](https://github.com/Brightspace/d2l-menu-ui) component.  It provides behavior in addition to the basic behavior of `d2l-dropdown-content` such as closing the menu when menu items are selected, resetting to the root of nested menus when reopening, etc.
 
 ```html
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
