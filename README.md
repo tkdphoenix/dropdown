@@ -66,12 +66,14 @@ dropdown.addEventListener('click', function() {
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
 
-<d2l-dropdown-button text="Open!">
+<d2l-dropdown-button text="Open!" primary>
 	<d2l-dropdown-content>
 		Some content...
 	</d2l-dropdown-content>
 </d2l-dropdown-button>
 ```
+
+* `primary` - optionally render button as primary button
 
 #### Context Menu Opener
 

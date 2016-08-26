@@ -19,7 +19,7 @@
 				margin-right: 0;
 			}
 		</style>
-		<button is="d2l-button">
+		<button is="d2l-button" primary=[[primary]]>
 			<span>[[text]]</span><iron-icon icon="d2l-tier1:chevron-down"></iron-icon>
 		</button>
 		<content></content>
@@ -33,6 +33,11 @@
 			],
 
 			properties: {
+				primary: {
+					type: Boolean,
+					reflectToAttribute: true,
+					value: false
+				},
 				text: String
 			},
 
