@@ -102,9 +102,9 @@ dropdown.addEventListener('click', function() {
 </d2l-dropdown-content>
 ```
 
-* min-width (number) - optionally override default min-width
-* max-width (number) - optionally override default max-width
-* no-padding - optionally render with no padding
+* `min-width` (number) - optionally override default min-width
+* `max-width` (number) - optionally override default max-width
+* `no-padding` - optionally render with no padding
 
 ```javascript
 // triggered when dropdown opened
