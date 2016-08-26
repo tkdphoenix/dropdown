@@ -15,77 +15,110 @@ bower install d2l-dropdown
 
 ## Usage
 
-Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import `d2l-dropdown.html`:
-
-### Dropdown
-
-`d2l-dropdown` is a generic web component container that is positioned on the page and can be opened and closed.
-
-#### HTML
+Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import opener and content components as needed:
 
 ```html
 <head>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
-	<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
 </head>
 ```
 
-Include the `d2l-dropdown` element on your page, and provide a `target-id` where the dropdown should open:
+### Dropdown Openers
+
+#### Generic Opener
+
+`d2l-dropdown` is a generic opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`) enabling alternate opener implementation using existing elements/components. Provide and indicate your own opener element with the class attribute value `d2l-dropdown-opener`.  Wire-up is automatic.
 
 ```html
-<body>
-	...
-	<button id="my-opener">Open it!</button>
-	<d2l-dropdown id="dropdown" [no-auto-close] [no-auto-focus] [no-pointer] [target-id="my-opener"]>
-		your content
-	</d2l-dropdown>
-</body>
+<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
+
+<d2l-dropdown>
+	<button class="d2l-dropdown-opener">Open!</button>
+	<d2l-dropdown-content>
+		Some content...
+	</d2l-dropdown-content>
+</d2l-dropdown>
 ```
 
-#### Methods
+If the dropdown is initially empty when it's opened, the dropdown pointer will not be positioned correctly.  The `no-auto-open` attribute may be added to the opener, enabling you to take control of when the dropdown is actually opened:
+
+```html
+<d2l-dropdown no-auto-open>
+	...
+</d2l-dropdown>
+```
 
 ```javascript
-// open with open method (target to position dropdown; opener to set focus when closing via [Esc])
-dropdown.open(target, opener);
-
-// open with attribute (requires setting target-id attribute)
-dropdown.setAttribute('opened');
-
-// close with close method
-dropdown.close();
-
-// close with attribute
-dropdown.removeAttribute('opened');
+dropdown.addEventListener('click', function() {
+	// fetch sine content
+	...
+	// take control of when the dropdown is actually opened
+	dropdown.toggleOpen();
+});
 ```
 
-#### Events
+#### Button Opener
 
-The `d2l-dropdown` component fires events when opened or closed.
+`d2l-dropdown-button` is a `d2l-button` opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for the button and content component as needed.
+
+```html
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
+
+<d2l-dropdown-button text="Open!">
+	<d2l-dropdown-content>
+		Some content...
+	</d2l-dropdown-content>
+</d2l-dropdown-button>
+```
+
+#### Context Menu Opener
+
+`d2l-dropdown-context-menu` is a simple/minimal opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for accessibility and content component as needed.
+
+```html
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-context-menu.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
+
+<d2l-dropdown-context-menu text="Open!">
+	<d2l-dropdown-content>
+		Some content...
+	</d2l-dropdown-content>
+</d2l-dropdown-context-menu>
+```
+
+### Dropdown Contents
+
+#### Generic Content
+
+`d2l-dropdown-content` is a generic container for dropdown content.  It provides behavior such as sizing,  positioning, and managing focus gain/loss.
+
+```html
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
+
+<d2l-dropdown-content>
+	Some content...
+</d2l-dropdown-content>
+```
 
 ```javascript
 // triggered when dropdown opened
-view.addEventListener('open', () => { ... });
+view.addEventListener('d2l-dropdown-open', () => { ... });
 
 // triggered when dropdown closed
-view.addEventListener('close', () => { ... });
+view.addEventListener('d2l-dropdown-close', () => { ... });
 ```
 
-### Dropdown-Menu
+#### Menu Content
 
-`d2l-dropdown-menu` component simplifies focus management and styling when using `d2l-dropdown` with `d2l-menu` as content.  It is opened and closed with the same methods as `d2l-dropdown`, and supports the same options.
-
-#### HTML
+`d2l-dropdown-menu` is a container for a `d2l-menu` component.  It provides behavior in addition to the basic behavior of `d2l-dropdown-content` such as closing the menu when menu items are selected, resetting to the root of nested menus when reopening, etc.  See [d2l-menu](https://github.com/Brightspace/d2l-menu-ui) for more info on building menus.
 
 ```html
-<head>
-	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
-	<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
-</head>
-```
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 
-```html
-<d2l-dropdown-menu id="dropdown" style="max-width: 40rem; width: 300px;">
-	<d2l-menu label="...">
+<d2l-dropdown-menu>
+	<d2l-menu label="some menu">
 		...
 	</d2l-menu>
 </d2l-dropdown-menu>
