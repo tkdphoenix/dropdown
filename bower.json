@@ -3,7 +3,6 @@
   "description": "Polymer-based web component for a D2L dropdown",
   "main": [
     "d2l-dropdown.html",
-    "d2l-menu.html",
     "d2l-dropdown-menu.html"
   ],
   "license": "Apache-2.0",
@@ -17,8 +16,8 @@
   "dependencies": {
     "d2l-button": "~3.0.1",
     "d2l-colors": "^2.1.0",
-    "d2l-hierarchical-view": "~0.0.9",
     "d2l-icons": "^2.5.0",
+    "d2l-menu": "~0.0.1",
     "d2l-offscreen": "~2.1.0",
     "d2l-polymer-behaviors": "~0.0.3",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
