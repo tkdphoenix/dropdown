@@ -66,12 +66,9 @@
 		},
 
 		toggleOpen: function() {
-			var content = this.queryEffectiveChildren('d2l-dropdown-content');
+			var content = this.queryEffectiveChildren('[d2l-dropdown-content]');
 			if (!content) {
-				content = this.queryEffectiveChildren('d2l-dropdown-menu');
-				if (!content) {
-					return;
-				}
+				return;
 			}
 			content.toggleOpen();
 		},
