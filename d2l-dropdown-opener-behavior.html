@@ -1,0 +1,90 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="d2l-dropdown-opener-styles">
+	<template>
+		<style>
+
+			:host {
+				display: inline-block;
+				outline: none;
+				overflow: visible;
+				position: relative;
+			}
+
+		</style>
+	</template>
+</dom-module>
+<script>
+(function() {
+	'use strict';
+
+	/** @polymerBehavior */
+	var DropdownOpenerBehavior = {
+
+		properties: {
+			isDropdownOpener: {
+				type: Boolean,
+				readOnly: true,
+				value: true
+			},
+			noAutoOpen: {
+				type: Boolean,
+				reflectToAttribute: true
+			}
+		},
+
+		ready: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			opener.setAttribute('aria-haspopup', true);
+		},
+
+		attached: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			this.listen(opener, 'click', '__onClick');
+		},
+
+		detached: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			this.unlisten(opener, 'click', '__onClick');
+		},
+
+		getOpener: function() {
+			return this;
+		},
+
+		getOpenerElement: function() {
+			return this;
+		},
+
+		toggleOpen: function() {
+			var content = this.queryEffectiveChildren('[d2l-dropdown-content]');
+			if (!content) {
+				return;
+			}
+			content.toggleOpen();
+		},
+
+		__onClick: function() {
+			if (this.noAutoOpen) {
+				return;
+			}
+			this.toggleOpen();
+		}
+
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.DropdownOpenerBehavior = [DropdownOpenerBehavior];
+})();
+</script>

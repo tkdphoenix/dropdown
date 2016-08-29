@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>D2L Dropdown Web Component</title>
+	<title>D2L Dropdown Menu Web Component</title>
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
 		var shadow = (window.location.search.indexOf('dom=shadow') > -1);
@@ -10,6 +10,7 @@
 		}
 	</script>
 	<link rel="stylesheet" href="demo-styles.css">
+	<link rel="import" href="../d2l-dropdown.html">
 	<link rel="import" href="../d2l-dropdown-menu.html">
 </head>
 <body>
@@ -34,91 +35,89 @@
 		</div>
 	</div>
 
-	<p style="height: 3rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-	<div style="position:relative;">
-		<div id="content" style="margin-bottom:2rem;margin-top:10rem;">
-			<h2>Component</h2>
-			<button id="opener-default" style="position:relative;" onclick="openDropdown();">Open it!</button>
-			<button onclick="closeDropdown();">Close it!</button>
+	<div id="content" style="margin-bottom:2rem;margin-top:10rem;">
+		<h2>Component</h2>
+		<div style="padding-left:5%; padding-right: 0%;">
+			<d2l-dropdown>
+				<button class="d2l-dropdown-opener">Open it!</button>
+				<d2l-dropdown-menu id="dropdown" max-width="400">
+					<d2l-menu label="Astronomy">
+						<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
+						<d2l-menu-item text="Searching the Heavens Searching the Heavens Searching the Heavens"></d2l-menu-item>
+						<d2l-menu-item text="The Solar System">
+							<d2l-menu>
+								<d2l-menu-item text="Formation"></d2l-menu-item>
+								<d2l-menu-item text="Modern Solar System"></d2l-menu-item>
+								<d2l-menu-item text="Future Solar System"></d2l-menu-item>
+								<d2l-menu-item text="The Planets">
+									<d2l-menu>
+										<d2l-menu-item text="Mercury"></d2l-menu-item>
+										<d2l-menu-item text="Venus"></d2l-menu-item>
+										<d2l-menu-item text="Earth"></d2l-menu-item>
+										<d2l-menu-item text="Mars"></d2l-menu-item>
+										<d2l-menu-item text="Jupiter"></d2l-menu-item>
+										<d2l-menu-item text="Saturn"></d2l-menu-item>
+										<d2l-menu-item text="Uranus"></d2l-menu-item>
+										<d2l-menu-item text="Neptune"></d2l-menu-item>
+										<d2l-menu-item text="Dwarf Planets"></d2l-menu-item>
+									</d2l-menu>
+								</d2l-menu-item>
+								<d2l-menu-item text="The Sun"></d2l-menu-item>
+								<d2l-menu-item text="Solar &amp; Lunar Eclipses"></d2l-menu-item>
+								<d2l-menu-item text="Meteors &amp; Meteorites"></d2l-menu-item>
+								<d2l-menu-item text="Asteroids"></d2l-menu-item>
+								<d2l-menu-item text="Comets"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="Stars &amp; Galaxies">
+							<d2l-menu>
+								<d2l-menu-item text="What is a Star?"></d2l-menu-item>
+								<d2l-menu-item text="Lifecycle of a Star"></d2l-menu-item>
+								<d2l-menu-item text="Binaries &amp; Multiples"></d2l-menu-item>
+								<d2l-menu-item text="Star Clusters"></d2l-menu-item>
+								<d2l-menu-item text="Star Death">
+									<d2l-menu>
+										<d2l-menu-item text="Supernovae"></d2l-menu-item>
+										<d2l-menu-item text="Black Holes"></d2l-menu-item>
+									</d2l-menu>
+								</d2l-menu-item>
+								<d2l-menu-item text="Star Clusters"></d2l-menu-item>
+								<d2l-menu-item text="Galaxies">
+									<d2l-menu>
+										<d2l-menu-item text="Classification"></d2l-menu-item>
+										<d2l-menu-item text="Birth &amp; Evolution"></d2l-menu-item>
+										<d2l-menu-item text="Spiral"></d2l-menu-item>
+										<d2l-menu-item text="Elliptical"></d2l-menu-item>
+										<d2l-menu-item text="Lenticular"></d2l-menu-item>
+										<d2l-menu-item text="Irregular"></d2l-menu-item>
+										<d2l-menu-item text="Active &amp; Radio"></d2l-menu-item>
+										<d2l-menu-item text="Quasars"></d2l-menu-item>
+										<d2l-menu-item text="Galaxy Clusters"></d2l-menu-item>
+									</d2l-menu>
+								</d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="The Night Sky">
+							<d2l-menu>
+								<d2l-menu-item text="Constellations"></d2l-menu-item>
+								<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
+								<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
+								<d2l-menu-item text="Telescopes"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-menu-item>
+						<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
+					</d2l-menu>
+				</d2l-dropdown-menu>
+			</d2l-dropdown>
 		</div>
-		<div style="clear:both;"></div>
+	</div>
+	<div style="clear:both;"></div>
 
-		<div id="dropdown-container">
-			<d2l-dropdown-menu id="dropdown" style="max-width: 40rem; width: 300px;">
-				<d2l-menu label="Astronomy">
-					<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
-					<d2l-menu-item text="Searching the Heavens"></d2l-menu-item>
-					<d2l-menu-item text="The Solar System">
-						<d2l-menu>
-							<d2l-menu-item text="Formation"></d2l-menu-item>
-							<d2l-menu-item text="Modern Solar System"></d2l-menu-item>
-							<d2l-menu-item text="Future Solar System"></d2l-menu-item>
-							<d2l-menu-item text="The Planets">
-								<d2l-menu>
-									<d2l-menu-item text="Mercury"></d2l-menu-item>
-									<d2l-menu-item text="Venus"></d2l-menu-item>
-									<d2l-menu-item text="Earth"></d2l-menu-item>
-									<d2l-menu-item text="Mars"></d2l-menu-item>
-									<d2l-menu-item text="Jupiter"></d2l-menu-item>
-									<d2l-menu-item text="Saturn"></d2l-menu-item>
-									<d2l-menu-item text="Uranus"></d2l-menu-item>
-									<d2l-menu-item text="Neptune"></d2l-menu-item>
-									<d2l-menu-item text="Dwarf Planets"></d2l-menu-item>
-								</d2l-menu>
-							</d2l-menu-item>
-							<d2l-menu-item text="The Sun"></d2l-menu-item>
-							<d2l-menu-item text="Solar &amp; Lunar Eclipses"></d2l-menu-item>
-							<d2l-menu-item text="Meteors &amp; Meteorites"></d2l-menu-item>
-							<d2l-menu-item text="Asteroids"></d2l-menu-item>
-							<d2l-menu-item text="Comets"></d2l-menu-item>
-						</d2l-menu>
-					</d2l-menu-item>
-					<d2l-menu-item text="Stars &amp; Galaxies">
-						<d2l-menu>
-							<d2l-menu-item text="What is a Star?"></d2l-menu-item>
-							<d2l-menu-item text="Lifecycle of a Star"></d2l-menu-item>
-							<d2l-menu-item text="Binaries &amp; Multiples"></d2l-menu-item>
-							<d2l-menu-item text="Star Clusters"></d2l-menu-item>
-							<d2l-menu-item text="Star Death">
-								<d2l-menu>
-									<d2l-menu-item text="Supernovae"></d2l-menu-item>
-									<d2l-menu-item text="Black Holes"></d2l-menu-item>
-								</d2l-menu>
-							</d2l-menu-item>
-							<d2l-menu-item text="Star Clusters"></d2l-menu-item>
-							<d2l-menu-item text="Galaxies">
-								<d2l-menu>
-									<d2l-menu-item text="Classification"></d2l-menu-item>
-									<d2l-menu-item text="Birth &amp; Evolution"></d2l-menu-item>
-									<d2l-menu-item text="Spiral"></d2l-menu-item>
-									<d2l-menu-item text="Elliptical"></d2l-menu-item>
-									<d2l-menu-item text="Lenticular"></d2l-menu-item>
-									<d2l-menu-item text="Irregular"></d2l-menu-item>
-									<d2l-menu-item text="Active &amp; Radio"></d2l-menu-item>
-									<d2l-menu-item text="Quasars"></d2l-menu-item>
-									<d2l-menu-item text="Galaxy Clusters"></d2l-menu-item>
-								</d2l-menu>
-							</d2l-menu-item>
-						</d2l-menu>
-					</d2l-menu-item>
-					<d2l-menu-item text="The Night Sky">
-						<d2l-menu>
-							<d2l-menu-item text="Constellations"></d2l-menu-item>
-							<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
-							<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
-							<d2l-menu-item text="Telescopes"></d2l-menu-item>
-						</d2l-menu>
-					</d2l-menu-item>
-					<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
-				</d2l-menu>
-			</d2l-dropdown-menu>
-		</div>
-
+	<div>
 		<a href="https://youtu.be/9ze87zQFSak">Google 5</a>
 		<p style="margin-bottom: 30rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
 	</div>
+
 	<script>
 
 		var page_dropdown = document.getElementById('dropdown');
@@ -145,39 +144,19 @@
 			console.log('selected', e);
 		})
 
-		function openDropdown() {
-			page_dropdown.open(document.getElementById('opener-default'));
-		}
-
-		function closeDropdown() {
-			page_dropdown.removeAttribute('opened');
-		}
-
-		function appendDropdown() {
-			document.getElementById('dropdown-container').appendChild(page_dropdown);
-		}
-
-		function removeDropdown() {
-			page_dropdown.parentNode.removeChild(page_dropdown);
-		}
-
 		function toggleRTL() {
 			closeDropdown();
-			var isRTL = (document.body.dir === 'rtl');
-			if (isRTL) {
+			if (document.body.dir === 'rtl') {
 				document.body.dir = 'ltr';
 			} else {
 				document.body.dir = 'rtl';
 			}
-			removeDropdown();
-			appendDropdown();
 		}
 
 		function toggleFloat() {
 			closeDropdown();
 			var content = document.getElementById('content');
-			var isFloatRight = (content.style.cssFloat === 'right');
-			if (isFloatRight) {
+			if (content.style.cssFloat === 'right') {
 				content.style.cssFloat = '';
 			} else {
 				content.style.cssFloat = 'right';

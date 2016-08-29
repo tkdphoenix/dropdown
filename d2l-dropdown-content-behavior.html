@@ -1,0 +1,437 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-polymer-behaviors/d2l-dom.html">
+<link rel="import" href="../d2l-polymer-behaviors/d2l-dom-focus.html">
+
+<dom-module id="d2l-dropdown-content-styles">
+	<template>
+		<style include="d2l-colors">
+
+			:host {
+				box-sizing: border-box;
+				color: var(--d2l-color-ferrite);
+				display: none;
+				left: 0;
+				position: absolute;
+				text-align: left;
+				top: calc(100% + 20px);
+				width: 100%;
+				z-index: 1000; /* position on top of floating buttons */
+			}
+
+			:host([opened]) {
+				display: inline-block;
+			}
+
+			:host([opened]) {
+				-webkit-animation: d2l-dropdown-animation 300ms ease;
+				animation: d2l-dropdown-animation 300ms ease;
+			}
+
+			:host([opened-above]) {
+				bottom: calc(100% + 20px);
+				top: auto;
+				-webkit-animation: d2l-dropdown-above-animation 300ms ease;
+				animation: d2l-dropdown-above-animation 300ms ease;
+			}
+
+			:host .d2l-dropdown-content-pointer {
+				position: absolute;
+				display: inline-block;
+				clip: rect(-5px, 21px, 8px, -3px);
+				top: -7px;
+				left: calc(50% - 7px);
+			}
+
+			:host .d2l-dropdown-content-pointer > div {
+				background-color: var(--d2l-color-white);
+				border: 1px solid var(--d2l-color-titanius);
+				border-radius: 0.1rem;
+				box-shadow: -4px -4px 12px -5px rgba(86, 90, 92, .2);
+				height: 16px;
+				width: 16px;
+				transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
+			}
+
+			:host([opened-above]) .d2l-dropdown-content-pointer {
+				top: auto;
+				clip: rect(9px, 21px, 22px, -3px);
+				bottom: -8px;
+			}
+
+			:host([opened-above]) .d2l-dropdown-content-pointer > div {
+				box-shadow: 4px 4px 12px -5px rgba(86, 90, 92, .2);
+			}
+
+			:host([no-pointer]) .d2l-dropdown-content-pointer {
+				display: none;
+			}
+
+			:host .d2l-dropdown-content-width-reset {
+				width: 80vw;
+			}
+
+			:host .d2l-dropdown-content-container {
+				background-color: var(--d2l-color-white);
+				border: 1px solid var(--d2l-color-titanius);
+				border-radius: 0.3rem;
+				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
+				box-sizing: border-box;
+				display: inline-block;
+				min-width: 70px;
+				max-width: 370px;
+				outline: none;
+				padding: 1rem;
+				position: relative;
+			}
+
+			:host([no-border]) .d2l-dropdown-content-container {
+				border-style: none;
+			}
+
+			:host([no-padding]) .d2l-dropdown-content-container {
+				padding: 0;
+			}
+
+			:host-context([dir="rtl"]) {
+				left: auto;
+				right: 0;
+				text-align: right;
+			}
+
+			@keyframes d2l-dropdown-animation {
+				0% { transform: translate(0,-10px); opacity: 0; }
+				100% { transform: translate(0,0); opacity: 1; }
+			}
+			@keyframes d2l-dropdown-above-animation {
+				0% { transform: translate(0,10px); opacity: 0; }
+				100% { transform: translate(0,0); opacity: 1; }
+			}
+			@-webkit-keyframes d2l-dropdown-animation {
+				0% { -webkit-transform: translate(0,-10px); opacity: 0; }
+				100% { -webkit-transform: translate(0,0); opacity: 1; }
+			}
+			@-webkit-keyframes d2l-dropdown-above-animation {
+				0% { -webkit-transform: translate(0,10px); opacity: 0; }
+				100% { -webkit-transform: translate(0,0); opacity: 1; }
+			}
+
+		</style>
+	</template>
+</dom-module>
+<script>
+(function() {
+	'use strict';
+
+	/** @polymerBehavior */
+	var DropdownContentBehavior = {
+
+		hostAttributes: {
+			'd2l-dropdown-content': true
+		},
+
+		properties: {
+			minWidth: {
+				type: Number,
+				observer: '__minWidthChanged',
+				reflectToAttribute: true
+			},
+			maxWidth: {
+				type: Number,
+				observer: '__maxWidthChanged',
+				reflectToAttribute: true
+			},
+			noAutoClose: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			noAutoFit: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			noAutoFocus: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			noBorder: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			noPadding: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			noPointer: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			opened: {
+				type: Boolean,
+				observer: '__openedChanged',
+				reflectToAttribute: true
+			},
+			openedAbove: {
+				type: Boolean,
+				reflectToAttribute: true
+			}
+		},
+
+		listeners: {
+			'd2l-dropdown-close': '__onClose',
+			'keyup': '__onKeyUp'
+		},
+
+		__isRTL: false,
+
+		ready: function() {
+			this.__onResize = this.__onResize.bind(this);
+			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
+			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
+		},
+
+		attached: function() {
+			window.addEventListener('resize', this.__onResize);
+			document.body.addEventListener('focus', this.__onAutoCloseFocus, true);
+			document.body.addEventListener('click', this.__onAutoCloseClick, true);
+		},
+
+		detached: function() {
+			window.removeEventListener('resize', this.__onResize);
+			document.body.removeEventListener('focus', this.__onAutoCloseFocus, true);
+			document.body.removeEventListener('click', this.__onAutoCloseClick, true);
+		},
+
+		close: function() {
+			this.opened = false;
+		},
+
+		open: function() {
+			this.opened = true;
+		},
+
+		toggleOpen: function() {
+			if (this.opened) {
+				this.close();
+			} else {
+				this.open();
+			}
+		},
+
+		__getContentContainer: function() {
+			return this.$$('.d2l-dropdown-content-container');
+		},
+
+		__getOpener: function() {
+			var opener = D2L.Dom.findComposedAncestor(this, function(elem) {
+				if (elem.isDropdownOpener) {
+					return true;
+				}
+			});
+			return opener;
+		},
+
+		__minWidthChanged: function(newValue) {
+			if (!newValue) {
+				return;
+			}
+			this.__getContentContainer().style.minWidth = newValue + 'px';
+		},
+
+		__maxWidthChanged: function(newValue) {
+			if (!newValue) {
+				return;
+			}
+			this.__getContentContainer().style.maxWidth = newValue + 'px';
+		},
+
+		__onAutoCloseFocus: function() {
+			/* timeout needed to work around lack of support for relatedTarget */
+			setTimeout(function() {
+				if (!this.opened
+					|| this.noAutoClose
+					|| !document.activeElement
+					|| document.activeElement === document.body) {
+					return;
+				}
+
+				var activeElement = Polymer.dom(document.activeElement).node;
+				if (D2L.Dom.isComposedAncestor(this, activeElement)
+					|| D2L.Dom.isComposedAncestor(this.__getOpener(), activeElement)) {
+					return;
+				}
+
+				this.opened = false;
+			}.bind(this), 0);
+		},
+
+		__onAutoCloseClick: function(e) {
+			if (!this.opened || this.noAutoClose) {
+				return;
+			}
+			var content = this.__getContentContainer();
+			if (D2L.Dom.isComposedAncestor(content, Polymer.dom(e).rootTarget)) {
+				return;
+			}
+			var opener = this.__getOpener();
+			if (D2L.Dom.isComposedAncestor(opener.getOpenerElement(), Polymer.dom(e).rootTarget)) {
+				return;
+			}
+
+			this.opened = false;
+		},
+
+		__onClose: function(e) {
+			if (e.target !== this || !document.activeElement) {
+				return;
+			}
+			var activeElement = Polymer.dom(document.activeElement).node;
+			if (!D2L.Dom.isComposedAncestor(this, activeElement)) {
+				return;
+			}
+			var opener = this.__getOpener();
+			opener.getOpenerElement().focus();
+		},
+
+		__onKeyUp: function(e) {
+			if (!this.opened) {
+				return;
+			}
+			if (e.keyCode === 27) {
+				// escape
+				this.opened = false;
+			}
+		},
+
+		__onResize: function() {
+			if (!this.opened) {
+				return;
+			}
+			this.__position();
+		},
+
+		__openedChanged: function(newValue) {
+
+			this.__isRTL = (getComputedStyle(this).direction === 'rtl');
+
+			if (newValue) {
+
+				var content = this.__getContentContainer();
+
+				if (!this.noAutoFit) {
+					content.scrollTop = 0;
+				}
+
+				this.__position();
+
+				if (!this.noAutoFocus) {
+					var focusable = D2L.Dom.Focus.getFirstFocusableDescendant(this);
+					if (focusable) {
+						focusable.focus();
+					} else {
+						content.setAttribute('tabindex', '-1');
+						content.focus();
+					}
+				}
+
+				this.fire('d2l-dropdown-open');
+
+			} else {
+
+				this.fire('d2l-dropdown-close');
+
+			}
+
+		},
+
+		__position: function() {
+
+			var opener = this.__getOpener();
+			var target = opener.getOpenerElement();
+			if (!target) {
+				return;
+			}
+
+			var content = this.__getContentContainer();
+
+			if (!this.noAutoFit) {
+				content.style.maxHeight = 'none';
+			}
+
+			var targetRect = target.getBoundingClientRect();
+			var contentRect = content.getBoundingClientRect();
+
+			var spaceAround = {
+				above: targetRect.top - 40,
+				below: window.innerHeight - targetRect.bottom - 40,
+				left: targetRect.left - 20,
+				right: window.innerWidth - targetRect.right - 20
+			};
+
+			var spaceRequired = {
+				height: contentRect.height + 20,
+				width: contentRect.width + 0
+			};
+
+			var maxHeight;
+
+			if (((spaceAround.below - spaceRequired.height) < 0)
+				&& (spaceAround.above > spaceRequired.height)) {
+				maxHeight = spaceAround.above;
+				this.openedAbove = true;
+			} else {
+				maxHeight = spaceAround.below;
+				this.openedAbove = false;
+			}
+
+			var centerDelta = contentRect.width - targetRect.width;
+			var contentXAdjustment = centerDelta / 2;
+			if (centerDelta > 0) {
+				// content wider than target, so slide left/right as needed
+				if (!this.__isRTL) {
+					if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
+						// center with target
+						content.style.left = (contentXAdjustment * -1) + 'px';
+					} else if (spaceAround.left < contentXAdjustment) {
+						// slide content right (not enough space to center)
+						content.style.left = ((spaceAround.left) * -1) + 'px';
+					} else if (spaceAround.right < contentXAdjustment) {
+						// slide content left (not enough space to center)
+						content.style.left = ((contentRect.width - targetRect.width) * -1) + spaceAround.right + 'px';
+					}
+				} else {
+					if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
+						// center with target
+						content.style.right = (contentXAdjustment * -1) + 'px';
+					} else if (spaceAround.left < contentXAdjustment) {
+						// slide content right (not enough space to center)
+						content.style.right = ((contentRect.width - targetRect.width) * -1) + spaceAround.left + 'px';
+					} else if (spaceAround.right < contentXAdjustment) {
+						// slide content left (not enough space to center)
+						content.style.right = ((spaceAround.right) * -1) + 'px';
+					}
+				}
+			} else {
+				// content narrower than target, so slide in
+				if (!this.__isRTL) {
+					content.style.left = (contentXAdjustment * -1) + 'px';
+				} else {
+					content.style.right = (contentXAdjustment * -1) + 'px';
+				}
+			}
+
+			if (!this.noAutoFit && maxHeight && maxHeight > 0) {
+				content.style.maxHeight = maxHeight + 'px';
+				content.style.overflowY = 'auto';
+			}
+
+		}
+
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.DropdownContentBehavior = [DropdownContentBehavior];
+})();
+</script>

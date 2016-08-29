@@ -1,0 +1,75 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen.html">
+<link rel="import" href="d2l-dropdown-opener-behavior.html">
+
+<dom-module id="d2l-dropdown-context-menu">
+	<template>
+		<style include="d2l-colors d2l-dropdown-opener-styles">
+			:host {
+				display: inline-block;
+			}
+			:host button {
+				background-color: transparent;
+				border: 1px solid transparent;
+				border-radius: 0.3rem;
+				box-sizing: border-box;
+				cursor: pointer;
+				height: calc(1.4rem + 2px);
+				outline-style: none;
+				width: calc(1.4rem + 2px);
+			}
+			:host button:focus,
+			:host button:hover {
+				border-color: var(--d2l-color-pressicus);
+				color: var(--d2l-color-celestuba);
+			}
+			:host([opened]) button {
+				border-color: var(--d2l-color-pressicus);
+				color: var(--d2l-color-celestine);
+			}
+			:host iron-icon {
+				height: 0.8rem;
+				width: 0.8rem;
+			}
+		</style>
+		<button>
+			<d2l-offscreen>[[text]]</d2l-offscreen>
+			<iron-icon icon="d2l-tier1:chevron-down"></iron-icon>
+		</button>
+		<content></content>
+	</template>
+	<script>
+		Polymer({
+			is: 'd2l-dropdown-context-menu',
+
+			behaviors: [
+				window.D2L.PolymerBehaviors.DropdownOpenerBehavior
+			],
+
+			properties: {
+				text: String
+			},
+
+			listeners: {
+				'd2l-dropdown-close': '_onClose',
+				'd2l-dropdown-open': '_onOpen'
+			},
+
+			getOpenerElement: function() {
+				return this.$$('button');
+			},
+
+			_onClose: function() {
+				this.removeAttribute('opened');
+			},
+
+			_onOpen: function() {
+				this.setAttribute('opened', '');
+			}
+
+		});
+	</script>
+</dom-module>

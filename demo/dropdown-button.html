@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>D2L Dropdown Web Component</title>
+	<title>D2L Dropdown Button Component</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
@@ -11,12 +11,12 @@
 		}
 	</script>
 	<link rel="stylesheet" href="demo-styles.css">
-	<link rel="import" href="../d2l-dropdown.html">
+	<link rel="import" href="../d2l-dropdown-button.html">
 	<link rel="import" href="../d2l-dropdown-content.html">
 </head>
 <body unresolved>
 
-	<h1>d2l-dropdown web component</h1>
+	<h1>d2l-dropdown-button web component</h1>
 
 	<div>
 		<h2>Configuration</h2>
@@ -25,6 +25,9 @@
 			<button onclick="toggleFloat();">Toggle Float</button>
 		</div>
 		<div style="margin-bottom: 0.75rem;">
+			<label for="config-primary">
+				Is Primary <input id="config-primary" type="checkbox" />
+			</label>
 			<label for="config-no-auto-close">
 				No Auto-Close <input id="config-no-auto-close" type="checkbox" />
 			</label>
@@ -46,14 +49,12 @@
 	<div id="content" style="margin-bottom: 2rem; margin-top: 10rem;">
 		<h2>Component</h2>
 		<div style="padding-left:5%; padding-right: 0%;">
-			<d2l-dropdown>
-				<button class="d2l-dropdown-opener">Open it!</button>
+			<d2l-dropdown-button id="dropdown-button" text="Open!">
 				<d2l-dropdown-content id="dropdown-content" max-width="400">
-					<a href="https://youtu.be/9ze87zQFSak">Google 5</a>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 					<a href="http://www.desire2learn.com">D2L</a>
 				</d2l-dropdown-content>
-			</d2l-dropdown>
+			</d2l-dropdown-button>
 		</div>
 	</div>
 	<div style="clear:both;"></div>
@@ -63,23 +64,33 @@
 	<script>
 
 		var dropdown_content = document.getElementById('dropdown-content');
+		var dropdown_button = document.getElementById('dropdown-button');
 
-		function wireupConfig(propertyName) {
+		function wireupOpenerConfig(propertyName) {
+			wireupConfig(dropdown_button, propertyName);
+		}
+
+		function wireupContentConfig(propertyName) {
+			wireupConfig(dropdown_content, propertyName);
+		}
+
+		function wireupConfig(elem, propertyName) {
 			var configElem = document.getElementById('config-' + propertyName);
 			configElem.addEventListener('change', function(e) {
 				if (e.target.checked) {
-					dropdown_content.setAttribute(propertyName, true);
+					elem.setAttribute(propertyName, true);
 				} else {
-					dropdown_content.removeAttribute(propertyName);
+					elem.removeAttribute(propertyName);
 				}
 			});
 		}
 
-		wireupConfig('no-auto-close');
-		wireupConfig('no-auto-fit');
-		wireupConfig('no-auto-focus');
-		wireupConfig('no-pointer');
-		wireupConfig('no-padding');
+		wireupOpenerConfig('primary');
+		wireupContentConfig('no-auto-close');
+		wireupContentConfig('no-auto-fit');
+		wireupContentConfig('no-auto-focus');
+		wireupContentConfig('no-pointer');
+		wireupContentConfig('no-padding');
 
 		dropdown_content.addEventListener('d2l-dropdown-open', function(e) {
 			console.log('d2l-dropdown-open', e);
