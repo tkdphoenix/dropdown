@@ -68,8 +68,12 @@
 				display: none;
 			}
 
-			:host .d2l-dropdown-content-width-reset {
+			:host .d2l-dropdown-content-position {
+				display: inline-block;
+				min-width: 70px;
+				max-width: 370px;
 				width: 80vw;
+				position: relative;
 			}
 
 			:host .d2l-dropdown-content-container {
@@ -79,15 +83,17 @@
 				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
 				box-sizing: border-box;
 				display: inline-block;
-				min-width: 70px;
-				max-width: 370px;
+				max-width: 100%;
 				outline: none;
 				padding: 1rem;
-				position: relative;
 			}
 
 			:host([no-border]) .d2l-dropdown-content-container {
 				border-style: none;
+			}
+
+			:host([no-box-shadow]) .d2l-dropdown-content-container {
+				box-shadow: none;
 			}
 
 			:host([no-padding]) .d2l-dropdown-content-container {
@@ -158,6 +164,10 @@
 				type: Boolean,
 				reflectToAttribute: true
 			},
+			noBoxShadow: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
 			noPadding: {
 				type: Boolean,
 				reflectToAttribute: true
@@ -222,6 +232,10 @@
 			return this.$$('.d2l-dropdown-content-container');
 		},
 
+		__getPositionContainer: function() {
+			return this.$$('.d2l-dropdown-content-position');
+		},
+
 		__getOpener: function() {
 			var opener = D2L.Dom.findComposedAncestor(this, function(elem) {
 				if (elem.isDropdownOpener) {
@@ -235,14 +249,14 @@
 			if (!newValue) {
 				return;
 			}
-			this.__getContentContainer().style.minWidth = newValue + 'px';
+			this.__getPositionContainer().style.minWidth = newValue + 'px';
 		},
 
 		__maxWidthChanged: function(newValue) {
 			if (!newValue) {
 				return;
 			}
-			this.__getContentContainer().style.maxWidth = newValue + 'px';
+			this.__getPositionContainer().style.maxWidth = newValue + 'px';
 		},
 
 		__onAutoCloseFocus: function() {
@@ -353,6 +367,7 @@
 			}
 
 			var content = this.__getContentContainer();
+			var position = this.__getPositionContainer();
 
 			if (!this.noAutoFit) {
 				content.style.maxHeight = 'none';
@@ -360,6 +375,8 @@
 
 			var targetRect = target.getBoundingClientRect();
 			var contentRect = content.getBoundingClientRect();
+
+			position.style.width = window.innerWidth - 40 + 'px';
 
 			var spaceAround = {
 				above: targetRect.top - 40,
@@ -391,32 +408,32 @@
 				if (!this.__isRTL) {
 					if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
 						// center with target
-						content.style.left = (contentXAdjustment * -1) + 'px';
+						position.style.left = (contentXAdjustment * -1) + 'px';
 					} else if (spaceAround.left < contentXAdjustment) {
 						// slide content right (not enough space to center)
-						content.style.left = ((spaceAround.left) * -1) + 'px';
+						position.style.left = ((spaceAround.left) * -1) + 'px';
 					} else if (spaceAround.right < contentXAdjustment) {
 						// slide content left (not enough space to center)
-						content.style.left = ((contentRect.width - targetRect.width) * -1) + spaceAround.right + 'px';
+						position.style.left = ((contentRect.width - targetRect.width) * -1) + spaceAround.right + 'px';
 					}
 				} else {
 					if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
 						// center with target
-						content.style.right = (contentXAdjustment * -1) + 'px';
+						position.style.right = (contentXAdjustment * -1) + 'px';
 					} else if (spaceAround.left < contentXAdjustment) {
 						// slide content right (not enough space to center)
-						content.style.right = ((contentRect.width - targetRect.width) * -1) + spaceAround.left + 'px';
+						position.style.right = ((contentRect.width - targetRect.width) * -1) + spaceAround.left + 'px';
 					} else if (spaceAround.right < contentXAdjustment) {
 						// slide content left (not enough space to center)
-						content.style.right = ((spaceAround.right) * -1) + 'px';
+						position.style.right = ((spaceAround.right) * -1) + 'px';
 					}
 				}
 			} else {
 				// content narrower than target, so slide in
 				if (!this.__isRTL) {
-					content.style.left = (contentXAdjustment * -1) + 'px';
+					position.style.left = (contentXAdjustment * -1) + 'px';
 				} else {
-					content.style.right = (contentXAdjustment * -1) + 'px';
+					position.style.right = (contentXAdjustment * -1) + 'px';
 				}
 			}
 
