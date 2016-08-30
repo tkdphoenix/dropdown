@@ -89,7 +89,6 @@
 		});
 
 		function toggleRTL() {
-			closeDropdown();
 			if (document.body.dir === 'rtl') {
 				document.body.dir = 'ltr';
 			} else {
@@ -98,7 +97,6 @@
 		}
 
 		function toggleFloat() {
-			closeDropdown();
 			var content = document.getElementById('content');
 			if (content.style.cssFloat === 'right') {
 				content.style.cssFloat = '';
