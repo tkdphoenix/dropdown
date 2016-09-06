@@ -41,6 +41,7 @@
 				clip: rect(-5px, 21px, 8px, -3px);
 				top: -7px;
 				left: calc(50% - 7px);
+				z-index: 1;
 			}
 
 			:host .d2l-dropdown-content-pointer > div {
@@ -69,31 +70,32 @@
 			}
 
 			:host .d2l-dropdown-content-position {
+				border-radius: 0.3rem;
 				display: inline-block;
-				min-width: 70px;
-				max-width: 370px;
-				width: 80vw;
-				position: relative;
+				position: absolute;
 			}
 
-			:host .d2l-dropdown-content-container {
+			:host .d2l-dropdown-content-width {
 				background-color: var(--d2l-color-white);
 				border: 1px solid var(--d2l-color-titanius);
 				border-radius: 0.3rem;
 				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
 				box-sizing: border-box;
+				min-width: 70px;
+				max-width: 370px;
+				position: absolute;
+				width: 100vw;
+			}
+
+			:host([opened-above]) .d2l-dropdown-content-width {
+				bottom: 100%;
+			}
+
+			:host .d2l-dropdown-content-container {
+				box-sizing: border-box;
 				display: inline-block;
-				max-width: 100%;
 				outline: none;
 				padding: 1rem;
-			}
-
-			:host([no-border]) .d2l-dropdown-content-container {
-				border-style: none;
-			}
-
-			:host([no-box-shadow]) .d2l-dropdown-content-container {
-				box-shadow: none;
 			}
 
 			:host([no-padding]) .d2l-dropdown-content-container {
@@ -157,14 +159,6 @@
 				reflectToAttribute: true
 			},
 			noAutoFocus: {
-				type: Boolean,
-				reflectToAttribute: true
-			},
-			noBorder: {
-				type: Boolean,
-				reflectToAttribute: true
-			},
-			noBoxShadow: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
@@ -236,6 +230,10 @@
 			return this.$$('.d2l-dropdown-content-position');
 		},
 
+		__getWidthContainer: function() {
+			return this.$$('.d2l-dropdown-content-width');
+		},
+
 		__getOpener: function() {
 			var opener = D2L.Dom.findComposedAncestor(this, function(elem) {
 				if (elem.isDropdownOpener) {
@@ -249,14 +247,15 @@
 			if (!newValue) {
 				return;
 			}
-			this.__getPositionContainer().style.minWidth = newValue + 'px';
+			this.__getWidthContainer().style.minWidth = newValue + 'px';
+			this.__getContentContainer().style.minWidth = newValue + 'px';
 		},
 
 		__maxWidthChanged: function(newValue) {
 			if (!newValue) {
 				return;
 			}
-			this.__getPositionContainer().style.maxWidth = newValue + 'px';
+			this.__getWidthContainer().style.maxWidth = newValue + 'px';
 		},
 
 		__onAutoCloseFocus: function() {
@@ -358,7 +357,7 @@
 
 		},
 
-		__position: function() {
+		__position: function(ignoreVertical) {
 
 			var opener = this.__getOpener();
 			var target = opener.getOpenerElement();
@@ -368,6 +367,7 @@
 
 			var content = this.__getContentContainer();
 			var position = this.__getPositionContainer();
+			var widthContainer = this.__getWidthContainer();
 
 			if (!this.noAutoFit) {
 				content.style.maxHeight = 'none';
@@ -376,13 +376,11 @@
 			var targetRect = target.getBoundingClientRect();
 			var contentRect = content.getBoundingClientRect();
 
-			position.style.width = window.innerWidth - 40 + 'px';
-
 			var spaceAround = {
-				above: targetRect.top - 40,
-				below: window.innerHeight - targetRect.bottom - 40,
+				above: targetRect.top - 20,
+				below: window.innerHeight - targetRect.bottom - 80,
 				left: targetRect.left - 20,
-				right: window.innerWidth - targetRect.right - 20
+				right: window.innerWidth - targetRect.right - 40
 			};
 
 			var spaceRequired = {
@@ -390,57 +388,84 @@
 				width: contentRect.width + 0
 			};
 
-			var maxHeight;
+			var adjustPosition = function() {
 
-			if (((spaceAround.below - spaceRequired.height) < 0)
-				&& (spaceAround.above > spaceRequired.height)) {
-				maxHeight = spaceAround.above;
-				this.openedAbove = true;
-			} else {
-				maxHeight = spaceAround.below;
-				this.openedAbove = false;
-			}
+				var maxHeight;
 
-			var centerDelta = contentRect.width - targetRect.width;
-			var contentXAdjustment = centerDelta / 2;
-			if (centerDelta > 0) {
-				// content wider than target, so slide left/right as needed
-				if (!this.__isRTL) {
-					if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
-						// center with target
+				if (!ignoreVertical) {
+					if (((spaceAround.below - spaceRequired.height) < 0)
+						&& (spaceAround.above > spaceRequired.height)) {
+						this.openedAbove = true;
+					} else {
+						this.openedAbove = false;
+					}
+				}
+
+				if (this.openedAbove) {
+					maxHeight = spaceAround.above;
+				} else {
+					maxHeight = spaceAround.below;
+				}
+
+				var centerDelta = contentRect.width - targetRect.width;
+				var contentXAdjustment = centerDelta / 2;
+				if (centerDelta > 0) {
+					// content wider than target, so slide left/right as needed
+					if (!this.__isRTL) {
+						if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
+							// center with target
+							position.style.left = (contentXAdjustment * -1) + 'px';
+						} else if (spaceAround.left < contentXAdjustment) {
+							// slide content right (not enough space to center)
+							position.style.left = ((spaceAround.left) * -1) + 'px';
+						} else if (spaceAround.right < contentXAdjustment) {
+							// slide content left (not enough space to center)
+							position.style.left = ((contentRect.width - targetRect.width) * -1) + spaceAround.right + 'px';
+						}
+					} else {
+						if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
+							// center with target
+							position.style.right = (contentXAdjustment * -1) + 'px';
+						} else if (spaceAround.left < contentXAdjustment) {
+							// slide content right (not enough space to center)
+							position.style.right = ((contentRect.width - targetRect.width) * -1) + spaceAround.left + 'px';
+						} else if (spaceAround.right < contentXAdjustment) {
+							// slide content left (not enough space to center)
+							position.style.right = ((spaceAround.right) * -1) + 'px';
+						}
+					}
+				} else {
+					// content narrower than target, so slide in
+					if (!this.__isRTL) {
 						position.style.left = (contentXAdjustment * -1) + 'px';
-					} else if (spaceAround.left < contentXAdjustment) {
-						// slide content right (not enough space to center)
-						position.style.left = ((spaceAround.left) * -1) + 'px';
-					} else if (spaceAround.right < contentXAdjustment) {
-						// slide content left (not enough space to center)
-						position.style.left = ((contentRect.width - targetRect.width) * -1) + spaceAround.right + 'px';
-					}
-				} else {
-					if (spaceAround.left > contentXAdjustment && spaceAround.right > contentXAdjustment) {
-						// center with target
+					} else {
 						position.style.right = (contentXAdjustment * -1) + 'px';
-					} else if (spaceAround.left < contentXAdjustment) {
-						// slide content right (not enough space to center)
-						position.style.right = ((contentRect.width - targetRect.width) * -1) + spaceAround.left + 'px';
-					} else if (spaceAround.right < contentXAdjustment) {
-						// slide content left (not enough space to center)
-						position.style.right = ((spaceAround.right) * -1) + 'px';
 					}
 				}
-			} else {
-				// content narrower than target, so slide in
-				if (!this.__isRTL) {
-					position.style.left = (contentXAdjustment * -1) + 'px';
-				} else {
-					position.style.right = (contentXAdjustment * -1) + 'px';
-				}
-			}
 
-			if (!this.noAutoFit && maxHeight && maxHeight > 0) {
-				content.style.maxHeight = maxHeight + 'px';
-				content.style.overflowY = 'auto';
+				if (!this.noAutoFit && maxHeight && maxHeight > 0) {
+					content.style.maxHeight = maxHeight + 'px';
+					content.style.overflowY = 'auto';
+				}
+
+				this.fire('d2l-dropdown-position');
+
+			}.bind(this);
+
+			/* don't let dropdown content horizontally overflow viewport */
+			widthContainer.style.width = '';
+			content.style.width = '';
+
+			var width = window.innerWidth - 40;
+			if (width > content.scrollWidth) {
+				width = content.scrollWidth;
 			}
+			/* add 2 to width since scrollWidth does not include border */
+			widthContainer.style.width = width + 2 + 'px';
+			/* set width of content too so IE will render scroll inside border */
+			content.style.width = width + 'px';
+
+			adjustPosition();
 
 		}
 

@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>D2L Dropdown Menu Web Component</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
 	<script>
 		var shadow = (window.location.search.indexOf('dom=shadow') > -1);
@@ -38,13 +39,13 @@
 
 	<div id="content" style="margin-bottom:2rem;margin-top:10rem;">
 		<h2>Component</h2>
-		<div style="padding-left:5%; padding-right: 0%;">
+		<div style="padding-left:25%; padding-right: 0%;">
 			<d2l-dropdown>
 				<button class="d2l-dropdown-opener">Open it!</button>
-				<d2l-dropdown-menu id="dropdown" max-width="400">
+				<d2l-dropdown-menu id="dropdown">
 					<d2l-menu label="Astronomy">
 						<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
-						<d2l-menu-item text="Searching the Heavens Searching the Heavens Searching the Heavens"></d2l-menu-item>
+						<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
 						<d2l-menu-item text="The Solar System">
 							<d2l-menu>
 								<d2l-menu-item text="Formation"></d2l-menu-item>
@@ -118,6 +119,8 @@
 		<a href="https://youtu.be/9ze87zQFSak">Google 5</a>
 		<p style="margin-bottom: 30rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 	</div>
+
+	<div style="height: 200px;"></div>
 
 	<script>
 
