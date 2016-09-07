@@ -94,6 +94,7 @@
 			:host .d2l-dropdown-content-container {
 				box-sizing: border-box;
 				display: inline-block;
+				max-width: 100%;
 				outline: none;
 				padding: 1rem;
 			}
@@ -373,22 +374,22 @@
 				content.style.maxHeight = 'none';
 			}
 
-			var targetRect = target.getBoundingClientRect();
-			var contentRect = content.getBoundingClientRect();
-
-			var spaceAround = {
-				above: targetRect.top - 20,
-				below: window.innerHeight - targetRect.bottom - 80,
-				left: targetRect.left - 20,
-				right: window.innerWidth - targetRect.right - 40
-			};
-
-			var spaceRequired = {
-				height: contentRect.height + 20,
-				width: contentRect.width + 0
-			};
-
 			var adjustPosition = function() {
+
+				var targetRect = target.getBoundingClientRect();
+				var contentRect = content.getBoundingClientRect();
+
+				var spaceAround = {
+					above: targetRect.top - 20,
+					below: window.innerHeight - targetRect.bottom - 80,
+					left: targetRect.left - 20,
+					right: window.innerWidth - targetRect.right - 30
+				};
+
+				var spaceRequired = {
+					height: contentRect.height + 20,
+					width: contentRect.width
+				};
 
 				var maxHeight;
 
@@ -461,9 +462,9 @@
 				width = content.scrollWidth;
 			}
 			/* add 2 to width since scrollWidth does not include border */
-			widthContainer.style.width = width + 2 + 'px';
+			widthContainer.style.width = width + 20 + 'px';
 			/* set width of content too so IE will render scroll inside border */
-			content.style.width = width + 'px';
+			content.style.width = width + 18 + 'px';
 
 			adjustPosition();
 
