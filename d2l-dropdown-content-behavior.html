@@ -374,22 +374,22 @@
 				content.style.maxHeight = 'none';
 			}
 
-			var targetRect = target.getBoundingClientRect();
-			var contentRect = content.getBoundingClientRect();
-
-			var spaceAround = {
-				above: targetRect.top - 20,
-				below: window.innerHeight - targetRect.bottom - 80,
-				left: targetRect.left - 20,
-				right: window.innerWidth - targetRect.right - 40
-			};
-
-			var spaceRequired = {
-				height: contentRect.height + 20,
-				width: contentRect.width + 0
-			};
-
 			var adjustPosition = function() {
+
+				var targetRect = target.getBoundingClientRect();
+				var contentRect = content.getBoundingClientRect();
+
+				var spaceAround = {
+					above: targetRect.top - 20,
+					below: window.innerHeight - targetRect.bottom - 80,
+					left: targetRect.left - 20,
+					right: window.innerWidth - targetRect.right - 30
+				};
+
+				var spaceRequired = {
+					height: contentRect.height + 20,
+					width: contentRect.width
+				};
 
 				var maxHeight;
 
