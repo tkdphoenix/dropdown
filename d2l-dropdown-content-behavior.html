@@ -403,9 +403,9 @@
 				}
 
 				if (this.openedAbove) {
-					maxHeight = spaceAround.above;
+					maxHeight = Math.floor(spaceAround.above);
 				} else {
-					maxHeight = spaceAround.below;
+					maxHeight = Math.floor(spaceAround.below);
 				}
 
 				var centerDelta = contentRect.width - targetRect.width;
@@ -446,7 +446,12 @@
 
 				if (!this.noAutoFit && maxHeight && maxHeight > 0) {
 					content.style.maxHeight = maxHeight + 'px';
-					content.style.overflowY = 'auto';
+					if (content.scrollHeight > maxHeight) {
+						content.style.overflowY = 'auto';
+					} else {
+						/* needed for IE */
+						content.style.overflowY = '';
+					}
 				}
 
 				this.fire('d2l-dropdown-position');

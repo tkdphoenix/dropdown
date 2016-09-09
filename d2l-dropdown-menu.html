@@ -135,7 +135,9 @@
 						topCap.classList.add('d2l-dropdown-content-top-scroll');
 					}
 				}
-				if (this._content.scrollHeight - (this._content.scrollTop + this._content.clientHeight) < 2) {
+
+				/* scrollHeight incorrect in IE by 4px second time opened */
+				if (this._content.scrollHeight - (this._content.scrollTop + this._content.clientHeight) < 5) {
 					if (bottomCap.classList.contains('d2l-dropdown-content-bottom-scroll')) {
 						bottomCap.classList.remove('d2l-dropdown-content-bottom-scroll');
 					}
