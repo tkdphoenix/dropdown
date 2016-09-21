@@ -1,30 +1,17 @@
 <html>
 <head>
-	<title>D2L Dropdown Context Menu Component</title>
+	<title>d2l-dropdown-context-menu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
-	<script>
-		var shadow = (window.location.search.indexOf('dom=shadow') > -1);
-		if (shadow) {
-			window.Polymer = window.Polymer || {};
-			window.Polymer.dom = 'shadow';
-		}
-	</script>
-	<link rel="stylesheet" href="demo-styles.css">
+	<link rel="import" href="../../d2l-demo-template/d2l-demo-template.html">
 	<link rel="import" href="../d2l-dropdown-context-menu.html">
 	<link rel="import" href="../d2l-dropdown-content.html">
 </head>
 <body unresolved>
 
-	<h1>d2l-dropdown-context-menu web component</h1>
+	<d2l-demo-template title="d2l-dropdown-context-menu">
 
-	<div>
-		<h2>Configuration</h2>
-		<div style="margin-bottom: 0.75rem;">
-			<button onclick="toggleRTL();">Toggle RTL</button>
-			<button onclick="toggleFloat();">Toggle Float</button>
-		</div>
-		<div style="margin-bottom: 0.75rem;">
+		<div class="d2l-demo-actions">
 			<label for="config-no-auto-close">
 				No Auto-Close <input id="config-no-auto-close" type="checkbox" />
 			</label>
@@ -41,22 +28,25 @@
 				No Padding <input id="config-no-padding" type="checkbox" />
 			</label>
 		</div>
-	</div>
 
-	<div id="content" style="margin-bottom: 2rem; margin-top: 10rem;">
-		<h2>Component</h2>
-		<div style="padding-left:5%; padding-right: 0%;">
-			<d2l-dropdown-context-menu id="dropdown-context-menu" text="Open!">
-				<d2l-dropdown-content id="dropdown-content" max-width="400">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<a href="http://www.desire2learn.com">D2L</a>
-				</d2l-dropdown-content>
-			</d2l-dropdown-context-menu>
+		<div class="d2l-demo-fixture">
+
+			<div style="margin-bottom: 2rem; margin-top: 10rem; padding-left:5%; padding-right: 0%;">
+
+				<d2l-dropdown-context-menu id="dropdown-context-menu" text="Open!">
+					<d2l-dropdown-content id="dropdown-content" max-width="400">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						<a href="http://www.desire2learn.com">D2L</a>
+					</d2l-dropdown-content>
+				</d2l-dropdown-context-menu>
+
+			</div>
+
+			<a href="https://youtu.be/9ze87zQFSak">Google </a>
+
 		</div>
-	</div>
-	<div style="clear:both;"></div>
 
-	<a href="https://youtu.be/9ze87zQFSak">Google 5</a>
+	</d2l-demo-template>
 
 	<script>
 
@@ -85,25 +75,6 @@
 		dropdown_content.addEventListener('d2l-dropdown-close', function(e) {
 			console.log('d2l-dropdown-close', e);
 		});
-
-		function toggleRTL() {
-			closeDropdown();
-			if (document.body.dir === 'rtl') {
-				document.body.dir = 'ltr';
-			} else {
-				document.body.dir = 'rtl';
-			}
-		}
-
-		function toggleFloat() {
-			closeDropdown();
-			var content = document.getElementById('content');
-			if (content.style.cssFloat === 'right') {
-				content.style.cssFloat = '';
-			} else {
-				content.style.cssFloat = 'right';
-			}
-		}
 
 	</script>
 </body>

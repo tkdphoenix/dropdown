@@ -1,171 +1,118 @@
 <html>
 <head>
-	<title>D2L Dropdown Menu Web Component</title>
+	<title>d2l-dropdown-menu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
-	<script>
-		var shadow = (window.location.search.indexOf('dom=shadow') > -1);
-		if (shadow) {
-			window.Polymer = window.Polymer || {};
-			window.Polymer.dom = 'shadow';
-		}
-	</script>
-	<link rel="stylesheet" href="demo-styles.css">
+	<link rel="import" href="../../d2l-demo-template/d2l-demo-template.html">
+	<link rel="import" href="../../d2l-menu/d2l-menu.html">
 	<link rel="import" href="../d2l-dropdown.html">
 	<link rel="import" href="../d2l-dropdown-menu.html">
-	<link rel="import" href="../../d2l-menu/d2l-menu.html">
 </head>
-<body>
+<body unresolved>
 
-	<h1>d2l-dropdown-menu web component</h1>
+	<d2l-demo-template title="d2l-dropdown-menu">
 
-	<div>
-		<h2>Configuration</h2>
-		<div style="margin-bottom: 0.75rem;">
-			<button onclick="toggleRTL();">Toggle RTL</button>
-			<button onclick="toggleFloat();">Toggle Float</button>
+		<div class="d2l-demo-actions">
 			<button onclick="toggleHiddenFirst(4000);">Toggle First (4s delay)</button>
 			<button onclick="toggleHiddenLast(4000);">Toggle Last (4s delay)</button>
 		</div>
-		<div style="margin-bottom: 0.75rem;">
-			<label for="config-no-auto-close">
-				No Auto-Close <input id="config-no-auto-close" type="checkbox" />
-			</label>
-			<label for="config-no-pointer">
-				No Pointer <input id="config-no-pointer" type="checkbox" />
-			</label>
+
+		<div class="d2l-demo-fixture">
+
+			<div style="margin-bottom:2rem;margin-top:10rem; padding-left:25%; padding-right: 0%;">
+
+				<d2l-dropdown>
+					<button class="d2l-dropdown-opener">Open it!</button>
+					<d2l-dropdown-menu id="dropdown">
+						<d2l-menu label="Astronomy">
+							<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
+							<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+							<d2l-menu-item text="The Solar System">
+								<d2l-menu>
+									<d2l-menu-item text="Formation"></d2l-menu-item>
+									<d2l-menu-item text="Modern Solar System"></d2l-menu-item>
+									<d2l-menu-item text="Future Solar System"></d2l-menu-item>
+									<d2l-menu-item text="The Planets">
+										<d2l-menu>
+											<d2l-menu-item text="Mercury"></d2l-menu-item>
+											<d2l-menu-item text="Venus"></d2l-menu-item>
+											<d2l-menu-item text="Earth"></d2l-menu-item>
+											<d2l-menu-item text="Mars"></d2l-menu-item>
+											<d2l-menu-item text="Jupiter"></d2l-menu-item>
+											<d2l-menu-item text="Saturn"></d2l-menu-item>
+											<d2l-menu-item text="Uranus"></d2l-menu-item>
+											<d2l-menu-item text="Neptune"></d2l-menu-item>
+											<d2l-menu-item text="Dwarf Planets"></d2l-menu-item>
+										</d2l-menu>
+									</d2l-menu-item>
+									<d2l-menu-item text="The Sun"></d2l-menu-item>
+									<d2l-menu-item text="Solar &amp; Lunar Eclipses"></d2l-menu-item>
+									<d2l-menu-item text="Meteors &amp; Meteorites"></d2l-menu-item>
+									<d2l-menu-item text="Asteroids"></d2l-menu-item>
+									<d2l-menu-item text="Comets"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-menu-item>
+							<d2l-menu-item text="Stars &amp; Galaxies">
+								<d2l-menu>
+									<d2l-menu-item text="What is a Star?"></d2l-menu-item>
+									<d2l-menu-item text="Lifecycle of a Star"></d2l-menu-item>
+									<d2l-menu-item text="Binaries &amp; Multiples"></d2l-menu-item>
+									<d2l-menu-item text="Star Clusters"></d2l-menu-item>
+									<d2l-menu-item text="Star Death">
+										<d2l-menu>
+											<d2l-menu-item text="Supernovae"></d2l-menu-item>
+											<d2l-menu-item text="Black Holes"></d2l-menu-item>
+										</d2l-menu>
+									</d2l-menu-item>
+									<d2l-menu-item text="Star Clusters"></d2l-menu-item>
+									<d2l-menu-item text="Galaxies">
+										<d2l-menu>
+											<d2l-menu-item text="Classification"></d2l-menu-item>
+											<d2l-menu-item text="Birth &amp; Evolution"></d2l-menu-item>
+											<d2l-menu-item text="Spiral"></d2l-menu-item>
+											<d2l-menu-item text="Elliptical"></d2l-menu-item>
+											<d2l-menu-item text="Lenticular"></d2l-menu-item>
+											<d2l-menu-item text="Irregular"></d2l-menu-item>
+											<d2l-menu-item text="Active &amp; Radio"></d2l-menu-item>
+											<d2l-menu-item text="Quasars"></d2l-menu-item>
+											<d2l-menu-item text="Galaxy Clusters"></d2l-menu-item>
+										</d2l-menu>
+									</d2l-menu-item>
+								</d2l-menu>
+							</d2l-menu-item>
+							<d2l-menu-item text="The Night Sky">
+								<d2l-menu>
+									<d2l-menu-item text="Constellations"></d2l-menu-item>
+									<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
+									<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
+									<d2l-menu-item text="Telescopes"></d2l-menu-item>
+								</d2l-menu>
+							</d2l-menu-item>
+							<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
+						</d2l-menu>
+					</d2l-dropdown-menu>
+				</d2l-dropdown>
+
+			</div>
+
+			<div>
+				<a href="https://youtu.be/9ze87zQFSak">Google</a>
+				<p style="margin-bottom: 30rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+
+			<div style="height: 200px;"></div>
+
 		</div>
-	</div>
 
-	<div id="content" style="margin-bottom:2rem;margin-top:10rem;">
-		<h2>Component</h2>
-		<div style="padding-left:25%; padding-right: 0%;">
-			<d2l-dropdown>
-				<button class="d2l-dropdown-opener">Open it!</button>
-				<d2l-dropdown-menu id="dropdown">
-					<d2l-menu label="Astronomy">
-						<d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
-						<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
-						<d2l-menu-item text="The Solar System">
-							<d2l-menu>
-								<d2l-menu-item text="Formation"></d2l-menu-item>
-								<d2l-menu-item text="Modern Solar System"></d2l-menu-item>
-								<d2l-menu-item text="Future Solar System"></d2l-menu-item>
-								<d2l-menu-item text="The Planets">
-									<d2l-menu>
-										<d2l-menu-item text="Mercury"></d2l-menu-item>
-										<d2l-menu-item text="Venus"></d2l-menu-item>
-										<d2l-menu-item text="Earth"></d2l-menu-item>
-										<d2l-menu-item text="Mars"></d2l-menu-item>
-										<d2l-menu-item text="Jupiter"></d2l-menu-item>
-										<d2l-menu-item text="Saturn"></d2l-menu-item>
-										<d2l-menu-item text="Uranus"></d2l-menu-item>
-										<d2l-menu-item text="Neptune"></d2l-menu-item>
-										<d2l-menu-item text="Dwarf Planets"></d2l-menu-item>
-									</d2l-menu>
-								</d2l-menu-item>
-								<d2l-menu-item text="The Sun"></d2l-menu-item>
-								<d2l-menu-item text="Solar &amp; Lunar Eclipses"></d2l-menu-item>
-								<d2l-menu-item text="Meteors &amp; Meteorites"></d2l-menu-item>
-								<d2l-menu-item text="Asteroids"></d2l-menu-item>
-								<d2l-menu-item text="Comets"></d2l-menu-item>
-							</d2l-menu>
-						</d2l-menu-item>
-						<d2l-menu-item text="Stars &amp; Galaxies">
-							<d2l-menu>
-								<d2l-menu-item text="What is a Star?"></d2l-menu-item>
-								<d2l-menu-item text="Lifecycle of a Star"></d2l-menu-item>
-								<d2l-menu-item text="Binaries &amp; Multiples"></d2l-menu-item>
-								<d2l-menu-item text="Star Clusters"></d2l-menu-item>
-								<d2l-menu-item text="Star Death">
-									<d2l-menu>
-										<d2l-menu-item text="Supernovae"></d2l-menu-item>
-										<d2l-menu-item text="Black Holes"></d2l-menu-item>
-									</d2l-menu>
-								</d2l-menu-item>
-								<d2l-menu-item text="Star Clusters"></d2l-menu-item>
-								<d2l-menu-item text="Galaxies">
-									<d2l-menu>
-										<d2l-menu-item text="Classification"></d2l-menu-item>
-										<d2l-menu-item text="Birth &amp; Evolution"></d2l-menu-item>
-										<d2l-menu-item text="Spiral"></d2l-menu-item>
-										<d2l-menu-item text="Elliptical"></d2l-menu-item>
-										<d2l-menu-item text="Lenticular"></d2l-menu-item>
-										<d2l-menu-item text="Irregular"></d2l-menu-item>
-										<d2l-menu-item text="Active &amp; Radio"></d2l-menu-item>
-										<d2l-menu-item text="Quasars"></d2l-menu-item>
-										<d2l-menu-item text="Galaxy Clusters"></d2l-menu-item>
-									</d2l-menu>
-								</d2l-menu-item>
-							</d2l-menu>
-						</d2l-menu-item>
-						<d2l-menu-item text="The Night Sky">
-							<d2l-menu>
-								<d2l-menu-item text="Constellations"></d2l-menu-item>
-								<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
-								<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
-								<d2l-menu-item text="Telescopes"></d2l-menu-item>
-							</d2l-menu>
-						</d2l-menu-item>
-						<d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
-					</d2l-menu>
-				</d2l-dropdown-menu>
-			</d2l-dropdown>
-		</div>
-	</div>
-	<div style="clear:both;"></div>
-
-	<div>
-		<a href="https://youtu.be/9ze87zQFSak">Google 5</a>
-		<p style="margin-bottom: 30rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	</div>
-
-	<div style="height: 200px;"></div>
+	</d2l-demo-template>
 
 	<script>
 
 		var page_dropdown = document.getElementById('dropdown');
 
-		var config_noAutoClose = document.getElementById('config-no-auto-close');
-		config_noAutoClose.addEventListener('change', function(e) {
-			if (e.target.checked) {
-				page_dropdown.setAttribute('no-auto-close', true);
-			} else {
-				page_dropdown.removeAttribute('no-auto-close');
-			}
-		});
-
-		var config_noPointer = document.getElementById('config-no-pointer');
-		config_noPointer.addEventListener('change', function(e) {
-			if (e.target.checked) {
-				page_dropdown.setAttribute('no-pointer', true);
-			} else {
-				page_dropdown.removeAttribute('no-pointer');
-			}
-		});
-
 		page_dropdown.addEventListener('select', function(e) {
 			console.log('selected', e);
 		})
-
-		function toggleRTL() {
-			closeDropdown();
-			if (document.body.dir === 'rtl') {
-				document.body.dir = 'ltr';
-			} else {
-				document.body.dir = 'rtl';
-			}
-		}
-
-		function toggleFloat() {
-			closeDropdown();
-			var content = document.getElementById('content');
-			if (content.style.cssFloat === 'right') {
-				content.style.cssFloat = '';
-			} else {
-				content.style.cssFloat = 'right';
-			}
-		}
 
 		function toggleHiddenFirst(delayMs) {
 			var firstItem = document.getElementById('first-item');
