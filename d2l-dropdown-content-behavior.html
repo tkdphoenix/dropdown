@@ -209,6 +209,7 @@
 
 		listeners: {
 			'd2l-dropdown-close': '__onClose',
+			'd2l-dropdown-position': '__toggleScrollStyles',
 			'keyup': '__onKeyUp'
 		},
 
@@ -485,8 +486,6 @@
 				}
 
 				this.fire('d2l-dropdown-position');
-
-				this.__toggleScrollStyles();
 
 			}.bind(this);
 
