@@ -19,7 +19,7 @@
 						<button class="d2l-dropdown-opener"></button>
 						<d2l-dropdown-content>
 							<p id="non_focusable_inside"></p>
-							<a id="focusable_inside" href="http://www.desire2learn.com">D2L</a>
+							<a id="focusable_inside" href="http://www.desire2learn.com"></a>
 						</d2l-dropdown-content>
 					</d2l-dropdown>
 					<p id="non_focusable_outside"></p>
@@ -66,7 +66,7 @@
 
 				it('has default min-width 70px', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						var contentRect = content.__getWidthContainer().getBoundingClientRect();
 						expect(contentRect.width).to.equal(70);
 						done();
 					});
@@ -75,8 +75,8 @@
 
 				it('overrides default min-width if provided', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						var contentRect = content.__getContentContainer().getBoundingClientRect();
-						expect(contentRect.width).to.equal(150);
+						var contentRect = content.__getWidthContainer().getBoundingClientRect();
+						expect(contentRect.width).to.equal(170); /* +20px for scrollbar */
 						done();
 					});
 					content.setAttribute('min-width', '150');
@@ -85,7 +85,7 @@
 
 				it('has default max-width 370px', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						var contentRect = content.__getWidthContainer().getBoundingClientRect();
 						expect(contentRect.width).to.equal(370);
 						done();
 					});
@@ -95,7 +95,7 @@
 
 				it('overrides default max-width if provided', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						var contentRect = content.__getContentContainer().getBoundingClientRect();
+						var contentRect = content.__getWidthContainer().getBoundingClientRect();
 						expect(contentRect.width).to.equal(200);
 						done();
 					});
