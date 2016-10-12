@@ -110,8 +110,8 @@
 
 		var page_dropdown = document.getElementById('dropdown');
 
-		page_dropdown.addEventListener('select', function(e) {
-			console.log('selected', e);
+		page_dropdown.addEventListener('d2l-menu-item-select', function(e) {
+			console.log('item selected', e.target);
 		})
 
 		function toggleHiddenFirst(delayMs) {
