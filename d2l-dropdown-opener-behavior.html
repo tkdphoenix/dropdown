@@ -42,11 +42,14 @@
 		},
 
 		attached: function() {
-			var opener = this.getOpenerElement();
-			if (!opener) {
-				return;
-			}
-			this.listen(opener, 'click', '__onClick');
+			Polymer.RenderStatus.afterNextRender(this, function() {
+				var opener = this.getOpenerElement();
+				if (!opener) {
+					return;
+				}
+				this.listen(opener, 'keypress', '__onKeyPress');
+				this.listen(opener, 'mouseup', '__onMouseUp');
+			}.bind(this));
 		},
 
 		detached: function() {
@@ -54,7 +57,8 @@
 			if (!opener) {
 				return;
 			}
-			this.unlisten(opener, 'click', '__onClick');
+			this.unlisten(opener, 'keypress', '__onKeyPress');
+			this.unlisten(opener, 'mouseup', '__onMouseUp');
 		},
 
 		getOpener: function() {
@@ -65,19 +69,29 @@
 			return this;
 		},
 
-		toggleOpen: function() {
+		toggleOpen: function(applyFocus) {
 			var content = this.queryEffectiveChildren('[d2l-dropdown-content]');
 			if (!content) {
 				return;
 			}
-			content.toggleOpen();
+			content.toggleOpen(applyFocus);
 		},
 
-		__onClick: function() {
+		__onKeyPress: function(e) {
+			if (e.keyCode !== 13) {
+				return;
+			}
 			if (this.noAutoOpen) {
 				return;
 			}
-			this.toggleOpen();
+			this.toggleOpen(true);
+		},
+
+		__onMouseUp: function(e) {
+			if (this.noAutoOpen) {
+				return;
+			}
+			this.toggleOpen(false);
 		}
 
 	};
