@@ -140,5 +140,5 @@ See the [VUI Best Practices & Style Guide](https://github.com/Brightspace/valenc
 
 [bower-url]: http://bower.io/search/?q=d2l-dropdown
 [bower-image]: https://img.shields.io/bower/v/d2l-dropdown.svg
-[ci-url]: https://travis-ci.org/Brightspace/d2l-dropdown-ui
-[ci-image]: https://travis-ci.org/Brightspace/d2l-dropdown-ui.svg?branch=master
+[ci-url]: https://travis-ci.org/BrightspaceUI/dropdown
+[ci-image]: https://travis-ci.org/BrightspaceUI/dropdown.svg?branch=master
