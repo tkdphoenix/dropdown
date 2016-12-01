@@ -244,15 +244,16 @@
 			this.opened = false;
 		},
 
-		open: function() {
+		open: function(applyFocus) {
+			this.__applyFocus = applyFocus !== undefined ? applyFocus : true;
 			this.opened = true;
 		},
 
-		toggleOpen: function() {
+		toggleOpen: function(applyFocus) {
 			if (this.opened) {
 				this.close();
 			} else {
-				this.open();
+				this.open(applyFocus);
 			}
 		},
 
@@ -377,7 +378,7 @@
 
 				this.__position();
 
-				if (!this.noAutoFocus) {
+				if (!this.noAutoFocus && this.__applyFocus) {
 					var focusable = D2L.Dom.Focus.getFirstFocusableDescendant(this);
 					if (focusable) {
 						focusable.focus();
