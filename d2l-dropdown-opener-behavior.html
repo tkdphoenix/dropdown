@@ -33,20 +33,13 @@
 			}
 		},
 
-		ready: function() {
-			var opener = this.getOpenerElement();
-			if (!opener) {
-				return;
-			}
-			opener.setAttribute('aria-haspopup', true);
-		},
-
 		attached: function() {
 			Polymer.RenderStatus.afterNextRender(this, function() {
 				var opener = this.getOpenerElement();
 				if (!opener) {
 					return;
 				}
+				opener.setAttribute('aria-haspopup', true);
 				this.listen(opener, 'keypress', '__onKeyPress');
 				this.listen(opener, 'mouseup', '__onMouseUp');
 			}.bind(this));
