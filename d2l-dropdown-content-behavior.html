@@ -207,12 +207,6 @@
 			}
 		},
 
-		listeners: {
-			'd2l-dropdown-close': '__onClose',
-			'd2l-dropdown-position': '__toggleScrollStyles',
-			'keyup': '__onKeyUp'
-		},
-
 		__content: null,
 
 		__isRTL: false,
@@ -228,10 +222,16 @@
 		attached: function() {
 			Polymer.RenderStatus.afterNextRender(this, function() {
 				this.__content = this.$$('.d2l-dropdown-content-container');
+
 				window.addEventListener('resize', this.__onResize);
 				document.body.addEventListener('focus', this.__onAutoCloseFocus, true);
 				document.body.addEventListener('click', this.__onAutoCloseClick, true);
+
+				this.listen(this, 'keyup', '__onKeyUp');
+				this.listen(this, 'd2l-dropdown-close', '__onClose');
+				this.listen(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 				this.listen(this.__content, 'scroll', '__toggleScrollStyles');
+
 			}.bind(this));
 		},
 
@@ -239,6 +239,9 @@
 			window.removeEventListener('resize', this.__onResize);
 			document.body.removeEventListener('focus', this.__onAutoCloseFocus, true);
 			document.body.removeEventListener('click', this.__onAutoCloseClick, true);
+			this.unlisten(this, 'keyup', '__onKeyUp');
+			this.unlisten(this, 'd2l-dropdown-close', '__onClose');
+			this.unlisten(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 			this.unlisten(this.__content, 'scroll', '__toggleScrollStyles');
 		},
 
