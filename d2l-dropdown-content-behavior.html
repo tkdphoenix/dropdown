@@ -223,14 +223,16 @@
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
 			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
-			this.__content = this.$$('.d2l-dropdown-content-container');
 		},
 
 		attached: function() {
-			window.addEventListener('resize', this.__onResize);
-			document.body.addEventListener('focus', this.__onAutoCloseFocus, true);
-			document.body.addEventListener('click', this.__onAutoCloseClick, true);
-			this.listen(this.__content, 'scroll', '__toggleScrollStyles');
+			Polymer.RenderStatus.afterNextRender(this, function() {
+				this.__content = this.$$('.d2l-dropdown-content-container');
+				window.addEventListener('resize', this.__onResize);
+				document.body.addEventListener('focus', this.__onAutoCloseFocus, true);
+				document.body.addEventListener('click', this.__onAutoCloseClick, true);
+				this.listen(this.__content, 'scroll', '__toggleScrollStyles');
+			}.bind(this));
 		},
 
 		detached: function() {
