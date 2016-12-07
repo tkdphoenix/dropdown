@@ -2,12 +2,12 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
-<link rel="import" href="../d2l-offscreen/d2l-offscreen.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <link rel="import" href="d2l-dropdown-opener-behavior.html">
 
 <dom-module id="d2l-dropdown-context-menu">
 	<template>
-		<style include="d2l-dropdown-opener-styles">
+		<style include="d2l-dropdown-opener-styles d2l-offscreen-shared-styles">
 			:host {
 				display: inline-block;
 			}
@@ -30,13 +30,16 @@
 				border-color: var(--d2l-color-pressicus);
 				color: var(--d2l-color-celestine);
 			}
+			:host button > div {
+				@apply(--d2l-offscreen);
+			}
 			:host iron-icon {
 				height: 0.8rem;
 				width: 0.8rem;
 			}
 		</style>
 		<button>
-			<d2l-offscreen>[[text]]</d2l-offscreen>
+			<div>[[text]]</div>
 			<iron-icon icon="d2l-tier1:chevron-down"></iron-icon>
 		</button>
 		<content></content>
