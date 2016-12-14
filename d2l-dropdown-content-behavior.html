@@ -204,6 +204,10 @@
 			openedAbove: {
 				type: Boolean,
 				reflectToAttribute: true
+			},
+			renderContent: {
+				type: Boolean,
+				value: false
 			}
 		},
 
@@ -373,7 +377,7 @@
 
 			this.__isRTL = (getComputedStyle(this).direction === 'rtl');
 
-			if (newValue) {
+			var doOpen = function() {
 
 				var content = this.__getContentContainer();
 
@@ -394,6 +398,18 @@
 				}
 
 				this.fire('d2l-dropdown-open');
+
+			}.bind(this);
+
+			if (newValue) {
+
+				if (!this.renderContent) {
+					this.renderContent = true;
+				}
+
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					doOpen();
+				}.bind(this));
 
 			} else {
 

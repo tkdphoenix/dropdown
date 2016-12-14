@@ -9,7 +9,9 @@
 			<div class="d2l-dropdown-content-width">
 				<div class="d2l-dropdown-content-top"></div>
 				<div class="d2l-dropdown-content-container">
-					<content></content>
+					<template is="dom-if" if="[[renderContent]]">
+						<content></content>
+					</template>
 				</div>
 				<div class="d2l-dropdown-content-bottom"></div>
 			</div>
