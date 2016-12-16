@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-icons/d2l-icon.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
 <link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <link rel="import" href="d2l-dropdown-opener-behavior.html">
@@ -26,21 +26,28 @@
 				border-color: var(--d2l-color-pressicus);
 				color: var(--d2l-color-celestuba);
 			}
+			:host button:focus d2l-icon,
+			:host button:hover d2l-icon {
+				color: var(--d2l-color-celestuba);
+			}
 			:host([opened]) button {
 				border-color: var(--d2l-color-pressicus);
+				color: var(--d2l-color-celestine);
+			}
+			:host([opened]) button d2l-icon {
 				color: var(--d2l-color-celestine);
 			}
 			:host button > div {
 				@apply(--d2l-offscreen);
 			}
-			:host iron-icon {
+			:host d2l-icon {
 				height: 0.8rem;
 				width: 0.8rem;
 			}
 		</style>
 		<button>
 			<div>[[text]]</div>
-			<iron-icon icon="d2l-tier1:chevron-down"></iron-icon>
+			<d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
 		</button>
 		<content></content>
 	</template>
