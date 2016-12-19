@@ -408,12 +408,10 @@
 			if (newValue) {
 
 				if (!this.renderContent) {
-					this.renderContent = true;
+					this.forceRender();
 				}
 
-				Polymer.RenderStatus.afterNextRender(this, function() {
-					doOpen();
-				}.bind(this));
+				doOpen();
 
 			} else {
 
