@@ -255,6 +255,13 @@
 			this.opened = true;
 		},
 
+		forceRender: function() {
+			if (!this.renderContent) {
+				this.renderContent = true;
+			}
+			this.$$('template').render();
+		},
+
 		toggleOpen: function(applyFocus) {
 			if (this.opened) {
 				this.close();
