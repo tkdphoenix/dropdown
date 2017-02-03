@@ -14,7 +14,7 @@
 				left: 0;
 				position: absolute;
 				text-align: left;
-				top: calc(100% + 20px);
+				top: calc(100% + var(--d2l-dropdown-offset, 20px));
 				width: 100%;
 				z-index: 1000; /* position on top of floating buttons */
 			}
@@ -29,7 +29,7 @@
 			}
 
 			:host([opened-above]) {
-				bottom: calc(100% + 20px);
+				bottom: calc(100% + var(--d2l-dropdown-offset, 20px));
 				top: auto;
 				-webkit-animation: d2l-dropdown-above-animation 300ms ease;
 				animation: d2l-dropdown-above-animation 300ms ease;
@@ -205,7 +205,11 @@
 				type: Boolean,
 				reflectToAttribute: true
 			},
-			renderContent: Boolean
+			renderContent: Boolean,
+			verticalOffset: {
+				type: Number,
+				observer: '__verticalOffsetChanged'
+			}
 		},
 
 		__content: null,
@@ -222,6 +226,11 @@
 
 		attached: function() {
 			Polymer.RenderStatus.afterNextRender(this, function() {
+
+				if (this.verticalOffset !== undefined) {
+					this.__verticalOffsetChanged(this.verticalOffset);
+				}
+
 				this.__content = this.$$('.d2l-dropdown-content-container');
 
 				window.addEventListener('resize', this.__onResize);
@@ -560,6 +569,13 @@
 				if (!bottomCap.classList.contains('d2l-dropdown-content-bottom-scroll')) {
 					bottomCap.classList.add('d2l-dropdown-content-bottom-scroll');
 				}
+			}
+		},
+
+		__verticalOffsetChanged: function(newValue) {
+			if (this.isAttached && newValue !== undefined) {
+				this.customStyle['--d2l-dropdown-offset'] = newValue + 'px';
+				this.updateStyles();
 			}
 		}
 
