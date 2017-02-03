@@ -207,7 +207,7 @@
 			},
 			renderContent: Boolean,
 			verticalOffset: {
-				type: Number,
+				type: String,
 				observer: '__verticalOffsetChanged'
 			}
 		},
@@ -573,10 +573,20 @@
 		},
 
 		__verticalOffsetChanged: function(newValue) {
-			if (this.isAttached && newValue !== undefined) {
-				this.customStyle['--d2l-dropdown-offset'] = newValue + 'px';
-				this.updateStyles();
+
+			if (!this.isAttached) {
+				return;
 			}
+
+			newValue = parseInt(newValue);
+
+			if (isNaN(parseInt(newValue))) {
+				delete this.customStyle['--d2l-dropdown-offset'];
+			} else {
+				this.customStyle['--d2l-dropdown-offset'] = newValue + 'px';
+			}
+			this.updateStyles();
+
 		}
 
 	};
