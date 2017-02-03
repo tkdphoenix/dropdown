@@ -106,7 +106,11 @@ dropdown.addEventListener('click', function() {
 
 * `min-width` (number) - optionally override default min-width
 * `max-width` (number) - optionally override default max-width
+* `no-auto-fit` - optionally opt out of auto-sizing
 * `no-padding` - optionally render with no padding
+* `no-pointer` - optionally render without a pointer
+* `render-content` - optionally stamp contents into DOM immediately
+* `vertical-offset` - optionally provide custom offset, positive or negative
 
 ```javascript
 // triggered when dropdown opened
