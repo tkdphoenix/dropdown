@@ -14,7 +14,7 @@
 				left: 0;
 				position: absolute;
 				text-align: left;
-				top: calc(100% + var(--d2l-dropdown-offset, 20px));
+				top: calc(100% + var(--d2l-dropdown-verticaloffset, 20px));
 				width: 100%;
 				z-index: 1000; /* position on top of floating buttons */
 			}
@@ -29,7 +29,7 @@
 			}
 
 			:host([opened-above]) {
-				bottom: calc(100% + var(--d2l-dropdown-offset, 20px));
+				bottom: calc(100% + var(--d2l-dropdown-verticaloffset, 20px));
 				top: auto;
 				-webkit-animation: d2l-dropdown-above-animation 300ms ease;
 				animation: d2l-dropdown-above-animation 300ms ease;
@@ -581,9 +581,9 @@
 			newValue = parseInt(newValue);
 
 			if (isNaN(parseInt(newValue))) {
-				delete this.customStyle['--d2l-dropdown-offset'];
+				delete this.customStyle['--d2l-dropdown-verticaloffset'];
 			} else {
-				this.customStyle['--d2l-dropdown-offset'] = newValue + 'px';
+				this.customStyle['--d2l-dropdown-verticaloffset'] = newValue + 'px';
 			}
 			this.updateStyles();
 
