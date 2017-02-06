@@ -518,12 +518,7 @@
 
 				if (!this.noAutoFit && maxHeight && maxHeight > 0) {
 					content.style.maxHeight = maxHeight + 'px';
-					if (content.scrollHeight > maxHeight) {
-						content.style.overflowY = 'auto';
-					} else {
-						/* needed for IE */
-						content.style.overflowY = '';
-					}
+					content.style.overflowY = 'auto';
 				}
 
 				this.fire('d2l-dropdown-position');
