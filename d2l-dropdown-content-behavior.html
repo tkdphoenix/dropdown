@@ -158,8 +158,6 @@
 (function() {
 	'use strict';
 
-	var mutationObserver;
-
 	/** @polymerBehavior */
 	var DropdownContentBehavior = {
 
@@ -220,12 +218,14 @@
 
 		__previousFocusableAncestor: null,
 
+		__mutationObserver: null,
+
 		ready: function() {
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
 			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
 
-			mutationObserver = new MutationObserver(function(mutations) {
+			this.__mutationObserver = new MutationObserver(function(mutations) {
 				mutations.forEach(function(mutation) {
 					this.__toggleOverflowY();
 				}.bind(this));
@@ -250,8 +250,8 @@
 				this.listen(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 				this.listen(this.__content, 'scroll', '__toggleScrollStyles');
 
-				var config = { childList: true }
-				mutationObserver.observe(this.__getContentContainer(), config);
+				var config = { subtree: true, childList: true }
+				this.__mutationObserver.observe(this.__getContentContainer(), config);
 			}.bind(this));
 		},
 
@@ -263,7 +263,7 @@
 			this.unlisten(this, 'd2l-dropdown-close', '__onClose');
 			this.unlisten(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 			this.unlisten(this.__content, 'scroll', '__toggleScrollStyles');
-			mutationObserver.disconnect();
+			this.__mutationObserver.disconnect();
 		},
 
 		close: function() {
@@ -554,13 +554,12 @@
 		},
 
 		__toggleOverflowY: function() {
-			var content = this.__getContentContainer();
-			var maxHeight = parseInt(content.style.maxHeight.replace(/[^0-9\.]/g, ''), 10);
-			if (content.scrollHeight > maxHeight) {
-				content.style.overflowY = 'auto';
+			var maxHeight = parseInt(this.__content.style.maxHeight.replace(/[^0-9\.]/g, ''), 10);
+			if (this.__content.scrollHeight > maxHeight) {
+				this.__content.style.overflowY = 'auto';
 			} else {
 				/* needed for IE */
-				content.style.overflowY = '';
+				this.__content.style.overflowY = '';
 			}
 		},
 
