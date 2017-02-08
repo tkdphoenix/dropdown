@@ -224,10 +224,6 @@
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
 			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
-
-			this.__mutationObserver = new MutationObserver(function() {
-				this.__toggleOverflowY();
-			}.bind(this));
 		},
 
 		attached: function() {
@@ -247,11 +243,6 @@
 				this.listen(this, 'd2l-dropdown-close', '__onClose');
 				this.listen(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 				this.listen(this.__content, 'scroll', '__toggleScrollStyles');
-
-				if (!this.noAutoFit) {
-					var config = { subtree: true, childList: true };
-					this.__mutationObserver.observe(this.__getContentContainer(), config);
-				}
 			}.bind(this));
 		},
 
@@ -263,9 +254,6 @@
 			this.unlisten(this, 'd2l-dropdown-close', '__onClose');
 			this.unlisten(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 			this.unlisten(this.__content, 'scroll', '__toggleScrollStyles');
-			if (!this.noAutoFit) {
-				this.__mutationObserver.disconnect();
-			}
 		},
 
 		close: function() {
@@ -435,9 +423,23 @@
 
 				doOpen();
 
+				if (!this.noAutoFit) {
+					if (!this.__mutationObserver) {
+						this.__mutationObserver = new MutationObserver(function() {
+							this.__toggleOverflowY();
+						}.bind(this));
+					}
+					var config = { subtree: true, childList: true };
+					this.__mutationObserver.observe(this.__getContentContainer(), config);
+				}
+
 			} else {
 
 				this.fire('d2l-dropdown-close');
+
+				if (!this.noAutoFit && this.__mutationObserver) {
+					this.__mutationObserver.disconnect();
+				}
 
 			}
 
@@ -560,7 +562,7 @@
 				return;
 			}
 
-			var maxHeight = parseInt(this.__content.style.maxHeight.replace(/[^0-9\.]/g, ''), 10);
+			var maxHeight = parseInt(this.__content.style.maxHeight, 10);
 			if (!maxHeight) {
 				return;
 			}
