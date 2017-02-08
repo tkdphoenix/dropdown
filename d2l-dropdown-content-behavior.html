@@ -226,7 +226,7 @@
 			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
 
 			this.__mutationObserver = new MutationObserver(function() {
-				this.__toggleOverflowY()
+				this.__toggleOverflowY();
 			}.bind(this));
 		},
 
@@ -556,12 +556,12 @@
 		},
 
 		__toggleOverflowY: function() {
-			if (!this.__content || !this.__content.style || !this.__content.style.maxHeight){
+			if (!this.__content || !this.__content.style || !this.__content.style.maxHeight) {
 				return;
 			}
 
 			var maxHeight = parseInt(this.__content.style.maxHeight.replace(/[^0-9\.]/g, ''), 10);
-			if (!maxHeight){
+			if (!maxHeight) {
 				return;
 			}
 
