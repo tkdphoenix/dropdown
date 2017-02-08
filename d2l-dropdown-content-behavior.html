@@ -158,6 +158,8 @@
 (function() {
 	'use strict';
 
+	var mutationObserver;
+
 	/** @polymerBehavior */
 	var DropdownContentBehavior = {
 
@@ -222,6 +224,12 @@
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
 			this.__onAutoCloseClick = this.__onAutoCloseClick.bind(this);
+
+			mutationObserver = new MutationObserver(function(mutations) {
+				mutations.forEach(function(mutation) {
+					this.__toggleOverflowY();
+				}.bind(this));
+			}.bind(this));
 		},
 
 		attached: function() {
@@ -242,6 +250,8 @@
 				this.listen(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 				this.listen(this.__content, 'scroll', '__toggleScrollStyles');
 
+				var config = { childList: true }
+				mutationObserver.observe(this.__getContentContainer(), config);
 			}.bind(this));
 		},
 
@@ -253,6 +263,7 @@
 			this.unlisten(this, 'd2l-dropdown-close', '__onClose');
 			this.unlisten(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 			this.unlisten(this.__content, 'scroll', '__toggleScrollStyles');
+			mutationObserver.disconnect();
 		},
 
 		close: function() {
@@ -518,7 +529,7 @@
 
 				if (!this.noAutoFit && maxHeight && maxHeight > 0) {
 					content.style.maxHeight = maxHeight + 'px';
-					content.style.overflowY = 'auto';
+					this.__toggleOverflowY();
 				}
 
 				this.fire('d2l-dropdown-position');
@@ -540,6 +551,17 @@
 
 			adjustPosition();
 
+		},
+
+		__toggleOverflowY: function() {
+			var content = this.__getContentContainer();
+			var maxHeight = parseInt(content.style.maxHeight.replace(/[^0-9\.]/g, ''), 10);
+			if (content.scrollHeight > maxHeight) {
+				content.style.overflowY = 'auto';
+			} else {
+				/* needed for IE */
+				content.style.overflowY = '';
+			}
 		},
 
 		__toggleScrollStyles: function() {
