@@ -218,6 +218,8 @@
 
 		__previousFocusableAncestor: null,
 
+		__mutationObserver: null,
+
 		ready: function() {
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
@@ -241,7 +243,6 @@
 				this.listen(this, 'd2l-dropdown-close', '__onClose');
 				this.listen(this, 'd2l-dropdown-position', '__toggleScrollStyles');
 				this.listen(this.__content, 'scroll', '__toggleScrollStyles');
-
 			}.bind(this));
 		},
 
@@ -422,9 +423,23 @@
 
 				doOpen();
 
+				if (!this.noAutoFit) {
+					if (!this.__mutationObserver) {
+						this.__mutationObserver = new MutationObserver(function() {
+							this.__toggleOverflowY();
+						}.bind(this));
+					}
+					var config = { subtree: true, childList: true };
+					this.__mutationObserver.observe(this.__getContentContainer(), config);
+				}
+
 			} else {
 
 				this.fire('d2l-dropdown-close');
+
+				if (!this.noAutoFit && this.__mutationObserver) {
+					this.__mutationObserver.disconnect();
+				}
 
 			}
 
@@ -518,12 +533,7 @@
 
 				if (!this.noAutoFit && maxHeight && maxHeight > 0) {
 					content.style.maxHeight = maxHeight + 'px';
-					if (content.scrollHeight > maxHeight) {
-						content.style.overflowY = 'auto';
-					} else {
-						/* needed for IE */
-						content.style.overflowY = '';
-					}
+					this.__toggleOverflowY();
 				}
 
 				this.fire('d2l-dropdown-position');
@@ -545,6 +555,24 @@
 
 			adjustPosition();
 
+		},
+
+		__toggleOverflowY: function() {
+			if (!this.__content || !this.__content.style || !this.__content.style.maxHeight) {
+				return;
+			}
+
+			var maxHeight = parseInt(this.__content.style.maxHeight, 10);
+			if (!maxHeight) {
+				return;
+			}
+
+			if (this.__content.scrollHeight > maxHeight) {
+				this.__content.style.overflowY = 'auto';
+			} else {
+				/* needed for IE */
+				this.__content.style.overflowY = '';
+			}
 		},
 
 		__toggleScrollStyles: function() {
