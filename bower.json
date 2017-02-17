@@ -20,7 +20,7 @@
     "d2l-icons": "^3.0.0",
     "d2l-menu": "^0.3.0",
     "d2l-offscreen": "^2.2.4",
-    "d2l-polymer-behaviors": "~0.0.4",
+    "d2l-polymer-behaviors": "~0.0.5",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
     "polymer": "^1.7.0"
   },
