@@ -467,7 +467,7 @@
 				var contentRect = content.getBoundingClientRect();
 
 				var spaceAround = {
-					above: targetRect.top - 20,
+					above: targetRect.top - 50,
 					below: window.innerHeight - targetRect.bottom - 80,
 					left: targetRect.left - 20,
 					right: document.documentElement.clientWidth - targetRect.right - 15
@@ -481,8 +481,13 @@
 				var maxHeight;
 
 				if (!ignoreVertical) {
-					if (((spaceAround.below - spaceRequired.height) < 0)
-						&& (spaceAround.above > spaceRequired.height)) {
+					if (
+						(spaceAround.below < spaceRequired.height)
+						&& (
+							(spaceAround.above > spaceRequired.height)
+							|| (spaceAround.above > spaceAround.below)
+						)
+					) {
 						this.openedAbove = true;
 					} else {
 						this.openedAbove = false;
