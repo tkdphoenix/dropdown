@@ -204,6 +204,7 @@
 				type: Boolean,
 				reflectToAttribute: true
 			},
+			boundary: Object,
 			opened: {
 				type: Boolean,
 				observer: '__openedChanged',
@@ -480,6 +481,13 @@
 					left: targetRect.left - 20,
 					right: document.documentElement.clientWidth - targetRect.right - 15
 				};
+
+				if (this.boundary) {
+					spaceAround.above = this.boundary.above >= 0 ? Math.min(spaceAround.above, this.boundary.above) : spaceAround.above;
+					spaceAround.below = this.boundary.below >= 0 ? Math.min(spaceAround.below, this.boundary.below) : spaceAround.below;
+					spaceAround.left = this.boundary.left >= 0 ? Math.min(spaceAround.left, this.boundary.left) : spaceAround.left;
+					spaceAround.right = this.boundary.right >= 0 ? Math.min(spaceAround.right, this.boundary.right) : spaceAround.right;
+				}
 
 				var spaceRequired = {
 					height: contentRect.height + 20,

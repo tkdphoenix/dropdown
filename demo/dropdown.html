@@ -33,6 +33,9 @@
 			<label for="config-align-end">
 				Align End <input id="config-align-end" type="checkbox" />
 			</label>
+			<label for="config-boundary">
+				Boundary (JSON) <input id="config-boundary" type="text" />
+			</label>
 		</div>
 
 		<div class="d2l-demo-fixture">
@@ -62,8 +65,10 @@
 		function wireupConfig(propertyName) {
 			var configElem = document.getElementById('config-' + propertyName);
 			configElem.addEventListener('change', function(e) {
-				if (e.target.checked) {
+				if (e.target.type === 'checkbox' && e.target.checked) {
 					dropdown_content.setAttribute(propertyName, true);
+				} else if (e.target.type !== 'checkbox' && e.target.value) {
+					dropdown_content.setAttribute(propertyName, e.target.value);
 				} else {
 					dropdown_content.removeAttribute(propertyName);
 				}
@@ -77,6 +82,7 @@
 		wireupConfig('no-padding');
 		wireupConfig('align-start');
 		wireupConfig('align-end');
+		wireupConfig('boundary');
 
 		dropdown_content.addEventListener('d2l-dropdown-open', function(e) {
 			console.log('d2l-dropdown-open', e);
