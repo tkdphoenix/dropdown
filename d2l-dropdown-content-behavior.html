@@ -196,12 +196,8 @@
 				type: Boolean,
 				reflectToAttribute: true
 			},
-			alignStart: {
-				type: Boolean,
-				reflectToAttribute: true
-			},
-			alignEnd: {
-				type: Boolean,
+			align: {
+				type: String,
 				reflectToAttribute: true
 			},
 			boundary: Object,
@@ -516,9 +512,9 @@
 					maxHeight = Math.floor(spaceAround.below);
 				}
 
-				if ((this.alignStart && !this.__isRTL) || (this.alignEnd && this.__isRTL)) {
+				if ((this.align === 'start' && !this.__isRTL) || (this.align === 'end' && this.__isRTL)) {
 					spaceAround.left = 0;
-				} else if ((this.alignStart && this.__isRTL) || (this.alignEnd && !this.__isRTL)) {
+				} else if ((this.align === 'start' && this.__isRTL) || (this.align === 'end' && !this.__isRTL)) {
 					spaceAround.right = 0;
 				}
 
