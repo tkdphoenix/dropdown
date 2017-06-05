@@ -27,6 +27,12 @@
 			<label for="config-no-padding">
 				No Padding <input id="config-no-padding" type="checkbox" />
 			</label>
+			<label for="config-align-start">
+				Align Start <input id="config-align-start" type="checkbox" />
+			</label>
+			<label for="config-align-end">
+				Align End <input id="config-align-end" type="checkbox" />
+			</label>
 		</div>
 
 		<div class="d2l-demo-fixture">
@@ -69,6 +75,8 @@
 		wireupConfig('no-auto-focus');
 		wireupConfig('no-pointer');
 		wireupConfig('no-padding');
+		wireupConfig('align-start');
+		wireupConfig('align-end');
 
 		dropdown_content.addEventListener('d2l-dropdown-open', function(e) {
 			console.log('d2l-dropdown-open', e);

@@ -196,6 +196,14 @@
 				type: Boolean,
 				reflectToAttribute: true
 			},
+			alignStart: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			alignEnd: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
 			opened: {
 				type: Boolean,
 				observer: '__openedChanged',
@@ -498,6 +506,12 @@
 					maxHeight = Math.floor(spaceAround.above);
 				} else {
 					maxHeight = Math.floor(spaceAround.below);
+				}
+
+				if ((this.alignStart && !this.__isRTL) || (this.alignEnd && this.__isRTL)) {
+					spaceAround.left = 0;
+				} else if ((this.alignStart && this.__isRTL) || (this.alignEnd && !this.__isRTL)) {
+					spaceAround.right = 0;
 				}
 
 				var centerDelta = contentRect.width - targetRect.width;
