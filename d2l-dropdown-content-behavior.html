@@ -196,6 +196,11 @@
 				type: Boolean,
 				reflectToAttribute: true
 			},
+			align: {
+				type: String,
+				reflectToAttribute: true
+			},
+			boundary: Object,
 			opened: {
 				type: Boolean,
 				observer: '__openedChanged',
@@ -473,6 +478,13 @@
 					right: document.documentElement.clientWidth - targetRect.right - 15
 				};
 
+				if (this.boundary) {
+					spaceAround.above = this.boundary.above >= 0 ? Math.min(spaceAround.above, this.boundary.above) : spaceAround.above;
+					spaceAround.below = this.boundary.below >= 0 ? Math.min(spaceAround.below, this.boundary.below) : spaceAround.below;
+					spaceAround.left = this.boundary.left >= 0 ? Math.min(spaceAround.left, this.boundary.left) : spaceAround.left;
+					spaceAround.right = this.boundary.right >= 0 ? Math.min(spaceAround.right, this.boundary.right) : spaceAround.right;
+				}
+
 				var spaceRequired = {
 					height: contentRect.height + 20,
 					width: contentRect.width
@@ -498,6 +510,12 @@
 					maxHeight = Math.floor(spaceAround.above);
 				} else {
 					maxHeight = Math.floor(spaceAround.below);
+				}
+
+				if ((this.align === 'start' && !this.__isRTL) || (this.align === 'end' && this.__isRTL)) {
+					spaceAround.left = 0;
+				} else if ((this.align === 'start' && this.__isRTL) || (this.align === 'end' && !this.__isRTL)) {
+					spaceAround.right = 0;
 				}
 
 				var centerDelta = contentRect.width - targetRect.width;

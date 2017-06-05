@@ -27,6 +27,16 @@
 			<label for="config-no-padding">
 				No Padding <input id="config-no-padding" type="checkbox" />
 			</label>
+			<label for="config-align">
+				Align <select id="config-align">
+					<option value="">No Alignment</option>
+					<option>start</option>
+					<option>end</option>
+				</select>
+			</label>
+			<label for="config-boundary">
+				Boundary (JSON. above,below,left,right are valid properties) <input id="config-boundary" type="text" />
+			</label>
 		</div>
 
 		<div class="d2l-demo-fixture">
@@ -56,8 +66,10 @@
 		function wireupConfig(propertyName) {
 			var configElem = document.getElementById('config-' + propertyName);
 			configElem.addEventListener('change', function(e) {
-				if (e.target.checked) {
+				if (e.target.type === 'checkbox' && e.target.checked) {
 					dropdown_content.setAttribute(propertyName, true);
+				} else if (e.target.type !== 'checkbox' && e.target.value) {
+					dropdown_content.setAttribute(propertyName, e.target.value);
 				} else {
 					dropdown_content.removeAttribute(propertyName);
 				}
@@ -69,6 +81,8 @@
 		wireupConfig('no-auto-focus');
 		wireupConfig('no-pointer');
 		wireupConfig('no-padding');
+		wireupConfig('align');
+		wireupConfig('boundary');
 
 		dropdown_content.addEventListener('d2l-dropdown-open', function(e) {
 			console.log('d2l-dropdown-open', e);
