@@ -111,6 +111,8 @@ dropdown.addEventListener('click', function() {
 * `no-pointer` - optionally render without a pointer
 * `render-content` - optionally stamp contents into DOM immediately
 * `vertical-offset` - optionally provide custom offset, positive or negative
+* `align` (enum) - optionally align dropdown. Valid values are "start","end". If not set, the dropdown will attempt be centred
+* `boundary` (object) - optionally provide boundaries to where the dropdown will appear. Valid properties are "above", "below", "left", "right"
 
 ```javascript
 // triggered when dropdown opened
