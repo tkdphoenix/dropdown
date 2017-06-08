@@ -131,6 +131,24 @@
 
 			});
 
+			describe('scrollTo', function() {
+				it('sets scrollTop to specified value', function(done) {
+					Polymer.RenderStatus.afterNextRender(content, function() {
+						content.addEventListener('d2l-dropdown-position', function() {
+							expect(content.__content.scrollTop).to.equal(0);
+							content.scrollTo(1);
+							expect(content.__content.scrollTop).to.equal(1);
+							done();
+						});
+						content.boundary = {
+							below: 1,
+							above: 1
+						};
+						content.opened = true;
+					});
+				});
+			});
+
 			describe('auto-focus', function() {
 
 				it('focuses on descendant when opened', function(done) {

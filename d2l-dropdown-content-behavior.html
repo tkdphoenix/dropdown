@@ -285,6 +285,20 @@
 			}
 		},
 
+		scrollTo: function(scrollTop) {
+			var content = this.__content;
+			if (content) {
+				if (typeof scrollTop === 'number') {
+					content.scrollTop = scrollTop;
+				}
+				return content.scrollTop;
+			}
+		},
+
+		height: function() {
+			return this.__content && this.__content.offsetHeight;
+		},
+
 		__getContentContainer: function() {
 			return this.$$('.d2l-dropdown-content-container');
 		},
