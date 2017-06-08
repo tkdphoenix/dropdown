@@ -295,6 +295,10 @@
 			}
 		},
 
+		height: function() {
+			return this.__content && this.__content.offsetHeight;
+		},
+
 		__getContentContainer: function() {
 			return this.$$('.d2l-dropdown-content-container');
 		},
