@@ -98,7 +98,7 @@ dropdown.addEventListener('click', function() {
 <link rel="import" href="../d2l-dropdown-more.html">
 <link rel="import" href="../d2l-dropdown-menu.html">
 
-<d2l-dropdown-more id="dropdown-more-menu" text="Open!">
+<d2l-dropdown-more id="dropdown-more-menu" label="Open!">
 	<d2l-dropdown-menu id="dropdown-menu">
 		Some content...
 	</d2l-dropdown-menu>
