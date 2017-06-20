@@ -12,14 +12,12 @@
 			}
 			:host button {
 				border: none;
-				border-radius: 5px;
+				border-radius: 6px;
 				background: rgba(0,0,0,0.5);
 				color: white;
 				cursor: pointer;
-				padding-bottom: 8px;
-				padding-left: 9px;
-				padding-right: 8px;
-				padding-top: 9px;
+				height: 35px;
+				width: 35px;
 				transition: background 0.5s;
 			}
 			:host button:hover, :host button:focus {
@@ -33,7 +31,7 @@
 			}
 		</style>
 		<div class="d2l-dropdown-more-container">
-			<button aria-label$="{{text}}">
+			<button aria-label$="[[label]]">
 				<d2l-icon icon="d2l-tier1:more"></d2l-icon>
 			</button>
 		</div>
@@ -48,7 +46,7 @@
 			],
 
 			properties: {
-				text: String
+				label: String
 			}
 		});
 	</script>
