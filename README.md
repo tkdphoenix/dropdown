@@ -90,6 +90,21 @@ dropdown.addEventListener('click', function() {
 </d2l-dropdown-context-menu>
 ```
 
+#### More Opener
+
+`d2l-dropdown-more` is a simple opener using `d2l-tier1:more` as the button's icon. 
+
+```html
+<link rel="import" href="../d2l-dropdown-more.html">
+<link rel="import" href="../d2l-dropdown-menu.html">
+
+<d2l-dropdown-more id="dropdown-more-menu" label="Open!">
+	<d2l-dropdown-menu id="dropdown-menu">
+		Some content...
+	</d2l-dropdown-menu>
+</d2l-dropdown-more>
+```
+
 ### Dropdown Contents
 
 #### Generic Content
