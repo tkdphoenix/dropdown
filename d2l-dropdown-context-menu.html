@@ -38,7 +38,13 @@
 				color: var(--d2l-color-celestine);
 			}
 			:host button > div {
-				@apply(--d2l-offscreen);
+				@apply --d2l-offscreen;
+			}
+			:host(:dir(rtl)) button > div {
+				@apply --d2l-offscreen-rtl;
+			}
+			:host-context([dir="rtl"]) button > div {
+				@apply --d2l-offscreen-rtl;
 			}
 			:host d2l-icon {
 				height: 0.8rem;

@@ -91,7 +91,9 @@
 						expect(contentRect.width).to.equal(370);
 						done();
 					});
-					content.querySelector('#non_focusable_inside').style.width = '1000px';
+					var style = document.createElement('style');
+					style.innerHTML = '#non_focusable_inside { width: 1000px; }';
+					dropdownFixture.appendChild(style);
 					content.setAttribute('opened', true);
 				});
 
@@ -101,7 +103,9 @@
 						expect(contentRect.width).to.equal(200);
 						done();
 					});
-					content.querySelector('#non_focusable_inside').style.width = '1000px';
+					var style = document.createElement('style');
+					style.innerHTML = '#non_focusable_inside { width: 1000px; }';
+					dropdownFixture.appendChild(style);
 					content.setAttribute('max-width', '200');
 					content.setAttribute('opened', true);
 				});
@@ -175,7 +179,9 @@
 
 				it('should close when focus element outside receives focus', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						dropdownFixture.querySelector('#focusable_outside').focus();
+						Polymer.RenderStatus.afterNextRender(content, function() {
+							dropdownFixture.querySelector('#focusable_outside').focus();
+						});
 					});
 					content.addEventListener('d2l-dropdown-close', function() {
 						expect(content.opened).to.be.false;
@@ -186,7 +192,9 @@
 
 				it('should close when element outside is clicked', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						MockInteractions.tap(dropdownFixture.querySelector('#non_focusable_outside'));
+						Polymer.RenderStatus.afterNextRender(content, function() {
+							MockInteractions.tap(dropdownFixture.querySelector('#non_focusable_outside'));
+						});
 					});
 					content.addEventListener('d2l-dropdown-close', function() {
 						done();
@@ -283,6 +291,8 @@
 						}
 						done();
 					});
+					content.renderContent = true;
+					Polymer.dom.flush();
 					content.querySelector('#focusable_inside').setAttribute('tabindex', '-1');
 					content.setAttribute('opened', true);
 				});

@@ -133,6 +133,11 @@
 				right: 0;
 				text-align: right;
 			}
+			:host(:dir(rtl)) {
+				left: auto;
+				right: 0;
+				text-align: right;
+			}
 
 			@keyframes d2l-dropdown-animation {
 				0% { transform: translate(0,-10px); opacity: 0; }
@@ -225,6 +230,8 @@
 
 		__mutationObserver: null,
 
+		__applyFocus: true,
+
 		ready: function() {
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
@@ -274,7 +281,8 @@
 			if (!this.renderContent) {
 				this.renderContent = true;
 			}
-			this.$$('template').render();
+			var domIf = this.$$('dom-if') || this.$$('template');
+			domIf.render();
 		},
 
 		toggleOpen: function(applyFocus) {

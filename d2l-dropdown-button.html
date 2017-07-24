@@ -11,20 +11,24 @@
 				height: 0.8rem;
 				width: 0.8rem;
 			}
-			:host button > span {
+			:host d2l-button > span {
 				margin-right: 0.6rem;
 			}
 			:host([primary]) d2l-icon {
 				color: white;
 			}
-			:host-context([dir="rtl"]) button > span {
+			:host-context([dir="rtl"]) d2l-button > span {
+				margin-left: 0.6rem;
+				margin-right: 0;
+			}
+			:host(:dir(rtl)) d2l-button > span {
 				margin-left: 0.6rem;
 				margin-right: 0;
 			}
 		</style>
-		<button is="d2l-button" primary=[[primary]]>
+		<d2l-button primary=[[primary]]>
 			<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
-		</button>
+		</d2l-button>
 		<slot></slot>
 	</template>
 	<script>
@@ -44,7 +48,7 @@
 			},
 
 			getOpenerElement: function() {
-				return this.$$('button');
+				return this.$$('d2l-button');
 			}
 
 		});
