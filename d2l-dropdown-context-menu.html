@@ -40,6 +40,12 @@
 			:host button > div {
 				@apply(--d2l-offscreen);
 			}
+			:host(:dir(rtl)) button > div {
+				@apply(--d2l-offscreen-rtl);
+			}
+			:host-context([dir="rtl]) button > div {
+				@apply(--d2l-offscreen-rtl);
+			}
 			:host d2l-icon {
 				height: 0.8rem;
 				width: 0.8rem;
