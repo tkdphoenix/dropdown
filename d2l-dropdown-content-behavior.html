@@ -225,6 +225,8 @@
 
 		__mutationObserver: null,
 
+		__applyFocus: true,
+
 		ready: function() {
 			this.__onResize = this.__onResize.bind(this);
 			this.__onAutoCloseFocus = this.__onAutoCloseFocus.bind(this);
@@ -274,7 +276,8 @@
 			if (!this.renderContent) {
 				this.renderContent = true;
 			}
-			this.$$('template').render();
+			var domIf = this.$$('dom-if') || this.$$('template');
+			domIf.render();
 		},
 
 		toggleOpen: function(applyFocus) {

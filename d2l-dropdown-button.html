@@ -21,10 +21,14 @@
 				margin-left: 0.6rem;
 				margin-right: 0;
 			}
+			:host(:dir(rtl)) button > span {
+				margin-left: 0.6rem;
+				margin-right: 0;
+			}
 		</style>
-		<button is="d2l-button" primary=[[primary]]>
+		<d2l-button primary=[[primary]]>
 			<span>[[text]]</span><d2l-icon icon="d2l-tier1:chevron-down"></d2l-icon>
-		</button>
+		</d2l-button>
 		<slot></slot>
 	</template>
 	<script>
@@ -44,7 +48,7 @@
 			},
 
 			getOpenerElement: function() {
-				return this.$$('button');
+				return this.$$('d2l-button');
 			}
 
 		});
