@@ -1,6 +1,7 @@
 **Looking for SASS-based `vui-dropdown`?** It's [over here](https://github.com/Brightspace/valence-ui-dropdown/tree/sass).
 
 # d2l-dropdown
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/BrightspaceUI/dropdown)
 [![Bower version][bower-image]][bower-url]
 [![Build status][ci-image]][ci-url]
 
@@ -160,6 +161,6 @@ In production, it's recommended to use a build tool like [Vulcanize](https://git
 See the [VUI Best Practices & Style Guide](https://github.com/Brightspace/valence-ui-docs/wiki/Best-Practices-&-Style-Guide) for information on VUI naming conventions, plus information about the [EditorConfig](http://editorconfig.org) rules used in this repo.
 
 [bower-url]: http://bower.io/search/?q=d2l-dropdown
-[bower-image]: https://img.shields.io/bower/v/d2l-dropdown.svg
+[bower-image]: https://badge.fury.io/bo/d2l-dropdown.svg
 [ci-url]: https://travis-ci.org/BrightspaceUI/dropdown
-[ci-image]: https://travis-ci.org/BrightspaceUI/dropdown.svg?branch=master
+[ci-image]: https://travis-ci.org/BrightspaceUI/dropdown.svg
