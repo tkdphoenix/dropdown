@@ -387,6 +387,7 @@
 				return;
 			}
 			var activeElement = Polymer.dom(document.activeElement).node;
+			activeElement = this.root.activeElement || activeElement;
 			if (!D2L.Dom.isComposedAncestor(this, activeElement)) {
 				return;
 			}
