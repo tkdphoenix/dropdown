@@ -47,13 +47,25 @@ Polymer-based web component for dropdown using a button opener.
 			],
 
 			properties: {
+
+				/**
+				 * Whether the button is a primary or secondary button.
+				 */
 				primary: {
 					type: Boolean,
 					reflectToAttribute: true
 				},
+
+				/**
+				 * Text for the button.
+				 */
 				text: String
 			},
 
+			/**
+			 * Gets the opener element (required by d2l-dropdown behavior).
+			 * @return {HTMLElement}
+			 */
 			getOpenerElement: function() {
 				return this.$$('d2l-button');
 			}

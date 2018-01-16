@@ -73,7 +73,12 @@ Polymer-based web component for dropdown using a context-menu opener.
 			],
 
 			properties: {
+
+				/**
+				 * Label for the context-menu button (required for accessibility).
+				 */
 				text: String
+
 			},
 
 			listeners: {
@@ -81,6 +86,10 @@ Polymer-based web component for dropdown using a context-menu opener.
 				'd2l-dropdown-open': '_onOpen'
 			},
 
+			/**
+			 * Gets the opener element (required by d2l-dropdown behavior).
+			 * @return {HTMLElement}
+			 */
 			getOpenerElement: function() {
 				return this.$$('button');
 			},

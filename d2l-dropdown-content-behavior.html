@@ -173,56 +173,122 @@
 			'd2l-dropdown-content': true
 		},
 
+		/**
+		 * Triggered when dropdown content is opened/shown.
+		 * @event d2l-dropdown-open
+		 */
+
+		 /**
+		 * Triggered when dropdown content is closed/hidden.
+		 * @event d2l-dropdown-close
+		 */
+
 		properties: {
+
+			/**
+			 * Minimum width of content container (in pixels).
+			 */
 			minWidth: {
 				type: Number,
 				observer: '__minWidthChanged',
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Maximum width of content container (in pixels).
+			 */
 			maxWidth: {
 				type: Number,
 				observer: '__maxWidthChanged',
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Whether to automatically close the dropdown (ex. when focus is lost).
+			 */
 			noAutoClose: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Whether to automatically fit the content container to the available height.
+			 */
 			noAutoFit: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Whether to automatically apply focus to first focusable element in content.
+			 */
 			noAutoFocus: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Whether to apply padding to the content container.
+			 */
 			noPadding: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Whether to display the pointer above/below the content, pointing to the opener.
+			 */
 			noPointer: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Alignment of the dropdown content to the opener. Valid values are `start`, `end`. If
+			 * not set, will attempt to position so content container is centered under/over opener.
+			 */
 			align: {
 				type: String,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Optionally provide boundaries where the dropdown will appear. Valid values are `above`,
+			 * `below`, `left`, or `right`.
+			 */
 			boundary: Object,
+
+			/**
+			 * Whether the dropdown content is open or not.
+			 */
 			opened: {
 				type: Boolean,
 				observer: '__openedChanged',
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Private.
+			 */
 			openedAbove: {
 				type: Boolean,
 				reflectToAttribute: true
 			},
+
+			/**
+			 * Whether to render the content immediately. By default, the content rendering
+			 * is differred.
+			 */
 			renderContent: Boolean,
+
+			/**
+			 * Private.
+			 */
 			verticalOffset: {
 				type: String,
 				observer: '__verticalOffsetChanged'
 			}
+
 		},
 
 		__content: null,
@@ -271,15 +337,25 @@
 			this.unlisten(this.__content, 'scroll', '__toggleScrollStyles');
 		},
 
+		/**
+		 * Closes/hides the dropdown.
+		 */
 		close: function() {
 			this.opened = false;
 		},
 
+		/**
+		 * Opens/shows the dropdown.
+		 * @param {Boolean} applyFocus Whether focus should be automatically move to first focusable upon opening.
+		 */
 		open: function(applyFocus) {
 			this.__applyFocus = applyFocus !== undefined ? applyFocus : true;
 			this.opened = true;
 		},
 
+		/**
+		 * Stamps and attaches the content into the DOM immediately.
+		 */
 		forceRender: function() {
 			if (!this.renderContent) {
 				this.renderContent = true;
@@ -288,6 +364,10 @@
 			domIf.render();
 		},
 
+		/**
+		 * Toggles the opened/closed state of the dropdown.  If closed, it will open, and vice versa.
+		 * @param {Boolean} applyFocus Whether focus should be automatically move to first focusable upon opening.
+		 */
 		toggleOpen: function(applyFocus) {
 			if (this.opened) {
 				this.close();
@@ -296,6 +376,9 @@
 			}
 		},
 
+		/**
+		 * Private.
+		 */
 		scrollTo: function(scrollTop) {
 			var content = this.__content;
 			if (content) {
@@ -306,6 +389,9 @@
 			}
 		},
 
+		/**
+		 * Private.
+		 */
 		height: function() {
 			return this.__content && this.__content.offsetHeight;
 		},

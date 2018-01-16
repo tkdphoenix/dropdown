@@ -21,6 +21,10 @@ Polymer-based web component for dropdowns.
 				D2L.PolymerBehaviors.DropdownOpenerBehavior
 			],
 
+			/**
+			 * Gets the opener element with class "d2l-dropdown-opener" (required by d2l-dropdown behavior).
+			 * @return {HTMLElement}
+			 */
 			getOpenerElement: function() {
 				return this.queryEffectiveChildren('.d2l-dropdown-opener');
 			}

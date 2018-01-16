@@ -25,15 +25,25 @@
 	D2L.PolymerBehaviors.DropdownOpenerBehavior = {
 
 		properties: {
+
+			/**
+			 * Indicates the component is a dropdown opener.
+			 */
 			isDropdownOpener: {
 				type: Boolean,
 				readOnly: true,
 				value: true
 			},
+
+			/**
+			 * Whether to disable automatically opening the dropdown. Can be useful if the custom
+			 * opener needs to control the open/close state of the dropdown.
+			 */
 			noAutoOpen: {
 				type: Boolean,
 				reflectToAttribute: true
 			}
+
 		},
 
 		attached: function() {
@@ -57,14 +67,25 @@
 			this.unlisten(opener, 'mouseup', '__onMouseUp');
 		},
 
+		/**
+		 * Gets the opener component.
+		 */
 		getOpener: function() {
 			return this;
 		},
 
+		/**
+		 * Gets the opener element (required by d2l-dropdown behavior).
+		 * @return {HTMLElement}
+		 */
 		getOpenerElement: function() {
 			return this;
 		},
 
+		/**
+		 * Toggles the visible state of the dropdown. If open, it will close, and vice versa.
+		 * @param {Boolean} applyFocus Whether focus should be automatically move to first focusable upon opening.
+		 */
 		toggleOpen: function(applyFocus) {
 			var content = this.queryEffectiveChildren('[d2l-dropdown-content]');
 			if (!content) {
