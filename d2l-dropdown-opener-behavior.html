@@ -18,8 +18,11 @@
 (function() {
 	'use strict';
 
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+
 	/** @polymerBehavior */
-	var DropdownOpenerBehavior = {
+	D2L.PolymerBehaviors.DropdownOpenerBehavior = {
 
 		properties: {
 			isDropdownOpener: {
@@ -89,9 +92,5 @@
 
 	};
 
-	window.D2L = window.D2L || {};
-	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	/** @polymerBehavior */
-	window.D2L.PolymerBehaviors.DropdownOpenerBehavior = [DropdownOpenerBehavior];
 })();
 </script>
