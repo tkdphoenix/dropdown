@@ -58,7 +58,7 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
       }
     </style>
     <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
     </script>
     <next-code-block></next-code-block>
   </template>
@@ -123,7 +123,7 @@ dropdown.addEventListener('click', function() {
       }
     </style>
     <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
     </script>
     <next-code-block></next-code-block>
   </template>
@@ -172,7 +172,7 @@ dropdown.addEventListener('click', function() {
       }
     </style>
     <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
     </script>
     <next-code-block></next-code-block>
   </template>
@@ -219,7 +219,7 @@ dropdown.addEventListener('click', function() {
       }
     </style>
     <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
     </script>
     <next-code-block></next-code-block>
   </template>
@@ -268,7 +268,7 @@ dropdown.addEventListener('click', function() {
       }
     </style>
     <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '210px'; });
     </script>
     <next-code-block></next-code-block>
   </template>
@@ -336,7 +336,7 @@ content.addEventListener('d2l-dropdown-close', () => { ... });
       }
     </style>
     <script>
-      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '300px'; });
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '320px'; });
     </script>
     <next-code-block></next-code-block>
   </template>
