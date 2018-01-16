@@ -53,7 +53,13 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
         font-weight: 400;
         line-height: 1.4rem;
       }
+      d2l-dropdown {
+        margin-left: 15px;
+      }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
@@ -72,16 +78,16 @@ If the dropdown is initially empty when it's opened, the dropdown pointer will n
 
 ```html
 <d2l-dropdown no-auto-open>
-	...
+  ...
 </d2l-dropdown>
 ```
 
 ```javascript
 dropdown.addEventListener('click', function() {
-	// fetch some content
-	...
-	// take control of when the dropdown is actually opened
-	dropdown.toggleOpen();
+  // fetch some content
+  ...
+  // take control of when the dropdown is actually opened
+  dropdown.toggleOpen();
 });
 ```
 
@@ -112,7 +118,13 @@ dropdown.addEventListener('click', function() {
         font-weight: 400;
         line-height: 1.4rem;
       }
+      d2l-dropdown-button {
+        margin-left: 15px;
+      }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
@@ -155,7 +167,13 @@ dropdown.addEventListener('click', function() {
         font-weight: 400;
         line-height: 1.4rem;
       }
+      d2l-dropdown-context-menu {
+        margin-left: 15px;
+      }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
@@ -196,7 +214,13 @@ dropdown.addEventListener('click', function() {
         font-weight: 400;
         line-height: 1.4rem;
       }
+      d2l-dropdown-more {
+        margin-left: 15px;
+      }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '160px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
@@ -239,7 +263,13 @@ dropdown.addEventListener('click', function() {
         font-weight: 400;
         line-height: 1.4rem;
       }
+      d2l-dropdown-button {
+        margin-left: 15px;
+      }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '200px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
@@ -301,7 +331,13 @@ content.addEventListener('d2l-dropdown-close', () => { ... });
         font-weight: 400;
         line-height: 1.4rem;
       }
+      d2l-dropdown-button {
+        margin-left: 15px;
+      }
     </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '300px'; });
+    </script>
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
