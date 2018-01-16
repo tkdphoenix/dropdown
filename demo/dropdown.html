@@ -1,97 +1,82 @@
-<html>
-<head>
-	<title>d2l-dropdown</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
-	<link rel="import" href="../../d2l-demo-template/d2l-demo-template.html">
-	<link rel="import" href="../d2l-dropdown.html">
-	<link rel="import" href="../d2l-dropdown-content.html">
-</head>
-<body unresolved>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-dropdown demo</title>
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+		<link rel="import" href="../../d2l-typography/d2l-typography.html">
+		<link rel="import" href="../d2l-dropdown.html">
+		<link rel="import" href="../d2l-dropdown-content.html">
+		<custom-style>
+			<style is="custom-style" include="demo-pages-shared-styles"></style>
+		</custom-style>
+		<custom-style include="d2l-typography">
+			<style is="custom-style" include="d2l-typography"></style>
+		</custom-style>
+		<style>
+			html {
+				font-size: 20px;
+			}
+			</style>
+	</head>
+	<body unresolved class="d2l-typography">
+		<div class="vertical-section-container centered">
 
-	<d2l-demo-template title="d2l-dropdown">
+			<h3>Generic Dropdown</h3>
+			<demo-snippet>
+				<template>
+					<d2l-dropdown>
+						<button class="d2l-dropdown-opener">Open it!</button>
+						<d2l-dropdown-content max-width="400">
+							<a href="https://youtu.be/9ze87zQFSak">Google</a>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+							<a href="http://www.desire2learn.com">D2L</a>
+						</d2l-dropdown-content>
+					</d2l-dropdown>
+				</template>
+			</demo-snippet>
 
-		<div slot="d2l-demo-actions" class="d2l-demo-actions">
-			<label for="config-no-auto-close">
-				No Auto-Close <input id="config-no-auto-close" type="checkbox" />
-			</label>
-			<label for="config-no-auto-fit">
-				No Auto-Fit <input id="config-no-auto-fit" type="checkbox" />
-			</label>
-			<label for="config-no-auto-focus">
-				No Auto-Focus <input id="config-no-auto-focus" type="checkbox" />
-			</label>
-			<label for="config-no-pointer">
-				No Pointer <input id="config-no-pointer" type="checkbox" />
-			</label>
-			<label for="config-no-padding">
-				No Padding <input id="config-no-padding" type="checkbox" />
-			</label>
-			<label for="config-align">
-				Align <select id="config-align">
-					<option value="">No Alignment</option>
-					<option>start</option>
-					<option>end</option>
-				</select>
-			</label>
-			<label for="config-boundary">
-				Boundary (JSON. above,below,left,right are valid properties) <input id="config-boundary" type="text" />
-			</label>
-		</div>
-
-		<div slot="d2l-demo-fixture" class="d2l-demo-fixture">
-
-			<div style="margin-bottom: 2rem; margin-top: 10rem; padding-left:5%; padding-right: 0%;">
-				<d2l-dropdown>
-					<button class="d2l-dropdown-opener">Open it!</button>
-					<d2l-dropdown-content id="dropdown-content" max-width="400">
-						<a href="https://youtu.be/9ze87zQFSak">Google</a>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-						<a href="http://www.desire2learn.com">D2L</a>
-					</d2l-dropdown-content>
-				</d2l-dropdown>
+			<!--
+			<div slot="d2l-demo-actions" class="d2l-demo-actions">
+				<label for="config-no-auto-close">
+					No Auto-Close <input id="config-no-auto-close" type="checkbox" />
+				</label>
+				<label for="config-no-auto-fit">
+					No Auto-Fit <input id="config-no-auto-fit" type="checkbox" />
+				</label>
+				<label for="config-no-auto-focus">
+					No Auto-Focus <input id="config-no-auto-focus" type="checkbox" />
+				</label>
+				<label for="config-no-pointer">
+					No Pointer <input id="config-no-pointer" type="checkbox" />
+				</label>
+				<label for="config-no-padding">
+					No Padding <input id="config-no-padding" type="checkbox" />
+				</label>
+				<label for="config-align">
+					Align <select id="config-align">
+						<option value="">No Alignment</option>
+						<option>start</option>
+						<option>end</option>
+					</select>
+				</label>
+				<label for="config-boundary">
+					Boundary (JSON. above,below,left,right are valid properties) <input id="config-boundary" type="text" />
+				</label>
 			</div>
-
-			<a href="https://youtu.be/9ze87zQFSak">Google</a>
-			<div style="height:500px;"></div>
+			-->
 
 		</div>
-
-	</d2l-demo-template>
-
-	<script>
-
-		var dropdown_content = document.getElementById('dropdown-content');
-
-		function wireupConfig(propertyName) {
-			var configElem = document.getElementById('config-' + propertyName);
-			configElem.addEventListener('change', function(e) {
-				if (e.target.type === 'checkbox' && e.target.checked) {
-					dropdown_content.setAttribute(propertyName, true);
-				} else if (e.target.type !== 'checkbox' && e.target.value) {
-					dropdown_content.setAttribute(propertyName, e.target.value);
-				} else {
-					dropdown_content.removeAttribute(propertyName);
-				}
+		<script>
+			document.body.addEventListener('d2l-dropdown-open', function(e) {
+				console.log('d2l-dropdown-open', e);
 			});
-		}
-
-		wireupConfig('no-auto-close');
-		wireupConfig('no-auto-fit');
-		wireupConfig('no-auto-focus');
-		wireupConfig('no-pointer');
-		wireupConfig('no-padding');
-		wireupConfig('align');
-		wireupConfig('boundary');
-
-		dropdown_content.addEventListener('d2l-dropdown-open', function(e) {
-			console.log('d2l-dropdown-open', e);
-		});
-		dropdown_content.addEventListener('d2l-dropdown-close', function(e) {
-			console.log('d2l-dropdown-close', e);
-		});
-
-
-	</script>
-</body>
+			document.body.addEventListener('d2l-dropdown-close', function(e) {
+				console.log('d2l-dropdown-close', e);
+			});
+		</script>
+	</body>
 </html>
