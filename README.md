@@ -248,9 +248,9 @@ dropdown.addEventListener('click', function() {
 ```html
 <d2l-dropdown-button text="Open!" primary>
   <d2l-dropdown-content min-width="150" max-width="400">
-		<a href="https://www.google.com">Google</a>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-		<a href="http://www.desire2learn.com">D2L</a>
+    <a href="https://www.google.com">Google</a>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <a href="http://www.desire2learn.com">D2L</a>
   </d2l-dropdown-content>
 </d2l-dropdown-button>
 ```
