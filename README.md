@@ -197,8 +197,8 @@ dropdown.addEventListener('click', function() {
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
-    <link rel="import" href="../d2l-dropdown-more.html">
-    <link rel="import" href="../d2l-dropdown-content.html">
+    <link rel="import" href="d2l-dropdown-more.html">
+    <link rel="import" href="d2l-dropdown-content.html">
     <custom-style include="d2l-typography">
       <style is="custom-style" include="d2l-typography"></style>
     </custom-style>
