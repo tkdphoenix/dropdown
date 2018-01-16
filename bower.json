@@ -10,9 +10,12 @@
     "demo",
     "test",
     ".editorconfig",
+    ".eslintrc.json",
     ".gitignore",
     ".travis.yml",
-    "package.json"
+    "package.json",
+    "polymer.json",
+    "wct.conf.json"
   ],
   "dependencies": {
     "d2l-button": "^4.0.1",
