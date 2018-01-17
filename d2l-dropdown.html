@@ -1,6 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="d2l-dropdown-opener-behavior.html">
 
+<!--
+`d2l-dropdown`
+Polymer-based web component for dropdowns.
+
+@demo demo/dropdown.html Generic Dropdown
+-->
+
 <dom-module id="d2l-dropdown">
 	<template>
 		<style include="d2l-dropdown-opener-styles"></style>
@@ -11,9 +18,13 @@
 			is: 'd2l-dropdown',
 
 			behaviors: [
-				window.D2L.PolymerBehaviors.DropdownOpenerBehavior
+				D2L.PolymerBehaviors.DropdownOpenerBehavior
 			],
 
+			/**
+			 * Gets the opener element with class "d2l-dropdown-opener" (required by d2l-dropdown behavior).
+			 * @return {HTMLElement}
+			 */
 			getOpenerElement: function() {
 				return this.queryEffectiveChildren('.d2l-dropdown-opener');
 			}

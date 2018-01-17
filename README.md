@@ -20,7 +20,7 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 
 ```html
 <head>
-	<script src="https://s.brightspace.com/lib/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
 </head>
 ```
 
@@ -30,15 +30,47 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 
 `d2l-dropdown` is a generic opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`) enabling alternate opener implementation using existing elements/components. Provide and indicate your own opener element with the class attribute value `d2l-dropdown-opener`.  Wire-up is automatic.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
-
 <d2l-dropdown>
-	<button class="d2l-dropdown-opener">Open!</button>
-	<d2l-dropdown-content>
-		Some content...
-	</d2l-dropdown-content>
+  <button class="d2l-dropdown-opener">Open!</button>
+  <d2l-dropdown-content>
+    Some content...
+  </d2l-dropdown-content>
 </d2l-dropdown>
 ```
 
@@ -46,16 +78,16 @@ If the dropdown is initially empty when it's opened, the dropdown pointer will n
 
 ```html
 <d2l-dropdown no-auto-open>
-	...
+  ...
 </d2l-dropdown>
 ```
 
 ```javascript
 dropdown.addEventListener('click', function() {
-	// fetch some content
-	...
-	// take control of when the dropdown is actually opened
-	dropdown.toggleOpen();
+  // fetch some content
+  ...
+  // take control of when the dropdown is actually opened
+  dropdown.toggleOpen();
 });
 ```
 
@@ -63,14 +95,46 @@ dropdown.addEventListener('click', function() {
 
 `d2l-dropdown-button` is a `d2l-button` opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for the button and content component as needed.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown-button.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-button {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-button.html">
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
-
 <d2l-dropdown-button text="Open!" primary>
-	<d2l-dropdown-content>
-		Some content...
-	</d2l-dropdown-content>
+  <d2l-dropdown-content>
+    Some content...
+  </d2l-dropdown-content>
 </d2l-dropdown-button>
 ```
 
@@ -80,29 +144,93 @@ dropdown.addEventListener('click', function() {
 
 `d2l-dropdown-context-menu` is a simple/minimal opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for accessibility and content component as needed.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown-context-menu.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-context-menu {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-context-menu.html">
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
-
 <d2l-dropdown-context-menu text="Open!">
-	<d2l-dropdown-content>
-		Some content...
-	</d2l-dropdown-content>
+  <d2l-dropdown-content>
+    Some content...
+  </d2l-dropdown-content>
 </d2l-dropdown-context-menu>
 ```
 
 #### More Opener
 
-`d2l-dropdown-more` is a simple opener using `d2l-tier1:more` as the button's icon. 
+`d2l-dropdown-more` is a simple opener using `d2l-tier1:more` as the button's icon.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown-more.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-more {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<link rel="import" href="../d2l-dropdown-more.html">
-<link rel="import" href="../d2l-dropdown-menu.html">
-
-<d2l-dropdown-more id="dropdown-more-menu" label="Open!">
-	<d2l-dropdown-menu id="dropdown-menu">
-		Some content...
-	</d2l-dropdown-menu>
+<d2l-dropdown-more label="Open!">
+  <d2l-dropdown-content>
+    Some content...
+  </d2l-dropdown-content>
 </d2l-dropdown-more>
 ```
 
@@ -112,12 +240,49 @@ dropdown.addEventListener('click', function() {
 
 `d2l-dropdown-content` is a generic container for dropdown content.  It provides behavior such as sizing,  positioning, and managing focus gain/loss.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown-button.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-button {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '210px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-content.html">
-
-<d2l-dropdown-content min-width="..." max-width="..." no-padding>
-	Some content...
-</d2l-dropdown-content>
+<d2l-dropdown-button text="Open!" primary>
+  <d2l-dropdown-content min-width="150" max-width="400">
+    <a href="https://www.google.com">Google</a>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <a href="http://www.desire2learn.com">D2L</a>
+  </d2l-dropdown-content>
+</d2l-dropdown-button>
 ```
 
 * `min-width` (number) - optionally override default min-width
@@ -142,23 +307,102 @@ content.addEventListener('d2l-dropdown-close', () => { ... });
 
 `d2l-dropdown-menu` is a container for a [d2l-menu](https://github.com/Brightspace/d2l-menu-ui) component.  It provides behavior in addition to the basic behavior of `d2l-dropdown-content` such as closing the menu when menu items are selected, resetting to the root of nested menus when reopening, etc.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="../d2l-menu/d2l-menu.html">
+    <link rel="import" href="d2l-dropdown-button.html">
+    <link rel="import" href="d2l-dropdown-menu.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-button {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '320px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
-
-<d2l-dropdown-menu>
-	<d2l-menu label="some menu">
-		...
-	</d2l-menu>
-</d2l-dropdown-menu>
+<d2l-dropdown-button text="Open!" primary>
+  <d2l-dropdown-menu id="dropdown">
+    <d2l-menu label="Astronomy">
+      <d2l-menu-item text="Introduction" id="first-item" ></d2l-menu-item>
+      <d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+      <d2l-menu-item text="The Solar System">
+        <d2l-menu>
+          <d2l-menu-item text="Formation"></d2l-menu-item>
+          <d2l-menu-item text="Modern Solar System"></d2l-menu-item>
+          <d2l-menu-item text="Future Solar System"></d2l-menu-item>
+          <d2l-menu-item text="The Planets"></d2l-menu-item>
+          <d2l-menu-item text="The Sun"></d2l-menu-item>
+          <d2l-menu-item text="Solar &amp; Lunar Eclipses"></d2l-menu-item>
+          <d2l-menu-item text="Meteors &amp; Meteorites"></d2l-menu-item>
+          <d2l-menu-item text="Asteroids"></d2l-menu-item>
+          <d2l-menu-item text="Comets"></d2l-menu-item>
+        </d2l-menu>
+      </d2l-menu-item>
+      <d2l-menu-item text="Stars &amp; Galaxies"></d2l-menu-item>
+      <d2l-menu-item text="The Night Sky"></d2l-menu-item>
+      <d2l-menu-item text="The Universe" id="last-item"></d2l-menu-item>
+    </d2l-menu>
+  </d2l-dropdown-menu>
+</d2l-dropdown-button>
 ```
 
-### Usage in Production
+## Developing, Testing and Contributing
 
-In production, it's recommended to use a build tool like [Vulcanize](https://github.com/Polymer/vulcanize) to combine all your web components into a single import file. [More from the Polymer Docs: Optimize for Production](https://www.polymer-project.org/1.0/tools/optimize-for-production.html)...
+After cloning the repo, run `npm install` to install dependencies.
 
-## Coding styles
+If you don't have it already, install the [Polymer CLI](https://www.polymer-project.org/2.0/docs/tools/polymer-cli) globally:
 
-See the [VUI Best Practices & Style Guide](https://github.com/Brightspace/valence-ui-docs/wiki/Best-Practices-&-Style-Guide) for information on VUI naming conventions, plus information about the [EditorConfig](http://editorconfig.org) rules used in this repo.
+```shell
+npm install -g polymer-cli
+```
+
+To start a [local web server](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#serve) that hosts the demo page and tests:
+
+```shell
+polymer serve
+```
+
+To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#lint)):
+
+```shell
+npm run lint
+```
+
+To run unit tests locally using [Polymer test](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#tests):
+
+```shell
+polymer test --skip-plugin sauce
+```
+
+To lint AND run local unit tests:
+
+```shell
+npm test
+```
 
 [bower-url]: http://bower.io/search/?q=d2l-dropdown
 [bower-image]: https://badge.fury.io/bo/d2l-dropdown.svg
