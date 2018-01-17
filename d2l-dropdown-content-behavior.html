@@ -277,7 +277,7 @@
 
 			/**
 			 * Whether to render the content immediately. By default, the content rendering
-			 * is differred.
+			 * is deferred.
 			 */
 			renderContent: Boolean,
 
@@ -354,7 +354,10 @@
 		},
 
 		/**
-		 * Stamps and attaches the content into the DOM immediately.
+		 * Synchronously stamps and attaches the content into the DOM. By default, rendering of the
+		 * content into the DOM is deferred as a performance optimization, so if access to the content
+		 * DOM is required (for example by calling `document.querySelector`) before opening the dropdown,
+		 * `forceRender` may be used.
 		 */
 		forceRender: function() {
 			if (!this.renderContent) {
@@ -366,7 +369,7 @@
 
 		/**
 		 * Toggles the opened/closed state of the dropdown.  If closed, it will open, and vice versa.
-		 * @param {Boolean} applyFocus Whether focus should be automatically move to first focusable upon opening.
+		 * @param {Boolean} applyFocus Whether focus should be automatically moved to first focusable upon opening.
 		 */
 		toggleOpen: function(applyFocus) {
 			if (this.opened) {
