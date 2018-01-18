@@ -445,8 +445,7 @@
 					return;
 				}
 
-				var activeElement = Polymer.dom(document.activeElement).node;
-				activeElement = this.root.activeElement || activeElement;
+				var activeElement = D2L.Dom.Focus.getComposedActiveElement();
 
 				if (D2L.Dom.isComposedAncestor(this, activeElement)
 					|| D2L.Dom.isComposedAncestor(this.__getOpener(), activeElement)) {
@@ -474,16 +473,20 @@
 		},
 
 		__onClose: function(e) {
+
 			if (e.target !== this || !document.activeElement) {
 				return;
 			}
-			var activeElement = Polymer.dom(document.activeElement).node;
-			activeElement = this.root.activeElement || activeElement;
+
+			var activeElement = D2L.Dom.Focus.getComposedActiveElement();
+
 			if (!D2L.Dom.isComposedAncestor(this, activeElement)) {
 				return;
 			}
+
 			var opener = this.__getOpener();
 			opener.getOpenerElement().focus();
+
 		},
 
 		__onKeyUp: function(e) {
