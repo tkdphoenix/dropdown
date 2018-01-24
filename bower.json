@@ -25,7 +25,7 @@
     "d2l-offscreen": "^3.0.3",
     "d2l-polymer-behaviors": "^1.2.0",
     "iron-iconset-svg": "^2.1.0",
-    "polymer": "1.9.1 - 2"
+    "polymer": "1 - 2"
   },
   "devDependencies": {
     "d2l-typography": "^6.0.0",
