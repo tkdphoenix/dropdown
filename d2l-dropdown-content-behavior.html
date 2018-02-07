@@ -751,11 +751,10 @@
 			newValue = parseInt(newValue);
 
 			if (isNaN(parseInt(newValue))) {
-				delete this.customStyle['--d2l-dropdown-verticaloffset'];
+				this.updateStyles({'--d2l-dropdown-verticaloffset': undefined});
 			} else {
-				this.customStyle['--d2l-dropdown-verticaloffset'] = newValue + 'px';
+				this.updateStyles({'--d2l-dropdown-verticaloffset': newValue + 'px'});
 			}
-			this.updateStyles();
 
 		}
 
