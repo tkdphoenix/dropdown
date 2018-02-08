@@ -750,7 +750,7 @@
 
 			newValue = parseInt(newValue);
 
-			if (isNaN(parseInt(newValue))) {
+			if (isNaN(newValue)) {
 				this.updateStyles({'--d2l-dropdown-verticaloffset': '20px'});
 			} else {
 				this.updateStyles({'--d2l-dropdown-verticaloffset': newValue + 'px'});
