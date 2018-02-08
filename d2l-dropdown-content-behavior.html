@@ -750,12 +750,11 @@
 
 			newValue = parseInt(newValue);
 
-			if (isNaN(parseInt(newValue))) {
-				delete this.customStyle['--d2l-dropdown-verticaloffset'];
+			if (isNaN(newValue)) {
+				this.updateStyles({'--d2l-dropdown-verticaloffset': '20px'});
 			} else {
-				this.customStyle['--d2l-dropdown-verticaloffset'] = newValue + 'px';
+				this.updateStyles({'--d2l-dropdown-verticaloffset': newValue + 'px'});
 			}
-			this.updateStyles();
 
 		}
 
