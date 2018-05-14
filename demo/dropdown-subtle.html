@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-dropdown-button-subtle demo</title>
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+		<link rel="import" href="../../d2l-typography/d2l-typography.html">
+		<link rel="import" href="../d2l-dropdown-button-subtle.html">
+		<link rel="import" href="../d2l-dropdown-content.html">
+		<custom-style>
+			<style is="custom-style" include="demo-pages-shared-styles"></style>
+		</custom-style>
+		<custom-style include="d2l-typography">
+			<style is="custom-style" include="d2l-typography"></style>
+		</custom-style>
+		<style>
+			html {
+				font-size: 20px;
+			}
+			</style>
+	</head>
+	<body unresolved class="d2l-typography">
+		<div class="vertical-section-container centered">
+
+			<h3>Dropdown Subtle Button Opener</h3>
+			<demo-snippet>
+				<template>
+					<d2l-dropdown-button-subtle text="Open!">
+						<d2l-dropdown-content max-width="400">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+							<a href="http://www.desire2learn.com">D2L</a>
+						</d2l-dropdown-content>
+					</d2l-dropdown-button>
+				</template>
+			</demo-snippet>
+
+		</div>
+		<script>
+			document.body.addEventListener('d2l-dropdown-open', function(e) {
+				console.log('d2l-dropdown-open', e);
+			});
+			document.body.addEventListener('d2l-dropdown-close', function(e) {
+				console.log('d2l-dropdown-close', e);
+			});
+		</script>
+	</body>
+</html>
