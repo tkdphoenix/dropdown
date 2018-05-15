@@ -140,6 +140,53 @@ dropdown.addEventListener('click', function() {
 
 * `primary` - optionally render button as primary button
 
+#### Subtle Button Opener
+
+`d2l-dropdown-button-subtle` is a `d2l-button-subtle` opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for the button and content component as needed.
+
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown-button-subtle.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-button-subtle {
+        margin-left: 15px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<d2l-dropdown-button-subtle text="Open!">
+  <d2l-dropdown-content>
+    Some content...
+  </d2l-dropdown-content>
+</d2l-dropdown-button-subtle>
+```
+
 #### Context Menu Opener
 
 `d2l-dropdown-context-menu` is a simple/minimal opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for accessibility and content component as needed.
