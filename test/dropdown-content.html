@@ -19,11 +19,11 @@
 						<d2l-dropdown>
 							<button class="d2l-dropdown-opener"></button>
 							<d2l-dropdown-content>
-								<p id="non_focusable_inside"></p>
-								<a id="focusable_inside" href="http://www.desire2learn.com"></a>
+								<p id="non_focusable_inside">a</p>
+								<a id="focusable_inside" href="http://www.desire2learn.com">b</a>
 							</d2l-dropdown-content>
 						</d2l-dropdown>
-						<p id="non_focusable_outside"></p>
+						<p id="non_focusable_outside">c</p>
 						<button id="focusable_outside">out here</button>
 					</div>
 				</div>
@@ -78,7 +78,7 @@
 				it('overrides default min-width if provided', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
 						var contentRect = content.__getWidthContainer().getBoundingClientRect();
-						expect(contentRect.width).to.equal(170); /* +20px for scrollbar */
+						expect(contentRect.width).to.equal(170); // +20px for scrollbar
 						done();
 					});
 					content.setAttribute('min-width', '150');
@@ -137,13 +137,14 @@
 
 			describe('scrollTo', function() {
 				it('sets scrollTop to specified value', function(done) {
+					content.addEventListener('d2l-dropdown-position', function() {
+						expect(content.__content.scrollTop).to.equal(0);
+						content.scrollTo(1);
+						expect(content.__content.scrollTop).to.equal(1);
+						done();
+					});
 					Polymer.RenderStatus.afterNextRender(content, function() {
-						content.addEventListener('d2l-dropdown-position', function() {
-							expect(content.__content.scrollTop).to.equal(0);
-							content.scrollTo(1);
-							expect(content.__content.scrollTop).to.equal(1);
-							done();
-						});
+
 						content.boundary = {
 							below: 1,
 							above: 1
@@ -180,7 +181,7 @@
 				it('should close when focus element outside receives focus', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
 						Polymer.RenderStatus.afterNextRender(content, function() {
-							dropdownFixture.querySelector('#focusable_outside').focus();
+							MockInteractions.tap(dropdownFixture.querySelector('#focusable_outside'));
 						});
 					});
 					content.addEventListener('d2l-dropdown-close', function() {
@@ -302,18 +303,18 @@
 			describe('aria-expanded', function() {
 				it('should set aria-expanded on the opener', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
-						setTimeout(function() {
+						Polymer.RenderStatus.afterNextRender(opener, function() {
 							expect(opener.getAttribute('aria-expanded')).to.equal('true');
 							content.opened = false;
 						});
 					});
 					content.addEventListener('d2l-dropdown-close', function() {
-						setTimeout(function() {
+						Polymer.RenderStatus.afterNextRender(opener, function() {
 							expect(opener.getAttribute('aria-expanded')).to.equal('false');
 							done();
 						});
 					});
-					content.setAttribute('opened', true);
+					content.setAttribute('opened', 'opened');
 				});
 			});
 
