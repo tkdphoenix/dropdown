@@ -8,7 +8,8 @@
     "lint:wc": "polymer lint -i *.html",
     "lint": "npm run lint:js && npm run lint:wc",
     "test": "npm run lint && npm run test:polymer:local",
-    "test:polymer:local": "polymer test --skip-plugin sauce"
+    "test:polymer:local": "polymer test --skip-plugin sauce",
+    "test:polymer:sauce": "polymer test --skip-plugin local"
   },
   "repository": {
     "type": "git",
