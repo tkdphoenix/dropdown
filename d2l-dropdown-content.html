@@ -11,7 +11,13 @@ Polymer-based web component for dropdown generic content.
 <dom-module id="d2l-dropdown-content">
 
 	<template>
-		<style include="d2l-dropdown-content-styles"></style>
+		<style include="d2l-dropdown-content-styles">
+			/*
+			 * https://github.com/Polymer/tools/issues/408
+			 * Empty style blocks break linter.
+			 */
+			:host {}
+		</style>
 		<div class="d2l-dropdown-content-position">
 			<div class="d2l-dropdown-content-width">
 				<div class="d2l-dropdown-content-top"></div>

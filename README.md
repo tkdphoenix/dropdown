@@ -5,7 +5,7 @@
 [![Bower version][bower-image]][bower-url]
 [![Build status][ci-image]][ci-url]
 
-A [Polymer](https://www.polymer-project.org/1.0/)-based web component for dropdown/flyouts.
+A [Polymer](https://www.polymer-project.org)-based web component for dropdown/flyouts.
 
 ## Installation
 
@@ -16,11 +16,11 @@ bower install d2l-dropdown
 
 ## Usage
 
-Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import the opener and content components as needed:
+Include the [webcomponents.js](http://webcomponents.org/polyfills/) polyfill loader (for browsers who don't natively support web components), then import the opener and content components as needed:
 
 ```html
 <head>
-  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../webcomponentsjs/webcomponents-loader.js"></script>
 </head>
 ```
 
@@ -34,7 +34,7 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -99,7 +99,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-button.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -148,7 +148,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-button-subtle.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -195,7 +195,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-context-menu.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -242,7 +242,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-more.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -291,7 +291,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-button.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -358,7 +358,7 @@ content.addEventListener('d2l-dropdown-close', () => { ... });
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="../d2l-menu/d2l-menu.html">
     <link rel="import" href="d2l-dropdown-button.html">
@@ -442,7 +442,7 @@ npm run lint
 To run unit tests locally using [Polymer test](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#tests):
 
 ```shell
-polymer test --skip-plugin sauce
+npm run test:polymer:local
 ```
 
 To lint AND run local unit tests:

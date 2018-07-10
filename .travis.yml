@@ -1,6 +1,6 @@
 language: node_js
-node_js:
-- 9
+node_js: node
+addons:
+  chrome: stable
 script:
-- npm run test:lint:js
-- npm run test:lint:wc
+- npm run test
