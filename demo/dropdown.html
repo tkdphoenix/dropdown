@@ -39,42 +39,14 @@
 				</template>
 			</demo-snippet>
 
-			<!--
-			<div slot="d2l-demo-actions" class="d2l-demo-actions">
-				<label for="config-no-auto-close">
-					No Auto-Close <input id="config-no-auto-close" type="checkbox" />
-				</label>
-				<label for="config-no-auto-fit">
-					No Auto-Fit <input id="config-no-auto-fit" type="checkbox" />
-				</label>
-				<label for="config-no-auto-focus">
-					No Auto-Focus <input id="config-no-auto-focus" type="checkbox" />
-				</label>
-				<label for="config-no-pointer">
-					No Pointer <input id="config-no-pointer" type="checkbox" />
-				</label>
-				<label for="config-no-padding">
-					No Padding <input id="config-no-padding" type="checkbox" />
-				</label>
-				<label for="config-align">
-					Align <select id="config-align">
-						<option value="">No Alignment</option>
-						<option>start</option>
-						<option>end</option>
-					</select>
-				</label>
-				<label for="config-boundary">
-					Boundary (JSON. above,below,left,right are valid properties) <input id="config-boundary" type="text" />
-				</label>
-			</div>
-			-->
-
 		</div>
 		<script>
 			document.body.addEventListener('d2l-dropdown-open', function(e) {
+				// eslint-disable-next-line no-console
 				console.log('d2l-dropdown-open', e);
 			});
 			document.body.addEventListener('d2l-dropdown-close', function(e) {
+				// eslint-disable-next-line no-console
 				console.log('d2l-dropdown-close', e);
 			});
 		</script>
