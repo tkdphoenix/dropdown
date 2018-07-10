@@ -53,12 +53,12 @@
 				if (!opener) {
 					return;
 				}
-				opener.setAttribute('aria-haspopup', true);
+				opener.setAttribute('aria-haspopup', 'true');
 				this.listen(opener, 'keypress', '__onKeyPress');
 				this.listen(opener, 'mouseup', '__onMouseUp');
 				this.listen(this, 'd2l-dropdown-open', '__onOpened');
 				this.listen(this, 'd2l-dropdown-close', '__onClosed');
-				opener.setAttribute('aria-expanded', content && content.opened || false);
+				opener.setAttribute('aria-expanded', (content && content.opened || false).toString());
 			}.bind(this));
 		},
 
@@ -133,7 +133,7 @@
 			if (!opener) {
 				return;
 			}
-			opener.setAttribute('aria-expanded', true);
+			opener.setAttribute('aria-expanded', 'true');
 		},
 
 		__onClosed: function() {
@@ -141,7 +141,7 @@
 			if (!opener) {
 				return;
 			}
-			opener.setAttribute('aria-expanded', false);
+			opener.setAttribute('aria-expanded', 'false');
 		}
 
 	};
