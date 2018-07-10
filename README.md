@@ -16,11 +16,11 @@ bower install d2l-dropdown
 
 ## Usage
 
-Include the [webcomponents.js](http://webcomponents.org/polyfills/) polyfill loader (for browsers who don't natively support web components), then import the opener and content components as needed:
+Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyfill (for browsers who don't natively support web components), then import the opener and content components as needed:
 
 ```html
 <head>
-  <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
 </head>
 ```
 
@@ -34,7 +34,7 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) polyfill loa
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -99,7 +99,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-button.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -148,7 +148,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-button-subtle.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -195,7 +195,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-context-menu.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -242,7 +242,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-more.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -291,7 +291,7 @@ dropdown.addEventListener('click', function() {
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="d2l-dropdown-button.html">
     <link rel="import" href="d2l-dropdown-content.html">
@@ -358,7 +358,7 @@ content.addEventListener('d2l-dropdown-close', () => { ... });
 ```
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../d2l-typography/d2l-typography.html">
     <link rel="import" href="../d2l-menu/d2l-menu.html">
     <link rel="import" href="d2l-dropdown-button.html">
