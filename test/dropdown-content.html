@@ -304,22 +304,14 @@
 				it('should set aria-expanded on the opener', function(done) {
 					content.addEventListener('d2l-dropdown-open', function() {
 						setTimeout(function() {
-							try {
-								expect(opener.getAttribute('aria-expanded')).to.equal('true');
-								content.opened = false;
-							} catch (e) {
-								done(e);
-							}
+							expect(opener.getAttribute('aria-expanded')).to.equal('true');
+							content.opened = false;
 						});
 					});
 					content.addEventListener('d2l-dropdown-close', function() {
 						setTimeout(function() {
-							try {
-								expect(opener.getAttribute('aria-expanded')).to.equal('false');
-								done();
-							} catch (e) {
-								done(e);
-							}
+							expect(opener.getAttribute('aria-expanded')).to.equal('false');
+							done();
 						});
 					});
 					content.setAttribute('opened', true);
