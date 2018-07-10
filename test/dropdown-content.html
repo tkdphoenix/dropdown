@@ -34,10 +34,11 @@
 
 		describe('<d2l-dropdown-content>', function() {
 
-			var dropdownFixture, content;
+			var dropdownFixture, opener, content;
 
 			beforeEach(function() {
 				dropdownFixture = fixture('Dropdown');
+				opener = dropdownFixture.querySelector('.d2l-dropdown-opener');
 				content = dropdownFixture.querySelector('d2l-dropdown-content');
 			});
 
@@ -297,6 +298,24 @@
 					content.setAttribute('opened', true);
 				});
 
+			});
+
+			describe('aria-expanded', function() {
+				it('should set aria-expanded on the opener', function(done) {
+					content.addEventListener('d2l-dropdown-open', function() {
+						setTimeout(function() {
+							expect(opener.getAttribute('aria-expanded')).to.equal('true');
+							content.opened = false;
+						});
+					});
+					content.addEventListener('d2l-dropdown-close', function() {
+						setTimeout(function() {
+							expect(opener.getAttribute('aria-expanded')).to.equal('false');
+							done();
+						});
+					});
+					content.setAttribute('opened', true);
+				});
 			});
 
 		});

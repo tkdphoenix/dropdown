@@ -49,12 +49,16 @@
 		attached: function() {
 			Polymer.RenderStatus.afterNextRender(this, function() {
 				var opener = this.getOpenerElement();
+				var content = this.queryEffectiveChildren('[d2l-dropdown-content]');
 				if (!opener) {
 					return;
 				}
-				opener.setAttribute('aria-haspopup', true);
+				opener.setAttribute('aria-haspopup', 'true');
 				this.listen(opener, 'keypress', '__onKeyPress');
 				this.listen(opener, 'mouseup', '__onMouseUp');
+				this.listen(this, 'd2l-dropdown-open', '__onOpened');
+				this.listen(this, 'd2l-dropdown-close', '__onClosed');
+				opener.setAttribute('aria-expanded', (content && content.opened || false).toString());
 			}.bind(this));
 		},
 
@@ -65,6 +69,8 @@
 			}
 			this.unlisten(opener, 'keypress', '__onKeyPress');
 			this.unlisten(opener, 'mouseup', '__onMouseUp');
+			this.unlisten(this, 'd2l-dropdown-open', '__onOpened');
+			this.unlisten(this, 'd2l-dropdown-close', '__onClosed');
 		},
 
 		/**
@@ -120,6 +126,22 @@
 				return;
 			}
 			this.toggleOpen(false);
+		},
+
+		__onOpened: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			opener.setAttribute('aria-expanded', 'true');
+		},
+
+		__onClosed: function() {
+			var opener = this.getOpenerElement();
+			if (!opener) {
+				return;
+			}
+			opener.setAttribute('aria-expanded', 'false');
 		}
 
 	};
