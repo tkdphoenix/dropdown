@@ -112,8 +112,12 @@
 		 * @param {Boolean} applyFocus Whether focus should be automatically move to first focusable upon opening.
 		 */
 		toggleOpen: function(applyFocus) {
+			if (this.disabled) {
+				return;
+			}
+
 			var content = this.queryEffectiveChildren('[d2l-dropdown-content]');
-			if (!content || this.disabled) {
+			if (!content) {
 				return;
 			}
 			content.toggleOpen(applyFocus);
