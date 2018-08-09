@@ -146,6 +146,7 @@
 				return;
 			}
 			opener.setAttribute('aria-expanded', 'true');
+			opener.setAttribute('active', 'true');
 		},
 
 		__onClosed: function() {
@@ -154,6 +155,7 @@
 				return;
 			}
 			opener.setAttribute('aria-expanded', 'false');
+			opener.removeAttribute('active');
 		}
 
 	};
