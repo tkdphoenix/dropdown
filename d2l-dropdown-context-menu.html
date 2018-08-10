@@ -61,12 +61,10 @@ Polymer-based web component for dropdown using a context-menu opener.
 
 			_onClose: function() {
 				this.removeAttribute('opened');
-				this.$$('d2l-button-icon').removeAttribute('active');
 			},
 
 			_onOpen: function() {
 				this.setAttribute('opened', '');
-				this.$$('d2l-button-icon').setAttribute('active', 'true');
 			}
 
 		});
