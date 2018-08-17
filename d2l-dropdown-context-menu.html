@@ -25,7 +25,8 @@ Polymer-based web component for dropdown using a context-menu opener.
 			aria-label$="[[text]]"
 			disabled=[[disabled]]
 			icon="d2l-tier1:chevron-down"
-			text="[[text]]">
+			text="[[text]]"
+			translucent=[[translucent]]>
 		</d2l-button-icon>
 		<slot></slot>
 	</template>
@@ -42,7 +43,14 @@ Polymer-based web component for dropdown using a context-menu opener.
 				/**
 				 * Label for the context-menu button (required for accessibility).
 				 */
-				text: String
+				text: String,
+
+				/**
+				 * Whether the opener is translucent.
+				 */
+				translucent: {
+					type: Boolean
+				}
 
 			},
 
