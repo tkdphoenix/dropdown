@@ -189,7 +189,7 @@ dropdown.addEventListener('click', function() {
 
 #### Context Menu Opener
 
-`d2l-dropdown-context-menu` is a simple/minimal opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for accessibility and content component as needed.
+`d2l-dropdown-context-menu` is a simple/minimal opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for accessibility and content component as needed.  Optionally, specify the `translucent` attribute for busy/rich backgrounds.
 
 <!---
 ```
@@ -236,7 +236,7 @@ dropdown.addEventListener('click', function() {
 
 #### More Opener
 
-`d2l-dropdown-more` is a simple opener using `d2l-tier1:more` as the button's icon.
+`d2l-dropdown-more` is a simple/minimal opener for dropdown content (`d2l-dropdown-content` or `d2l-dropdown-menu`).  Provide `text` for accessibility and content component as needed.  Optionally, specify the `translucent` attribute for busy/rich backgrounds.
 
 <!---
 ```

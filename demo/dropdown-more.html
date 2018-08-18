@@ -49,6 +49,29 @@
 				</template>
 			</demo-snippet>
 
+			<h3>Dropdown More Button Opener (Translucent)</h3>
+			<demo-snippet>
+				<template>
+					<d2l-dropdown-more label="Open!" translucent>
+						<d2l-dropdown-menu>
+							<d2l-menu label="Astronomy">
+								<d2l-menu-item text="Introduction"></d2l-menu-item>
+								<d2l-menu-item text="Searching for the Heavens "></d2l-menu-item>
+								<d2l-menu-item text="The Night Sky">
+									<d2l-menu>
+										<d2l-menu-item text="Constellations"></d2l-menu-item>
+										<d2l-menu-item text="Mapping the Heavens"></d2l-menu-item>
+										<d2l-menu-item text="Reading Star Maps"></d2l-menu-item>
+										<d2l-menu-item text="Telescopes"></d2l-menu-item>
+									</d2l-menu>
+								</d2l-menu-item>
+								<d2l-menu-item text="The Universe"></d2l-menu-item>
+							</d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown-more>
+				</template>
+			</demo-snippet>
+
 		</div>
 		<script>
 			document.body.addEventListener('d2l-dropdown-open', function(e) {
