@@ -281,6 +281,12 @@ dropdown.addEventListener('click', function() {
 </d2l-dropdown-more>
 ```
 
+#### Visible on Ancestor Behavior
+
+For busy/rich backgrounds, the `d2l-dropdown-more` and `d2l-dropdown-context-menu` openers support the [VisibleOnAncestorBehavior](https://github.com/Brightspace/d2l-polymer-behaviors-ui) that can be enabled by specifying the `visible-on-ancestor` attribute.  See [VisibleOnAncestorBehavior](https://github.com/Brightspace/d2l-polymer-behaviors-ui) for more details on configuring that behavior.
+
+![screenshot of button component](/screenshots/dropdown-visible-on-ancestor.gif?raw=true)
+
 ### Dropdown Contents
 
 #### Generic Content
