@@ -1,0 +1,37 @@
+html {
+	font-size: 20px;
+}
+.ancestor-container {
+	padding: 0.5rem;
+	position: relative;
+}
+.ancestor-container::before {
+	background-color: rgba(0,0,0,0.03);
+	box-sizing: border-box;
+	content: 'visible-on-ancestor-target';
+	font-size: 0.7rem;
+	height: 100%;
+	left:0;
+	padding: 0.5rem;
+	position: absolute;;
+	text-align: right;
+	top: 0;
+	width: 100%;
+}
+.translucent-container {
+	position: relative;
+	height: 150px;
+}
+.translucent-container > img {
+	border-radius: 6px;
+	height: 100%;
+	position: absolute;
+	max-width: 400px;
+	width: 100%;
+}
+.translucent-container > d2l-dropdown-context-menu,
+.translucent-container > d2l-dropdown-more {
+	padding-right: 0;
+	margin-top: 12px;
+	margin-left: 12px;
+}
