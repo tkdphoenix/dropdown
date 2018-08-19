@@ -338,12 +338,12 @@ For busy/rich backgrounds, the `d2l-dropdown-more` and `d2l-dropdown-context-men
 -->
 ```html
 <div class="translucent-container d2l-visible-on-ancestor-target">
-	<img alt="" src="https://s.brightspace.com/course-images/images/e4fbb461-4cd9-4512-8304-44f2c2b741f1/tile-low-density-max-size.jpg"/>
-	<d2l-dropdown-more label="Open!" translucent visible-on-ancestor>
-		<d2l-dropdown-content>
-	    Some content...
-	  </d2l-dropdown-content>
-	</d2l-dropdown-more>
+  <img alt="" src="https://s.brightspace.com/course-images/images/e4fbb461-4cd9-4512-8304-44f2c2b741f1/tile-low-density-max-size.jpg"/>
+  <d2l-dropdown-more label="Open!" translucent visible-on-ancestor>
+    <d2l-dropdown-content>
+      Some content...
+    </d2l-dropdown-content>
+  </d2l-dropdown-more>
 </div>
 ```
 
