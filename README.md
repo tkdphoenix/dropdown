@@ -285,7 +285,68 @@ dropdown.addEventListener('click', function() {
 
 For busy/rich backgrounds, the `d2l-dropdown-more` and `d2l-dropdown-context-menu` openers support the [VisibleOnAncestorBehavior](https://github.com/Brightspace/d2l-polymer-behaviors-ui) that can be enabled by specifying the `visible-on-ancestor` attribute.  See [VisibleOnAncestorBehavior](https://github.com/Brightspace/d2l-polymer-behaviors-ui) for more details on configuring that behavior.
 
-![screenshot of button component](/screenshots/dropdown-visible-on-ancestor.gif?raw=true)
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../d2l-typography/d2l-typography.html">
+    <link rel="import" href="d2l-dropdown-more.html">
+    <link rel="import" href="d2l-dropdown-content.html">
+    <custom-style include="d2l-typography">
+      <style is="custom-style" include="d2l-typography"></style>
+    </custom-style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      body {
+        color: var(--d2l-color-ferrite);
+        font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        letter-spacing: 0.01rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+      }
+      d2l-dropdown-more {
+        margin-left: 15px;
+      }
+      .translucent-container {
+        position: relative;
+        height: 150px;
+      }
+      .translucent-container > img {
+        border-radius: 6px;
+        height: 100%;
+        position: absolute;
+        width: 100%;
+      }
+      .translucent-container > d2l-dropdown-context-menu,
+      .translucent-container > d2l-dropdown-more {
+        padding-right: 0;
+        margin-top: 12px;
+        margin-left: 12px;
+      }
+    </style>
+    <script>
+      document.body.addEventListener('d2l-dropdown-open', function() { document.body.style.height = '180px'; });
+    </script>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<div class="translucent-container d2l-visible-on-ancestor-target">
+	<img alt="" src="https://s.brightspace.com/course-images/images/e4fbb461-4cd9-4512-8304-44f2c2b741f1/tile-low-density-max-size.jpg"/>
+	<d2l-dropdown-more label="Open!" translucent visible-on-ancestor>
+		<d2l-dropdown-content>
+	    Some content...
+	  </d2l-dropdown-content>
+	</d2l-dropdown-more>
+</div>
+```
+
 
 ### Dropdown Contents
 
