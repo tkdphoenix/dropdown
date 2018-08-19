@@ -318,6 +318,7 @@ For busy/rich backgrounds, the `d2l-dropdown-more` and `d2l-dropdown-context-men
       .translucent-container > img {
         border-radius: 6px;
         height: 100%;
+        max-width: 400px;
         position: absolute;
         width: 100%;
       }

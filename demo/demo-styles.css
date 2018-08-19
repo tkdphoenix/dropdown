@@ -26,6 +26,7 @@ html {
 	border-radius: 6px;
 	height: 100%;
 	position: absolute;
+	max-width: 400px;
 	width: 100%;
 }
 .translucent-container > d2l-dropdown-context-menu,
