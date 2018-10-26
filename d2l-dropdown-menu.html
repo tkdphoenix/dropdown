@@ -47,7 +47,8 @@ Polymer-based web component for dropdown menu content.
 				'd2l-dropdown-close': '_onClose',
 				'd2l-dropdown-open': '_onOpen',
 				'd2l-menu-resize': '_onMenuResize',
-				'd2l-menu-item-select': '_onSelect'
+				'd2l-menu-item-select': '_onSelect',
+				'd2l-menu-item-change': '_onChange'
 			},
 
 			ready: function() {
@@ -91,6 +92,13 @@ Polymer-based web component for dropdown menu content.
 					}, 0);
 				}
 
+			},
+
+			_onChange: function(e) {
+				if (e.target.getAttribute('role') !== 'menuitemradio') {
+					return;
+				}
+				this.close();
 			},
 
 			_onSelect: function(e) {
