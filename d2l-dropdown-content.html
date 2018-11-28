@@ -9,8 +9,7 @@ Polymer-based web component for dropdown generic content.
 -->
 
 <dom-module id="d2l-dropdown-content">
-
-	<template>
+	<template strip-whitespace>
 		<style include="d2l-dropdown-content-styles">
 			/*
 			 * https://github.com/Polymer/tools/issues/408
@@ -33,7 +32,6 @@ Polymer-based web component for dropdown generic content.
 			<div></div>
 		</div>
 	</template>
-
 	<script>
 		Polymer({
 			is: 'd2l-dropdown-content',
@@ -44,5 +42,4 @@ Polymer-based web component for dropdown generic content.
 
 		});
 	</script>
-
 </dom-module>
