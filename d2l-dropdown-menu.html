@@ -10,8 +10,7 @@ Polymer-based web component for dropdown menu content.
 -->
 
 <dom-module id="d2l-dropdown-menu">
-
-	<template>
+	<template strip-whitespace>
 		<style include="d2l-dropdown-content-styles">
 			/*
 			 * https://github.com/Polymer/tools/issues/408
@@ -34,7 +33,6 @@ Polymer-based web component for dropdown menu content.
 			<div></div>
 		</div>
 	</template>
-
 	<script>
 		Polymer({
 			is: 'd2l-dropdown-menu',
@@ -110,5 +108,4 @@ Polymer-based web component for dropdown menu content.
 
 		});
 	</script>
-
 </dom-module>
