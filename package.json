@@ -4,9 +4,9 @@
   "description": "Polymer-based web component for a D2L dropdown",
   "scripts": {
     "postinstall": "polymer install --variants",
-    "lint:js": "eslint *.html demo/*.html test/*.html",
+    "lint:html": "eslint *.html demo/*.html test/*.html",
     "lint:wc": "polymer lint -i *.html",
-    "lint": "npm run lint:js && npm run lint:wc",
+    "lint": "npm run lint:html && npm run lint:wc",
     "test": "npm run lint && npm run test:polymer:local",
     "test:polymer:local": "polymer test --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local"
