@@ -1,11 +1,7 @@
 {
   "plugins": {
     "local": {
-      "browsers": [
-        {
-          "browserName": "chrome"
-        }
-      ],
+      "browsers": ["chrome"],
       "browserOptions": {
         "chrome": ["headless", "disable-gpu", "no-sandbox"]
       }
@@ -14,12 +10,12 @@
       "browsers": [
         {
           "browserName": "chrome",
-          "platform": "OS X 10.12",
+          "platform": "OS X 10.13",
           "version": ""
         },
         {
           "browserName": "firefox",
-          "platform": "OS X 10.12",
+          "platform": "OS X 10.13",
           "version": ""
         },
         {
