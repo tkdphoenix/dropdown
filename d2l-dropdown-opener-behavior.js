@@ -1,5 +1,5 @@
-import '../@polymer/polymer/polymer-legacy.js';
-import { afterNextRender } from '../@polymer/polymer/lib/utils/render-status.js';
+import '@polymer/polymer/polymer-legacy.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-dropdown-opener-styles">
