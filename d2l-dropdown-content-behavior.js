@@ -1,9 +1,9 @@
-import '../@polymer/polymer/polymer-legacy.js';
-import '../d2l-colors/d2l-colors.js';
-import '../d2l-polymer-behaviors/d2l-dom.js';
-import '../d2l-polymer-behaviors/d2l-dom-focus.js';
-import { afterNextRender } from '../@polymer/polymer/lib/utils/render-status.js';
-import { dom } from '../@polymer/polymer/lib/legacy/polymer.dom.js';
+import '@polymer/polymer/polymer-legacy.js';
+import 'd2l-colors/d2l-colors.js';
+import 'd2l-polymer-behaviors/d2l-dom.js';
+import 'd2l-polymer-behaviors/d2l-dom-focus.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-dropdown-content-styles">

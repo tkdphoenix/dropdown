@@ -9,13 +9,13 @@ Polymer-based web component for dropdown using a button opener.
   from HTML and may be out of place here. Review them and
   then delete this comment!
 */
-import '../@polymer/polymer/polymer-legacy.js';
+import '@polymer/polymer/polymer-legacy.js';
 
-import '../d2l-button/d2l-button.js';
-import '../d2l-icons/d2l-icon.js';
-import '../d2l-icons/tier1-icons.js';
+import 'd2l-button/d2l-button.js';
+import 'd2l-icons/d2l-icon.js';
+import 'd2l-icons/tier1-icons.js';
 import './d2l-dropdown-opener-behavior.js';
-import { Polymer } from '../@polymer/polymer/lib/legacy/polymer-fn.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-dropdown-button">
