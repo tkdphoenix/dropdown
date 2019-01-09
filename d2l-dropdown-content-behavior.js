@@ -41,7 +41,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-dropdown-content-styles">
 			:host .d2l-dropdown-content-pointer {
 				position: absolute;
 				display: inline-block;
-				clip: rect(-5px, 21px, 8px, -6px);
+				clip: rect(-5px, 21px, 8px, -7px);
 				top: -7px;
 				left: calc(50% - 7px);
 				z-index: 1;
