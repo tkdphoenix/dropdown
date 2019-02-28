@@ -530,7 +530,10 @@ D2L.PolymerBehaviors.DropdownContentBehavior = {
 			if (!this.noAutoFocus && this.__applyFocus) {
 				var focusable = D2L.Dom.Focus.getFirstFocusableDescendant(this);
 				if (focusable) {
-					focusable.focus();
+					// bumping this to the next frame is required to prevent IE/Edge from crazily invoking click on the focused element
+					requestAnimationFrame(function() {
+						focusable.focus();
+					});
 				} else {
 					content.setAttribute('tabindex', '-1');
 					content.focus();
